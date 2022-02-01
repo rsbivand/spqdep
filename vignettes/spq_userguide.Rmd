@@ -1,0 +1,403 @@
+---
+title: "spqdep user guide"
+subtitle: "The user guide <br>  <br>  <br>"
+author:
+- Fernando A. López, Technical University of Cartagena (Spain)
+- Román Mínguez, University of Castilla-La Mancha (Spain)
+- Antonio Páez, McMaster University (Canada)
+- Manuel Ruiz, Technical University of Cartagena (Spain) <br> <br> <br>
+date: "`r Sys.Date()` <br>"
+output:
+  bookdown::html_document2:
+    number_sections: yes
+    theme: flatly
+    toc: yes
+    toc_depth: 2
+    toc_float:
+      collapsed: no
+      smooth_scroll: no
+    toc_title: Article Outline
+    self_contained: false
+    
+linkcolor: red
+link-citations: yes
+bibliography: ["bibliospq.bib"]
+vignette: |
+  %\VignetteIndexEntry{spsur user guide}
+  %\VignetteEncoding{UTF-8}
+  %\VignetteEngine{knitr::rmarkdown} 
+editor_options: 
+  chunk_output_type: inline
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r, message = FALSE, collapse = TRUE, warning = FALSE}
+library(spdep)
+library(spatialreg)
+library(sf)
+library(ggplot2)
+```
+
+# Introduction
+
+This guide show the functionalities of the **spqdep** package to test spatial dependence on qualitative dataset.
+
+## Datasets
+
+Two data sets will be used as examples in this guide:
+
+- **provinces_spain**: The division of Spain into provinces. It is a multypolygon geometry with isolated provinces (islands without neighbouring provinces). See by example @paez2021.
+
+- **FastFood.sf**: The data set used as example in @ruiz2010. It is a geometry of points.
+
+The package is install like usual and the dataset can be loaded using the next code
+
+```{r, message = FALSE, collapse = TRUE}
+library(spqdep)
+data("provinces_spain", package = "spqdep")
+data("FastFood.sf", package = "spqdep")
+```
+
+## Data Generating Process (DGP)
+
+Additional to the two dataset available in the **spqdep** package. The user can generate structured spatial processes using the \code{dgp.spq()} function. The DGP generate with this function defined in @ruiz2010. 
+
+The next code show how to generate a random process on a set of random points localized in a square 1x1. In this case, the connectivity criteria is based on the 4 near neighborhood.
+
+```{r}
+set.seed(123)
+N <- 100
+cx <- runif(N)
+cy <- runif(N)
+coor <- cbind(cx,cy)
+p <- c(1/6,3/6,2/6)
+rho = 0.5
+listw <- spdep::nb2listw(knn2nb(knearneigh(coor, k = 4)))
+fx <- dgp.spq(list = listw, p = p, rho = rho)
+```
+
+The next plot show the qualitative spatial process defined.
+
+```{r}
+ggplot(data.frame(fx = fx, cx = cx, cy = cy), aes(x = cx, y = cy, color = fx)) + 
+    geom_point(size = 6) +
+    theme_bw()
+```
+
+
+# Q-test
+
+- The Q-test [@ruiz2010] is based on m-surroundings
+
+- Before to apply the Q-test it is necessary define a set of the m-surroundings 
+
+- The \code{m.surround()} function generate a set of m-surrounding.
+
+- The user can tuning several parameters to obtain a congruent set of m-surroundings.
+
+## m-surroundings
+
+- **m.surround()** is the function to generate m-surroundings.
+
+- The output of this function is a object of the class **m_surr**
+
+- Using the \code{plot()} method the user can explore the coherence of m-surroundings.
+
+By example. the next code obtain m-surroundings with length m = 3 and degree of overlapping r = 1:
+
+```{r}
+m = 3
+r = 1
+mh <- m.surround(x = cbind(cx,cy), m = m, r = r)
+class(mh)
+```
+
+## Methods for the m_surr class
+
+The **spqdep** have three methods that can be apply to this class: \code{print()}, \code{summary} and \code{plot}
+
+- \code{print()} list the m-surroundings
+
+```{r print mh}
+print(mh)
+```
+
+- \code{summary()} generate a summary of some characteristics of the m-surroundings
+
+```{r summary mh}
+summary(mh)
+```
+
+- \code{plot()} show the spatial structure of the m-surroundings
+
+```{r plot mh}
+plot(mh, type = 1)
+```
+
+- With the argument **control** the user can tuning some characteristics of the m-surroundings.
+
+By example, with **control** argument, the user can 'prune' non-coherent m-surroundings.
+
+```{r plot mh prune}
+control <- list (dtmaxknn = 10)
+mh.prune <- m.surround(x = coor, m = m, r = r, control = control)
+plot(mh.prune)
+```
+
+## The Q-test
+
+- The function \code{Q.test()} obtain the Q-test for a spatial process develop in @ruiz2010.
+
+The user must select the longitude of the m-surroundings (m) and the overlapping degree (r).
+In the next code example, the Q-test is obtain for the DGP spatial process (fx) obtain with the \code{dgp.spq()}. The coordinates **coor** must be included as argument. 
+
+```{r}
+q.test <- Q.test(fx = fx, coor = coor, m = 3, r = 1)
+```
+
+- The output is a list with the result for symbols based on permutations (standard) and combinations (equivalent).
+
+- The output of this function is an object of the **spqtest** class.
+
+## Distribution of Q-test
+
+- The asymptotic distribution is the default distribution to obtain the significance of Q-test [@ruiz2010].
+
+- Alternatively, the Monte Carlo method can be used to obtain the significance of the test. The paper @lopez2012 describe this approach.
+
+```{r}
+q.test.mc <- Q.test(fx = fx, coor = coor, m = 3, r = 1, distr = "mc")
+summary(q.test.mc)
+```
+
+## Methods for the spqtest class
+
+A summary can be apply to an object of the spqtest class:
+
+```{r}
+summary(q.test)
+```
+
+The histogram of the number of symbols is obtain appling the plot method.
+
+```{r}
+plot(q.test)
+```
+
+## The Q-test using a sf object
+
+- A sf object [@pebesma2018] or a data frame can be used as input of the \code{Q.test()} function:
+
+```{r, warning = FALSE}
+# Case 3: With a sf object with isolated areas
+sf_use_s2(FALSE)
+provinces_spain$Male2Female <- factor(provinces_spain$Male2Female > 100)
+levels(provinces_spain$Male2Female) = c("men","woman")
+f1 <- ~ Male2Female
+q.test.sf <- Q.test(formula = f1, data = provinces_spain, m = 3, r = 1)
+```
+
+- The method \code{plot()} show the histogram of the number of symbols
+
+```{r}
+plot(q.test.sf)
+```
+
+# Maps comparison. The QMap-test
+
+- The function \code{QMap()} obtain the test for maps comparison publish in @Ruiz2012b
+
+## The QMap test
+
+The next code generate two qualitative spatial process with different levels of spatial dependence and the Q-Map is apply.
+
+```{r}
+p <- c(1/6,3/6,2/6)
+rho = 0.5
+QY1 <- dgp.spq(p = p, listw = listw, rho = rho)
+rho = 0.8
+QY2 <- dgp.spq(p = p, listw = listw, rho = rho)
+dt = data.frame(QY1,QY2)
+m = 3
+r = 1
+formula <- ~ QY1 + QY2
+control <- list(dtmaxknn = 10)
+qmap <- Q.map.test(formula = formula, data = dt, coor = coor, m = m, r = r, type ="combinations", control = control)
+```
+
+- The output of \code{Q.Map()} id an object of the classes **qmap** and **htest**
+
+## Methods for qmap class
+
+- The qmap object is a list with two elements. Each element is an object of the class **htext**
+
+```{r}
+print(qmap[[1]])
+```
+
+- The \code{plot()} method obtains the distribution of symbols with the confidence intervals specified by the user.
+
+```{r}
+plot(qmap, ci=.6)
+```
+
+# Runs tests
+
+The runs test [@ruiz2021] have global and local versions
+
+## Global Runs test
+
+- The function **sp.runs.test** obtain the spatial runs test.
+
+```{r}
+listw <- knearneigh(coor, k = 3)
+srq <- sp.runs.test(fx = fx, listw = listw)
+```
+
+- The output of this function is a object of the classes **sprunstest** and **htest**
+
+## Methods for spruntest class
+
+- The **spqdep** has two methods for this class  \code{print} y \code{plot}
+
+```{r}
+print(srq)
+```
+
+```{r}
+plot(srq)
+```
+
+## The local Runs test
+
+- The function **local.sp.runs.test** obtain the local test based on runs.
+
+## Asymptotic version
+
+- Asymptotic version
+
+```{r}
+lsrq <- local.sp.runs.test(fx = fx, listw = listw, alternative = "less")
+```
+
+- The \code{print()} method list the statistic of each observation (point or region)
+
+```{r}
+print(lsrq)
+```
+
+- The \code{plot()} method identify the localization with values of local test significant.
+
+```{r}
+plot(lsrq, sig = 0.05)
+```
+
+## Monte Carlo local runs test
+
+- The Monte Carlo distribution ot the local test using a sf object
+
+```{r, warning = FALSE}
+data("provinces_spain")
+listw <- spdep::poly2nb(as(provinces_spain,"Spatial"), queen = FALSE)
+provinces_spain$Male2Female <- factor(provinces_spain$Male2Female > 100)
+levels(provinces_spain$Male2Female) = c("men","woman")
+plot(provinces_spain["Male2Female"])
+formula <- ~ Male2Female
+# Boots Version
+lsrq <- local.sp.runs.test(formula = formula, data = provinces_spain, listw = listw, distr ="bootstrap", nsim = 199)
+plot(lsrq, sf = provinces_spain, sig = 0.10)
+```
+
+# The scan test
+
+- Two of the scan tests to identify clusters can be apply to test spatial structure in qualitative spatial processes.
+
+- The scan test don't need pre-define the classical W conectivity matrix.
+
+- See @Kanaroglou2016
+
+- The scan tests contrasts the null of independence of a spatial qualitative process and give  additional information indicating one (or perhaps more) spatial cluster(s).
+
+- The scan tests don't have asymptotic distribution. The significance is obtained by permutational resampling.
+
+- The output of the scan function is an object of the classes **scantest** and **htest**
+
+## Scan bernoulli
+
+- For qualitative spatial process with two categories the bernoulli scan test is obtain with the next code
+
+```{r, warning = FALSE}
+formula <- ~ Male2Female
+scan.spain <- spqdep::scan.test(formula = formula, data = provinces_spain, case="men", nsim = 99, distr = "bernoulli")
+print(scan.spain)
+```
+
+## scan multinomial
+
+- In case of a spatial process with three or more categories
+
+```{r}
+data(FastFood.sf)
+formula <- ~ Type
+scan.fastfood <- scan.test(formula = formula, data = FastFood.sf, nsim = 99, distr = "multinomial", windows = "elliptic", 
+                           nv = 50)
+print(scan.fastfood)
+```
+
+## Methods for scan test
+
+- Two method can be used with **scantest** objects: \code{summary()} and \code{plot()}
+
+```{r}
+summary(scan.fastfood)
+```
+
+```{r, warning = FALSE}
+plot(scan.spain, sf = provinces_spain)
+```
+
+```{r, warning = FALSE}
+plot(scan.fastfood, sf = FastFood.sf)
+```
+
+# Similarity test
+
+The @Farber2014 paper develop the similarity test
+
+## Simiarity test
+
+The \code{similarity.test()} function calculates the similarity test for both asymptotic distribution and permutational resampling.
+
+```{r, warning = FALSE, collapse=TRUE}
+coor <- st_coordinates(st_centroid(FastFood.sf))
+listw <- spdep::knearneigh(coor, k = 4)
+formula <- ~ Type
+similarity <- similarity.test(formula = formula, data = FastFood.sf, listw = listw)
+print(similarity)
+```
+
+# join-count tests
+
+- The functions of the **spdep**  R-package have been **wrapped** for Bernoulli and Multinomial distributions. Asymptotic or Monte Carlo distributions (permutations) can be used to evaluate the signification of the tests.
+
+## Asyntotic distribution
+
+```{r, warning = FALSE}
+provinces_spain$Older <- cut(provinces_spain$Older, breaks = c(-Inf,19,22.5,Inf))
+levels(provinces_spain$Older) = c("low","middle","high")
+f1 <- ~ Older + Male2Female
+jc1 <- jc.test(formula = f1, data = provinces_spain, distr = "asymptotic", alternative = "greater", zero.policy = TRUE)
+summary(jc1)
+```
+
+## Monte Carlo distribution
+
+```{r, warning = FALSE}
+jc1 <- jc.test(formula = f1, data = provinces_spain, distr = "mc", alternative = "greater", zero.policy = TRUE)
+summary(jc1)
+```
+
+# References
