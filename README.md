@@ -9,4 +9,4 @@ You can install the released version of spsur from
 [CRAN](https://CRAN.R-project.org) with:
 
 ``` r
-install.packages("spsur")
+install.packages("spqdep")
