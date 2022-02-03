@@ -8,9 +8,13 @@ spqdata
 <!-- badges: start -->
 
 [![R-CMD-check](https://github.com/f8l5h9/spqdep/workflows/R-CMD-check/badge.svg)](https://github.com/f8l5h9/spqdep/actions)
-[![CRAN
-status](https://www.r-pkg.org/badges/version/spqdep)](https://CRAN.R-project.org/package=spqdep)
-\[![CRAN downloads](https://cranlogs.r-pkg.org/badges/total/spqdata)
+\[![CRAN status](https://www.r-pkg.org/badges/version-ago/spqdep)
+\[![CRAN
+downloads-last-month](https://cranlogs.r-pkg.org/badges/last-month/spqdep)
+\[![CRAN
+downloads-grand-total](https://cranlogs.r-pkg.org/badges/grand-total/spqdep)
+[![Lifecycle:
+stable](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://lifecycle.r-lib.org/articles/stages.html#stable)
 <!-- badges: end -->
 
 The goal of spqdep is to provide tools for the analysis of spatial
