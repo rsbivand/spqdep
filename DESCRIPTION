@@ -1,6 +1,6 @@
 Package: spqdep
 Type: Package
-Title: Testing for Spatial Structure of Qualitative Data in Cross Section
+Title: Testing for Structure of Qualitative Data in Spatial Cross Sectional Panels
 Version: 0.1.0
 Date: 2022-01-21
 Authors@R:
@@ -16,7 +16,7 @@ Maintainer: Fernando Lopez <fernando.lopez@upct.es>
 Description: Testing for spatial structure of qualitative data in cross section. The list of functions includes join-count test, Q test, scan test, similarity test and spatial runs test. The methodology of these models can be found in <doi:10.1007/s10109-009-0100-1> and <doi:10.1080/13658816.2011.586327>.
 LazyData: true
 Encoding: UTF-8
-License: GPL-3 
+License: MIT + file LICENSE
 Depends: 
     R (>= 3.5), 
     methods (>= 3.5),
