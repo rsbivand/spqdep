@@ -26,14 +26,14 @@ You can install the released version of spqdata from
 [CRAN](https://CRAN.R-project.org) with:
 
 ``` r
-#install.packages("spqdata")
+#install.packages("spqdep")
 ```
 
 And the development version from [GitHub](https://github.com/) with:
 
 ``` r
 # install.packages("devtools")
-#devtools::install_github("paezha/spqdata")
+#devtools::install_github("paezha/spqdep")
 ```
 
 ## Example
