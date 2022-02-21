@@ -23,7 +23,7 @@ linkcolor: red
 link-citations: yes
 bibliography: ["bibliospq.bib"]
 vignette: |
-  %\VignetteIndexEntry{spsur user guide}
+  %\VignetteIndexEntry{spqdep user guide}
   %\VignetteEncoding{UTF-8}
   %\VignetteEngine{knitr::rmarkdown} 
 editor_options: 
