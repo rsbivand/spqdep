@@ -303,13 +303,20 @@ scan.test <- function(formula = NULL, data = NULL, fx = NULL, coor = NULL, case 
   a <- which(lnlz == max(lnlz), arr.ind = TRUE)
   if (dim(a)[1] > 1) {
     warning(paste0("A total of ",dim(a)[1], " clusters has the same value of the statistic. Report as MLC only the first"))
+    a2 <- a
     a <- a[1,]
   }
-
   MLC <- nn[a[1],1:a[2]]
   loglik <- max(lnlz)
   cases.observ <- addmargins(table(mfx[MLC]))
   cases.expect <- addmargins(table(mfx)*length(MLC)/N)
+  # Alternative clusters with the same loglik
+  if (dim(a2)[1]>1){
+    AlternativeMLC <- list()
+    for (fl in 2:dim(a2)[1]){
+      AlternativeMLC[[fl-1]] <- nn[a2[fl,1],1:a2[fl,2]]
+    }
+  }
   }
 
 
@@ -396,7 +403,7 @@ scan.test <- function(formula = NULL, data = NULL, fx = NULL, coor = NULL, case 
     # names(vec) <- c("Number observ inside MLC","Expected cases in MLC","Observed cases in MLC")
     scan <- list(method = paste("Scan test. Distribution: ",distr),
                  fx = mfx, MLC = MLC, statistic = loglik, N = N, estimate = vec, nn = nn, nv = nv, coor = coor.input,
-                 p.value = p.value, nsim = nsim, data.name = data.name, distr = distr,
+                 p.value = p.value, nsim = nsim, data.name = data.name, distr = distr, Alternative.MLC = AlternativeMLC,
                  cases.expect = cases.expect,
                  cases.observ = cases.observ, sf = sf)
   }
