@@ -97,11 +97,23 @@ summary.scantest <- function(object, ...) {
   cat(paste0("Number of locations.............: ",z$N,"\n"))
   cat(paste0("Total number of cases...........: ",z$N,"\n"))
   cat("\nScan statistic:\n")
+  cat("Total cases in the MLC......: ")
+  cat(length(z$MLC))
+  cat("\n")
+  cat("Names of cathegories...: ")
+  cat(z$cases.names)
+  cat("\n")
   cat(paste0("Type of cluster (alternative)...: ",z$alternative,"\n"))
-  cat(paste0("Value of statisitic (loglik)....: ",round(z$statistic, digits = 2) ,"\n"))
-  cat(paste0("p-value.........................: ",round(z$p.value, digits = 3),"\n"))
+  cat(paste0("Value of statisitic (loglik)....: ",round(z$statistic, digits = 4) ,"\n"))
+  cat(paste0("p-value.........................: ",round(z$p.value, digits = 4),"\n"))
   cat("\nIDs of cluster detect:\n")
   cat("Location IDs included..................: ",z$MLC)
+  if (length(z$Alternative.MLC)>0){
+    for (i in 1:length(z$Alternative.MLC)){
+      cat("\n\n")
+      cat("Location IDs of alternative MLC with the same loglik: ",z$MLC)
+    }
+  }
   }
   if (z$distr=="multinomial"){
     cat("\nSummary of data:\n")
@@ -109,15 +121,27 @@ summary.scantest <- function(object, ...) {
     cat(paste0("Number of locations.............: ",z$N,"\n"))
     cat(paste0("Total number of cases...........: ",z$N,"\n"))
     cat("\nScan statistic:\n")
+    cat("Total cases in the MLC......: ")
+    cat(length(z$MLC))
+    cat("\n")
+    cat("Names of cathegories...: ")
+    cat(z$cases.names)
+    cat("\n")
     cat("Observed cases in the MLC...: ")
-    cat(round(z$cases.expect, digits = 2))
+    cat(round(z$cases.expect[1:length(unique(z$fx))], digits = 2))
     cat("\n")
     cat("Expected cases in the MLC...: ")
-    cat(z$cases.observ)
+    cat(z$cases.observ[1:length(unique(z$fx))])
     cat("\n")
-    cat(paste0("Value of statisitic (loglik)....: ",round(z$statistic, digits = 2) ,"\n"))
-    cat(paste0("p-value.........................: ",round(z$p.value, digits = 3),"\n"))
+    cat(paste0("Value of statisitic (loglik)....: ",round(z$statistic, digits = 4) ,"\n"))
+    cat(paste0("p-value.........................: ",round(z$p.value, digits = 4),"\n"))
     cat("\nIDs of cluster detect:\n")
     cat("Location IDs included..................: ",z$MLC)
+    if (length(z$Alternative.MLC)>0){
+      for (i in 1:length(z$Alternative.MLC)){
+      cat("\n\n")
+      cat("Location IDs of alternative MLC with the same loglik: ",z$MLC)
+      }
+    }
   }
 }

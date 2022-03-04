@@ -57,6 +57,7 @@
 #'     \code{cases.expect} \tab Expected cases into the MLC.\cr
 #'     \code{cases.observ} \tab Observed cases into the MLC.\cr
 #'     \code{nsim} \tab Number of permutations.\cr
+#'     \code{Alternative.MLC} \tab A list with the observations included another MLC with the same loglik than MLC.\cr
 #'     }
 #' @section Control arguments:
 #'   \tabular{ll}{
@@ -273,16 +274,28 @@ scan.test <- function(formula = NULL, data = NULL, fx = NULL, coor = NULL, case 
   lnlz[is.na(lnlz)] <- 0
 
   a <- which(lnlz == max(lnlz), arr.ind = TRUE)
+  a2 <- a
   if (dim(a)[1] > 1) {
-  warning(paste0("A total of ",dim(a)[1], " clusters has the same value of the statistic. Report as MLC only the first"))
   a <- a[1,]
   }
   MLC <- nn[a[1],1:a[2]]
   loglik <- max(lnlz)
   cases.observ <- sum(mfx[MLC]== case)
   cases.expect <- a[2]*(O/N)
+  cases.names <- names(table(mfx[MLC]))
+  AlternativeMLC <- list()
+  if (dim(a2)[1]>1){
+    for (fl in 2:dim(a2)[1]){
+      if (all.equal(sort(MLC),sort(nn[a2[fl,1],1:a2[fl,2]]))==FALSE){
+      AlternativeMLC[[fl-1]] <- nn[a2[fl,1],1:a2[fl,2]]}
+    }
   }
-
+  if (length(AlternativeMLC) > 0) {
+    warning(paste0("A total of ",length(AlternativeMLC), " clusters has the same value of the statistic.
+    Report as MLC only the first.
+    Use summary() to get all clusters with the same loglik"))
+  }
+  }
   ## Multinomial
   if (distr == "multinomial"){
   lnlz <- 0
@@ -301,22 +314,28 @@ scan.test <- function(formula = NULL, data = NULL, fx = NULL, coor = NULL, case 
   }
   lnlz[is.na(lnlz)] <- 0
   a <- which(lnlz == max(lnlz), arr.ind = TRUE)
+  a2 <- a
   if (dim(a)[1] > 1) {
-    warning(paste0("A total of ",dim(a)[1], " clusters has the same value of the statistic. Report as MLC only the first"))
-    a2 <- a
     a <- a[1,]
   }
   MLC <- nn[a[1],1:a[2]]
   loglik <- max(lnlz)
   cases.observ <- addmargins(table(mfx[MLC]))
   cases.expect <- addmargins(table(mfx)*length(MLC)/N)
+  cases.names <- names(table(mfx[MLC]))
   # Alternative clusters with the same loglik
+  AlternativeMLC <- list()
   if (dim(a2)[1]>1){
-    AlternativeMLC <- list()
     for (fl in 2:dim(a2)[1]){
-      AlternativeMLC[[fl-1]] <- nn[a2[fl,1],1:a2[fl,2]]
+      if (all.equal(sort(MLC),sort(nn[a2[fl,1],1:a2[fl,2]]))==FALSE){
+        AlternativeMLC[[fl-1]] <- nn[a2[fl,1],1:a2[fl,2]]}
     }
   }
+  if (length(AlternativeMLC) > 0) {
+    warning(paste0("A total of ",length(AlternativeMLC), " clusters has the same value of the statistic.
+    Report as MLC only the first.
+    Use summary() to get all clusters with the same loglik"))
+    }
   }
 
 
@@ -391,11 +410,13 @@ scan.test <- function(formula = NULL, data = NULL, fx = NULL, coor = NULL, case 
   colnames(vec) <- ""
   scan <- list(method = paste("Scan test. Distribution: ",distr),
               fx = mfx, MLC = MLC, statistic = loglik, N = N, estimate = vec, nn = nn, nv = nv, coor = coor.input,
-              p.value = p.value, nsim = nsim, data.name = data.name, distr = distr,
+              p.value = p.value, nsim = nsim, data.name = data.name, distr = distr, Alternative.MLC = AlternativeMLC,
               case = case,
               alternative = alternative,
               cases.expect = cases.expect,
-              cases.observ = cases.observ, sf = sf)
+              cases.observ = cases.observ,
+              cases.names = cases.names,
+              sf = sf)
   }
 
   if (distr == "multinomial"){
@@ -405,7 +426,9 @@ scan.test <- function(formula = NULL, data = NULL, fx = NULL, coor = NULL, case 
                  fx = mfx, MLC = MLC, statistic = loglik, N = N, estimate = vec, nn = nn, nv = nv, coor = coor.input,
                  p.value = p.value, nsim = nsim, data.name = data.name, distr = distr, Alternative.MLC = AlternativeMLC,
                  cases.expect = cases.expect,
-                 cases.observ = cases.observ, sf = sf)
+                 cases.observ = cases.observ,
+                 cases.names = cases.names,
+                 sf = sf)
   }
 
 
