@@ -129,10 +129,11 @@ summary.scantest <- function(object, ...) {
   }
   ################################
   # print secondary clusters
+  if(is.null(z$mincases)){
   for (f in 1:length(z$loglik.second)){
   cat("\n\n")
   cat("\nSecondary Scan statistic. Number", f,"\n")
-  cat("Total cases in secondary cluster.....: ",length(z$Secondary.clusters[[f]]) ,"\n")
+  cat("Total cases in secondary cluster.....: ",length(z$secondary.clusters[[f]]) ,"\n")
   cat("Names of cathegories.................: ")
   cat(z$cases.names)
   cat("\n")
@@ -140,11 +141,12 @@ summary.scantest <- function(object, ...) {
   cat(round(as.vector(table(z$fx))/z$N,digits = 2))
   cat("\n")
   cat("Percent per category inside cluster..: ")
-  cat(round(as.vector(table(z$fx[z$Secondary.clusters[[f]]]))/length(z$Secondary.clusters[[f]]),digits = 2))
+  cat(round(as.vector(table(z$fx[z$secondary.clusters[[f]]]))/length(z$secondary.clusters[[f]]),digits = 2))
   cat("\n")
   cat(paste0("Value of statisitic (loglik).........: ",round(z$loglik.second[f], digits = 4) ,"\n"))
   cat(paste0("p-value..............................: ",round(z$p.value.secondary[f], digits = 4),"\n"))
-  cat("Location IDs included................: ",z$Secondary.clusters[[f]])
+  cat("Location IDs included................: ",z$secondary.clusters[[f]])
+  }
   }
   }
   if (z$distr=="multinomial"){
@@ -184,12 +186,14 @@ summary.scantest <- function(object, ...) {
       cat("Location IDs of alternative MLC with the same loglik: ",z$MLC)
       }
     }
+
     ################################
+    if(is.null(z$mincases)){
     # print secondary clusters
     for (f in 1:length(z$loglik.second)){
       cat("\n\n")
       cat("\nSecondary Scan statistic. Number", f,"\n")
-      cat("Total cases in secondary cluster......: ",length(z$Secondary.clusters[[f]]) ,"\n")
+      cat("Total cases in secondary cluster......: ",length(z$secondary.clusters[[f]]) ,"\n")
       cat("Names of cathegories.................: ")
       cat(z$cases.names)
       cat("\n")
@@ -197,11 +201,12 @@ summary.scantest <- function(object, ...) {
       cat(round(as.vector(table(z$fx))/z$N,digits = 2))
       cat("\n")
       cat("Percent per category inside cluster..: ")
-      cat(round(as.vector(table(z$fx[z$Secondary.clusters[[f]]]))/length(z$Secondary.clusters[[f]]),digits = 2))
+      cat(round(as.vector(table(z$fx[z$secondary.clusters[[f]]]))/length(z$secondary.clusters[[f]]),digits = 2))
       cat("\n")
       cat(paste0("Value of statisitic (loglik)....: ",round(z$loglik.second[f], digits = 4) ,"\n"))
       cat(paste0("p-value.........................: ",round(z$p.value.secondary[f], digits = 4),"\n"))
-      cat("Location IDs included..................: ",z$Secondary.clusters[[f]])
+      cat("Location IDs included..................: ",z$secondary.clusters[[f]])
+    }
     }
   }
 }
