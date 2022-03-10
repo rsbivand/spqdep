@@ -25,16 +25,21 @@ You can install the released version of spqdata from
 [CRAN](https://CRAN.R-project.org) with:
 
 ``` r
-#install.packages("spqdep")
+# install.packages("spqdep")
 ```
 
 And the development version from [GitHub](https://github.com/) with:
 
 ``` r
 # install.packages("devtools")
-#devtools::install_github("f8l5h9/spqdep")
+# devtools::install_github("f8l5h9/spqdep")
 ```
+
+## Abstract
+
+Qualitative spatial variables are important in many fields of research. However, unlike the decades-worth of research devoted to the spatial association of quantitative variables, the exploratory analysis of spatial qualitative variables is relatively less developed. The objective of the present paper is to present a new R-package to test for spatial dependence in categorical spatial data. Several tests have been proposed, namely, the classical joint count statistics, the Q-test based on symbolic dynamics, the Scan-test based on scan methodology and a new spatial test based on spatial-runs. All tests can be applied to categorical spatial cross-section data with two or more categories and asymptotic and bootstrap permutation distribution are implemented. The R package is completely documented, including several examples and an user-guide is available as a vignette. The package spqdep is available in CRAN and is ideal for research and teaching activities.
 
 ## Example
 
 This is a basic example which shows you how to solve a common problem
+
