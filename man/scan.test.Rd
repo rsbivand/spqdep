@@ -4,8 +4,9 @@
 \alias{scan.test}
 \title{Compute the scan test.}
 \usage{
-scan.test(formula = NULL, data = NULL, fx = NULL, coor = NULL, case = NULL, nv = NULL,
-nsim = NULL, distr = NULL, windows = "circular", alternative = "High", control = list())
+scan.test(formula = NULL, data = NULL, fx = NULL, coor = NULL,
+case = NULL, nv = NULL, nsim = NULL, distr = NULL, windows = "circular",
+alternative = "High", minsize = 1, control = list())
 }
 \arguments{
 \item{formula}{a symbolic description of the factor (optional).}
@@ -30,6 +31,8 @@ and the upper limit (nv) defined by the user.}
 \item{alternative}{Only for Bernoulli spatial process. A character string specifying the type of cluster, must be one
 of "High" (default), "Both" or "Low".}
 
+\item{minsize}{Minimum number of observations inside of Most Likely Cluster and secondary clusters.}
+
 \item{control}{List of additional control arguments.}
 }
 \value{
@@ -44,11 +47,17 @@ A object of the \emph{htest} and \emph{scantest} class
     \code{nv} \tab Maximum number of observations into the cluster.\cr
     \code{data.name} \tab A character string giving the name of the factor.\cr
     \code{coor} \tab coordinates.\cr
-    \code{alternative} \tab Only for bernoulli spatial process. A character string describing the alternative hypothesis select by the user.\cr
+    \code{alternative} \tab Only for bernoulli spatial process. A character string describing
+    the alternative hypothesis select by the user.\cr
     \code{p.value} \tab p-value of the scan test.\cr
     \code{cases.expect} \tab Expected cases into the MLC.\cr
     \code{cases.observ} \tab Observed cases into the MLC.\cr
     \code{nsim} \tab Number of permutations.\cr
+    \code{scan.mc} \tab a (nsim x 1) vector with the loglik values under bootstrap permutation.\cr
+    \code{secondary.clusters} \tab a list with the observations included into the secondary clusters.\cr
+    \code{loglik.second} \tab a vector with the value of the secondary scan tests (maximum Log-likelihood ratio).\cr
+    \code{p.value.secondary} \tab a vector with the p-value of the secondary scan tests.\cr
+    \code{Alternative.MLC} \tab A vector with the observations included in another cluster with the same loglik than MLC.\cr
     }
 }
 \description{
@@ -96,21 +105,20 @@ summary(scan)
 plot(scan, sf = provinces_spain)
 
 ## With maximum number of neighborhood
-scan <- scan.test(formula = formula, data = provinces_spain, case = "woman", nv = 5,
+scan <- scan.test(formula = formula, data = provinces_spain, case = "woman",
 nsim = 99, distr = "bernoulli")
 print(scan)
 plot(scan, sf = provinces_spain)
 
 \donttest{
 ## With elliptic windows
-scan <- scan.test(formula = formula, data = provinces_spain, case = "men", nv = 20,
+scan <- scan.test(formula = formula, data = provinces_spain, case = "men", nv = 25,
 nsim = 99, distr = "bernoulli", windows ="elliptic")
 print(scan)
 scan <- scan.test(formula = formula, data = provinces_spain, case = "men", nv = 15,
 nsim = 99, distr = "bernoulli", windows ="elliptic", alternative = "Low")
 print(scan)
 plot(scan, sf = provinces_spain)
-
 
 # Case 2: scan test multinomial
 data(provinces_spain)
@@ -132,15 +140,15 @@ summary(scan)
 plot(scan, sf = FastFood.sf)
 
 # Case 4: DGP two categories
-N <- 500
+N <- 1500
 cx <- runif(N)
 cy <- runif(N)
 listw <- spdep::knearneigh(cbind(cx,cy), k = 10)
 p <- c(1/2,1/2)
 rho <- 0.5
 fx <- dgp.spq(p = p, listw = listw, rho = rho)
-scan <- scan.test(fx = fx, nsim = 9, case = "A", nv = 30, coor = cbind(cx,cy),
-distr = "bernoulli",windows="elliptic")
+scan <- scan.test(fx = fx, nsim = 99, case = "A", nv = 50, coor = cbind(cx,cy),
+distr = "bernoulli",windows="circular")
 print(scan)
 plot(scan)
 
@@ -166,8 +174,9 @@ plot(scan)
     \item Jung I, Kulldorff M, Richard OJ (2010).
     A spatial scan statistic for multinomial data.
       \emph{Statistics in Medicine}. 29(18), 1910-1918
-     \item Páez, A., López-Hernández, F. A., Ortega-García, J. A., & Ruiz, M. (2016).
-     Clustering and co-occurrence of cancer types: A comparison of techniques with an application to pediatric cancer in Murcia, Spain.
+     \item Páez, A., López-Hernández, F.A., Ortega-García, J.A., Ruiz, M. (2016).
+     Clustering and co-occurrence of cancer types: A comparison of techniques with
+     an application to pediatric cancer in Murcia, Spain.
      \emph{Spatial Analysis in Health Geography}, 69-90.
 
   }

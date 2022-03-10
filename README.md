@@ -32,7 +32,7 @@ And the development version from [GitHub](https://github.com/) with:
 
 ``` r
 # install.packages("devtools")
-#devtools::install_github("paezha/spqdep")
+#devtools::install_github("f8l5h9/spqdep")
 ```
 
 ## Example

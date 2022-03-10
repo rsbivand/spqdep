@@ -137,10 +137,12 @@ summary.scantest <- function(object, ...) {
   cat(paste0("Distribution....................: ",z$distr,"\n"))
   cat(paste0("Type of cluster (alternative)...: ",z$alternative,"\n"))
   cat(paste0("Number of locations.............: ",z$N,"\n"))
-  cat("Name of cases...................: ")
+  if (z$distr=="bernoulli"){
+  cat("Cathegory case..................: ")
   cat(as.character(z$case))
   cat("\n")
-  cat(paste0("Total number of cases...........: ",sum(z$fx == z$case),"\n"))
+  }
+  cat(paste0("Total number of observations....: ",sum(z$fx == z$case),"\n"))
   cat("Names of cathegories............: ")
   cat(z$cases.names)
   cat("\n")
@@ -151,11 +153,11 @@ summary.scantest <- function(object, ...) {
   cat(round(as.vector(table(z$fx))/z$N, digits = 2))
   cat("\n")
   cat("---------------------------------\n")
-  cat("\nScan statistic: MLC\n")
-  cat("Total cases in the MLC......: ")
+  cat("\nScan statistic: Most Likely Cluster\n")
+  cat("Total observations in the MLC........: ")
   cat(length(z$MLC))
   cat("\n")
-  cat("Names of cathegories...: ")
+  cat("Names of cathegories.................: ")
   cat(z$cases.names)
   cat("\n")
   cat("Percent per category total...........: ")
@@ -164,10 +166,10 @@ summary.scantest <- function(object, ...) {
   cat("Percent per category inside cluster..: ")
   cat(round(as.vector(table(z$fx[z$MLC]))/length(z$MLC),digits = 2))
   cat("\n")
-  cat(paste0("Value of statisitic (loglik)....: ",round(z$statistic, digits = 4) ,"\n"))
-  cat(paste0("p-value.........................: ",round(z$p.value, digits = 4),"\n"))
+  cat(paste0("Value of statisitic (loglik ratio)...: ",round(z$statistic, digits = 4) ,"\n"))
+  cat(paste0("p-value..............................: ",round(z$p.value, digits = 4),"\n"))
   cat("\nIDs of cluster detect:\n")
-  cat("Location IDs included..................: ",z$MLC)
+  cat("Location IDs included...: ",z$MLC)
   if (length(z$Alternative.MLC)>0){
     for (i in 1:length(z$Alternative.MLC)){
       cat("\n\n")
@@ -179,8 +181,8 @@ summary.scantest <- function(object, ...) {
   cat("\n---------------------------------")
   for (f in 1:length(z$loglik.second)){
   cat("\n\n")
-  cat("\nSecondary Scan statistic. Number", f,"\n")
-  cat("Total cases in secondary cluster.....: ",length(z$secondary.clusters[[f]]) ,"\n")
+  cat("\nSecondary Cluster. Number", f,"\n")
+  cat("Total observations in secondary cluster.: ",length(z$secondary.clusters[[f]]) ,"\n")
   cat("Names of cathegories.................: ")
   cat(z$cases.names)
   cat("\n")
@@ -190,7 +192,7 @@ summary.scantest <- function(object, ...) {
   cat("Percent per category inside cluster..: ")
   cat(round(as.vector(table(z$fx[z$secondary.clusters[[f]]]))/length(z$secondary.clusters[[f]]),digits = 2))
   cat("\n")
-  cat(paste0("Value of statisitic (loglik).........: ",round(z$loglik.second[f], digits = 4) ,"\n"))
+  cat(paste0("Value of statisitic (loglik ratio)...: ",round(z$loglik.second[f], digits = 4) ,"\n"))
   cat(paste0("p-value..............................: ",round(z$p.value.secondary[f], digits = 4),"\n"))
   cat("Location IDs included................: ",z$secondary.clusters[[f]])
   }
@@ -222,7 +224,7 @@ summary.scantest <- function(object, ...) {
     cat("Expected cases in the MLC......: ")
     cat(z$cases.observ[1:length(unique(z$fx))])
     cat("\n")
-    cat(paste0("Value of statistic (loglik)....: ",round(z$statistic, digits = 4) ,"\n"))
+    cat(paste0("Value of statistic (loglik ratio)....: ",round(z$statistic, digits = 4) ,"\n"))
     cat(paste0("p-value........................: ",round(z$p.value, digits = 4),"\n"))
     cat("\nIDs of cluster detect:\n")
     cat("Location IDs included.....: ",z$MLC)
@@ -248,10 +250,11 @@ summary.scantest <- function(object, ...) {
       cat("Percent per category inside cluster..: ")
       cat(round(as.vector(table(z$fx[z$secondary.clusters[[f]]]))/length(z$secondary.clusters[[f]]),digits = 2))
       cat("\n")
-      cat(paste0("Value of statisitic (loglik)....: ",round(z$loglik.second[f], digits = 4) ,"\n"))
+      cat(paste0("Value of statisitic (loglik ratio)....: ",round(z$loglik.second[f], digits = 4) ,"\n"))
       cat(paste0("p-value.........................: ",round(z$p.value.secondary[f], digits = 4),"\n"))
       cat("Location IDs included..................: ",z$secondary.clusters[[f]])
     }
 
   }
 }
+

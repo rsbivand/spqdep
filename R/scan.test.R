@@ -15,10 +15,11 @@
 #' of "High" (default), "Both" or "Low".
 #' @param distr distribution of the spatial process: "bernoulli" for two levels or "multinomial" for three or more levels.
 #' @param windows a string to select the type of cluster "circular" (default) of "elliptic".
-#' @param mincases Minimum number of observations inside of Most Likely Cluster ans secondary clusters.
+#' @param minsize Minimum number of observations inside of Most Likely Cluster and secondary clusters.
 #' @param control List of additional control arguments.
-#' @usage scan.test(formula = NULL, data = NULL, fx = NULL, coor = NULL, case = NULL, nv = NULL,
-#' nsim = NULL, distr = NULL, windows = "circular", alternative = "High", mincases = 1, control = list())
+#' @usage scan.test(formula = NULL, data = NULL, fx = NULL, coor = NULL,
+#' case = NULL, nv = NULL, nsim = NULL, distr = NULL, windows = "circular",
+#' alternative = "High", minsize = 1, control = list())
 #' @details
 #'
 #' Two alternative sets of arguments can be included in this function to compute the scan test:
@@ -53,7 +54,8 @@
 #'     \code{nv} \tab Maximum number of observations into the cluster.\cr
 #'     \code{data.name} \tab A character string giving the name of the factor.\cr
 #'     \code{coor} \tab coordinates.\cr
-#'     \code{alternative} \tab Only for bernoulli spatial process. A character string describing the alternative hypothesis select by the user.\cr
+#'     \code{alternative} \tab Only for bernoulli spatial process. A character string describing
+#'     the alternative hypothesis select by the user.\cr
 #'     \code{p.value} \tab p-value of the scan test.\cr
 #'     \code{cases.expect} \tab Expected cases into the MLC.\cr
 #'     \code{cases.observ} \tab Observed cases into the MLC.\cr
@@ -62,7 +64,7 @@
 #'     \code{secondary.clusters} \tab a list with the observations included into the secondary clusters.\cr
 #'     \code{loglik.second} \tab a vector with the value of the secondary scan tests (maximum Log-likelihood ratio).\cr
 #'     \code{p.value.secondary} \tab a vector with the p-value of the secondary scan tests.\cr
-#'     \code{Alternative.MLC} \tab A list with the observations included another MLC with the same loglik than MLC.\cr
+#'     \code{Alternative.MLC} \tab A vector with the observations included in another cluster with the same loglik than MLC.\cr
 #'     }
 #' @section Control arguments:
 #'   \tabular{ll}{
@@ -85,7 +87,8 @@
 #'     A spatial scan statistic for multinomial data.
 #'       \emph{Statistics in Medicine}. 29(18), 1910-1918
 #'      \item Páez, A., López-Hernández, F.A., Ortega-García, J.A., Ruiz, M. (2016).
-#'      Clustering and co-occurrence of cancer types: A comparison of techniques with an application to pediatric cancer in Murcia, Spain.
+#'      Clustering and co-occurrence of cancer types: A comparison of techniques with
+#'      an application to pediatric cancer in Murcia, Spain.
 #'      \emph{Spatial Analysis in Health Geography}, 69-90.
 #'
 #'   }
@@ -108,14 +111,14 @@
 #' plot(scan, sf = provinces_spain)
 #'
 #' ## With maximum number of neighborhood
-#' scan <- scan.test(formula = formula, data = provinces_spain, case = "woman", nv = 5,
+#' scan <- scan.test(formula = formula, data = provinces_spain, case = "woman",
 #' nsim = 99, distr = "bernoulli")
 #' print(scan)
 #' plot(scan, sf = provinces_spain)
 #'
 #' \donttest{
 #' ## With elliptic windows
-#' scan <- scan.test(formula = formula, data = provinces_spain, case = "men", nv = 20,
+#' scan <- scan.test(formula = formula, data = provinces_spain, case = "men", nv = 25,
 #' nsim = 99, distr = "bernoulli", windows ="elliptic")
 #' print(scan)
 #' scan <- scan.test(formula = formula, data = provinces_spain, case = "men", nv = 15,
@@ -143,15 +146,15 @@
 #' plot(scan, sf = FastFood.sf)
 #'
 #' # Case 4: DGP two categories
-#' N <- 500
+#' N <- 1500
 #' cx <- runif(N)
 #' cy <- runif(N)
 #' listw <- spdep::knearneigh(cbind(cx,cy), k = 10)
 #' p <- c(1/2,1/2)
 #' rho <- 0.5
 #' fx <- dgp.spq(p = p, listw = listw, rho = rho)
-#' scan <- scan.test(fx = fx, nsim = 99, case = "A", nv = 30, coor = cbind(cx,cy),
-#' distr = "bernoulli",windows="elliptic")
+#' scan <- scan.test(fx = fx, nsim = 99, case = "A", nv = 50, coor = cbind(cx,cy),
+#' distr = "bernoulli",windows="circular")
 #' print(scan)
 #' plot(scan)
 #'
@@ -171,7 +174,7 @@
 
 scan.test <- function(formula = NULL, data = NULL, fx = NULL, coor = NULL, case = NULL,
                       nv = NULL, nsim = NULL, distr = NULL, windows = "circular",
-                      alternative = "High", mincases = 1, control = list()) {
+                      alternative = "High", minsize = 1, control = list()) {
 
   # profvis({
   if (is.null(distr))
@@ -222,8 +225,8 @@ scan.test <- function(formula = NULL, data = NULL, fx = NULL, coor = NULL, case 
   if (is.null(nv))  nv <- trunc(N/2)
   if (!is.null(nv) && nv > trunc(N/2)) stop("nv must be lower than N/2")
 
-  if (mincases > nv/2)
-    stop("mincases must be lower than nv/2")
+  if (minsize > nv/2)
+    stop("minsize must be lower than nv/2")
   ## Previus
 
   if (is.null(coor) &&
@@ -279,14 +282,14 @@ scan.test <- function(formula = NULL, data = NULL, fx = NULL, coor = NULL, case 
     lnlz <- log(lnlz/lnlz0)
     lnlz[lnlz==-Inf] <- 0
     lnlz[is.na(lnlz)] <- 0
-    # if (is.null(mincases)){
+    # if (is.null(minsize)){
     #   a <- which(lnlz == max(lnlz), arr.ind = TRUE)
     #   MLC <- nn[a[1,1],1:a[1,2]]
     #   loglik <- max(lnlz)} ## With out restrictions in the number of cases in the MLC
     # else{
-    a <- which(lnlz[,mincases:nv] == max(lnlz[,mincases:nv]), arr.ind = TRUE)
-    MLC <- nn[a[1,1],1:(mincases+a[1,2])]
-    loglik <- max(lnlz[,mincases:nv])
+    a <- which(lnlz[,minsize:nv] == max(lnlz[,minsize:nv]), arr.ind = TRUE)
+    MLC <- nn[a[1,1],1:(minsize+a[1,2])]
+    loglik <- max(lnlz[,minsize:nv])
     # }
     a2 <- a
     cases.observ <- sum(mfx[MLC]== case)
@@ -323,14 +326,14 @@ scan.test <- function(formula = NULL, data = NULL, fx = NULL, coor = NULL, case 
     }
     lnlz[is.na(lnlz)] <- 0
     # Condición para seleccionar el MLC dependiendo si se exige un num min de observaciones
-    # if (is.null(mincases)){
+    # if (is.null(minsize)){
       # a <- which(lnlz == max(lnlz), arr.ind = TRUE)
       # MLC <- nn[a[1,1],1:a[1,2]]
       # loglik <- max(lnlz) ## With out restrictions in the number of cases in the MLC
       # } else {
-      a <- which(lnlz[,mincases:nv] == max(lnlz[,mincases:nv]), arr.ind = TRUE)
-      MLC <- nn[a[1,1],1:(mincases-1+a[1,2])]
-      loglik <- max(lnlz[,mincases:nv])
+      a <- which(lnlz[,minsize:nv] == max(lnlz[,minsize:nv]), arr.ind = TRUE)
+      MLC <- nn[a[1,1],1:(minsize-1+a[1,2])]
+      loglik <- max(lnlz[,minsize:nv])
 
     a2 <- a
     # if (dim(a)[1] > 1) {
@@ -359,32 +362,6 @@ scan.test <- function(formula = NULL, data = NULL, fx = NULL, coor = NULL, case 
     Use summary() to get all clusters with the same loglik"))
     }
   }
-
-  ####################################
-  #### Looking for secondary clusters
-  ####################################
-  loglik.second <- NULL
-  MLC2 <- list()
-  mlc <- MLC
-  for (f in 1:5){ # Como máximo busco 5 clusteres secundarios
-    qq <- nn
-    # Identifico en nn todas las observaciones que contienen algún elemento del MLC
-    pp <- qq[,1] %in% mlc
-    for (ii in 2:dim(qq)[2]){
-      pp <- cbind(pp,qq[,ii] %in% mlc)
-    }
-    # Pongo NA si las observación estan en el MLC
-    pp[pp==TRUE] <- NA
-    pp <- t(apply(pp, 1, cumsum)) # con cumcum se consigue poner NA
-    LNLZ <- lnlz
-    LNLZ[is.na(pp)] <- NA
-    loglik.second[f] <- max(LNLZ[,mincases:nv], na.rm = TRUE)
-    cc <- which(LNLZ == max(LNLZ[,mincases:nv], na.rm = TRUE), arr.ind = TRUE)
-    # Este es el cluster secundario
-    MLC2[[f]] <- nn[cc[1,1],1:(mincases+cc[1,2])]
-    mlc <- c(mlc,nn[cc[1,1],1:(mincases+cc[1,2])])
-  }
-  rm(qq,pp,LNLZ,cc,mlc)
 
   #####################################
   ## Scan mc
@@ -479,12 +456,41 @@ scan.test <- function(formula = NULL, data = NULL, fx = NULL, coor = NULL, case 
         lnlz <- lnlz + (CkZ*a + (Ck-CkZ)*b - Ck*c)
       }
       lnlz[is.na(lnlz)] <- 0
-      scan.mc[k] <- max(lnlz[,mincases:nv])
+      scan.mc[k] <- max(lnlz[,minsize:nv])
 
     }
   }
   p.value <- sum(scan.mc > loglik)/(nsim + 1)
   names(loglik) <- "scan-loglik"
+
+  ####################################
+  #### Looking for secondary clusters
+  ####################################
+  loglik.second <- NULL
+  MLC2 <- list()
+  mlc <- MLC
+
+  for (f in 1:5){ # Como máximo busco 5 clusteres secundarios
+    # qq <- nn
+    # # Identifico en nn todas las observaciones que contienen algún elemento del MLC
+    # pp <- qq[,1] %in% mlc
+    # for (ii in 2:dim(qq)[2]){
+    #   pp <- cbind(pp,qq[,ii] %in% mlc)
+    # }
+    pp <- matrix(nn %in% mlc, ncol = nv)
+    # Pongo NA si las observación estan en el MLC
+    pp[pp == TRUE] <- NA
+    pp <- t(apply(pp, 1, cumsum)) # con cumcum se consigue poner NA
+    LNLZ <- lnlz
+    LNLZ[is.na(pp)] <- NA
+    loglik.second[f] <- max(LNLZ[,minsize:nv], na.rm = TRUE)
+    cc <- which(LNLZ == max(LNLZ[,minsize:nv], na.rm = TRUE), arr.ind = TRUE)
+    # Este es el cluster secundario
+    MLC2[[f]] <- nn[cc[1,1],1:(minsize+cc[1,2])]
+    mlc <- c(mlc,nn[cc[1,1],1:(minsize+cc[1,2])])
+  }
+  rm(pp,LNLZ,cc,mlc)
+
   ####################################
   ## p-values for secondary clusters
   p.value.secondary <- NULL
@@ -500,8 +506,8 @@ scan.test <- function(formula = NULL, data = NULL, fx = NULL, coor = NULL, case 
     colnames(vec) <- ""
     scan <- list(method = paste("Scan test. Distribution: ",distr),
                  fx = mfx, MLC = MLC, statistic = loglik, N = N, estimate = vec, nn = nn, nv = nv, coor = coor.input,
-                 p.value = p.value, nsim = nsim, data.name = data.name, distr = distr, Alternative.MLC = AlternativeMLC,
-                 scan.mc = scan.mc, mincases = mincases,
+                 p.value = p.value, nsim = nsim, data.name = data.name, distr = distr,
+                 scan.mc = scan.mc, minsize = minsize,
                  secondary.clusters = MLC2, loglik.second = loglik.second, p.value.secondary = p.value.secondary,
                  case = case,
                  alternative = alternative,
@@ -516,8 +522,8 @@ scan.test <- function(formula = NULL, data = NULL, fx = NULL, coor = NULL, case 
     # names(vec) <- c("Number observ inside MLC","Expected cases in MLC","Observed cases in MLC")
     scan <- list(method = paste("Scan test. Distribution: ",distr),
                  fx = mfx, MLC = MLC, statistic = loglik, N = N, estimate = vec, nn = nn, nv = nv, coor = coor.input,
-                 p.value = p.value, nsim = nsim, data.name = data.name, distr = distr, Alternative.MLC = AlternativeMLC,
-                 scan.mc = scan.mc, mincases = mincases,
+                 p.value = p.value, nsim = nsim, data.name = data.name, distr = distr,
+                 scan.mc = scan.mc, minsize = minsize,
                  secondary.clusters = MLC2, loglik.second = loglik.second, p.value.secondary = p.value.secondary,
                  cases.expect = cases.expect,
                  cases.observ = cases.observ,
