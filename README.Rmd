@@ -38,8 +38,31 @@ And the development version from [GitHub](https://github.com/) with:
 
 ``` r
 # install.packages("devtools")
-#devtools::install_github("paezha/spqdata")
+#devtools::install_github("f8l5h9/spqdata")
 ```
+
+## Abstract
+
+Qualitative spatial variables are important in many fields of research. However, unlike the decades-worth of research devoted to the spatial association of quantitative variables, the exploratory analysis of spatial qualitative variables is relatively less developed. The objective of the present paper is to present a new R-package to test for spatial dependence in categorical spatial data. Several tests have been proposed, namely, the classical joint count statistics, the Q-test based on symbolic dynamics, the Scan-test based on scan methodology and a new spatial test based on spatial-runs. All tests can be applied to categorical spatial cross-section data with two or more categories and asymptotic and bootstrap permutation distribution are implemented. The R package is completely documented, including several examples and an user-guide is available as a vignette. The package spqdep is available in CRAN and is ideal for research and teaching activities.
+
 ## Example
 
 This is a basic example which shows you how to solve a common problem
+
+```{r example, collapse = FALSE}
+library(spqdep)
+N <- 200
+set.seed(1234)
+cx <- runif(N)
+cy <- runif(N)
+listw <- spdep::knearneigh(cbind(cx,cy), k = 10)
+p <- c(1/3,2/3)
+rho <- 0.9
+control <- list(seedinit = 1234)
+fx <- dgp.spq(p = p, listw = listw, rho = rho,control = control)
+scan <- scan.test(fx = fx, nsim = 199, case = "A", nv = 100, coor = cbind(cx,cy),
+distr = "bernoulli", windows="elliptic")
+print(scan)
+summary(scan)
+plot(scan)
+```

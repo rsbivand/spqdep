@@ -2,7 +2,7 @@ Package: spqdep
 Type: Package
 Title: Testing for Structure of Qualitative Data in Spatial Cross Sectional Panels
 Version: 0.1.1
-Date: 2022-01-21
+Date: 2022-03-11
 Authors@R:
     c(person("Fernando", "Lopez", email = "fernando.lopez@upct.es", 
                   role = c("aut", "cre"), comment = c(ORCID = "0000-0002-5397-9748")),
