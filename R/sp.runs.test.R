@@ -4,31 +4,34 @@
 #' @description This function compute the global spatial runs test for spatial independence of a
 #' categorical spatial data set.
 #' @param data an (optional) data frame or a sf object containing the variable to testing for.
-#' @param listw A neighborhood list (type knn or nb) or a W matrix that indicates the order of the elements in each  $m_i-environment$
-#' (for example of inverse distance). To calculate the number of runs in each $m_i-environment$, an order must
-#' be established, for example from the nearest neighbor to the furthest one.
+#' @param listw A neighbourhood list (type knn or nb) or a W matrix that indicates the order of the elements in each \eqn{m_i-environment}
+#' (for example of inverse distance). To calculate the number of runs in each \eqn{m_i-environment}, an order must
+#' be established, for example from the nearest neighbour to the furthest one.
 #' @param fx a factor (optional).
 #' @param formula a symbolic description of the factor (optional).
 #' @param alternative a character string specifying the alternative hypothesis, must be one
 #' of "two.sided" (default), "greater" or "less".
-#' @param distr A string. Distribution of the test "asymptotic" (default) or "bootstrap"
-#' @param nsim Number of permutations to obtain confidence intervals (CI).
+#' @param distr A string. Distribution of the test "asymptotic" (default) or "bootstrap".
+#' @param nsim Number of permutations to obtain pseudo-value and confidence intervals (CI).
 #' Default value is NULL to don`t get CI of number of runs.
 #' @param control List of additional control arguments.
 #' @usage sp.runs.test(formula = NULL, data = NULL, fx = NULL,
 #' listw = listw, alternative = "two.sided" ,
 #' distr = "asymptotic", nsim = NULL,control = list())
-#' @details The order of the neighborhoods ($m_i-environments$) is critical to obtain the test. \cr
-#' To obtain the number of runs observed in each $m_i-environment$, each element must be associated
-#' with a set of neighbors ordered by proximity. Three kinds of lists can be included to identify $m_i-environments$:
+#' @details The order of the neighbourhoods (\eqn{m_i-environments}) is critical to obtain the test. \cr
+#' To obtain the number of runs observed in each \eqn{m_i-environment}, each element must be associated
+#' with a set of neighbours ordered by proximity.
+#' Three kinds of lists can be included to identify \eqn{m_i-environments}:
 #'
 #' \tabular{ll}{
-#'     \code{knn} \tab Objects of the class knn that consider the neighbors in order of proximity.\cr
-#'     \code{nb} \tab If the neighbors are obtained from an sf object, the code internally
-#'     will call the function \code{\link{nb2nb_order}} it will order them in order of proximity of the centroids.\cr
+#'     \code{knn} \tab Objects of the class knn that consider the neighbours in order of proximity.\cr
+#'     \code{nb} \tab If the neighbours are obtained from an sf object, the code internally
+#'     will call the function \code{\link{nb2nb_order}} it will order them in order
+#'     of proximity of the centroids.\cr
 #'     \code{matrix} \tab
-#'     If a object of matrix class based in the inverse of the distance in introduced as argument, the function \code{\link{nb2nb_order}} will
-#'     also be called internally to transform the object the class matrix to a matrix of the class nb with ordered neighbors. \cr
+#'     If a object of matrix class based in the inverse of the distance in introduced
+#'     as argument, the function \code{\link{nb2nb_order}} will also be called internally
+#'     to transform the object the class matrix to a matrix of the class nb with ordered neighbours. \cr
 #'     }
 #'
 #' Two alternative sets of arguments can be included in this function to compute the spatial runs test:

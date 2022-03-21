@@ -1,14 +1,14 @@
 #' @title A function to create symbols
 #' @usage cr_symb(k = k, m = m)
-#' @description This function obtains symbols ...
+#' @description This function obtains the set of symbols to get the Q-statistic
 #' @param k number of categories
 #' @param m length of the m-surrounding
 #' @return A list with two types of symbols. Permutation and Combinations-totals
 #'  \tabular{ll}{
 #'     \code{p_symb} \tab Matrix with symbols (permutations)\cr
-#'     \code{c_symb} \tab  Matrix with symbols (combinations)) c \cr
+#'     \code{c_symb} \tab  Matrix with symbols (combinations)\cr
 #'     }
-#' @details Aquí Antonio escribe una linda historia ...
+#' @details ...
 #' @seealso
 #' \code{\link{m.surround}}
 #' @author

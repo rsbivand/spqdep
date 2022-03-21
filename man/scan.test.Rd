@@ -140,7 +140,7 @@ summary(scan)
 plot(scan, sf = FastFood.sf)
 
 # Case 4: DGP two categories
-N <- 1500
+N <- 150
 cx <- runif(N)
 cy <- runif(N)
 listw <- spdep::knearneigh(cbind(cx,cy), k = 10)

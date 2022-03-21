@@ -146,7 +146,7 @@
 #' plot(scan, sf = FastFood.sf)
 #'
 #' # Case 4: DGP two categories
-#' N <- 1500
+#' N <- 150
 #' cx <- runif(N)
 #' cy <- runif(N)
 #' listw <- spdep::knearneigh(cbind(cx,cy), k = 10)
@@ -176,7 +176,6 @@ scan.test <- function(formula = NULL, data = NULL, fx = NULL, coor = NULL, case 
                       nv = NULL, nsim = NULL, distr = NULL, windows = "circular",
                       alternative = "High", minsize = 1, control = list()) {
 
-  # profvis({
   if (is.null(distr))
     stop("Select a distribution, bernoulli or multinomial")
 
@@ -407,6 +406,7 @@ scan.test <- function(formula = NULL, data = NULL, fx = NULL, coor = NULL, case 
       fxp <- mfx[sample(N)]
       XF <- matrix(fxp[nn], ncol = nv, nrow = dim(nn)[1])
       oz <- t(apply(XF==case, 1 , cumsum))
+      # oz <- t(apply_cumsum_col(t(XF == case)))
       oznz <- oz/nz
       OozNnz <- (O-oz)/(N-nz)
       OozNnz.1 <- 1 - OozNnz
@@ -534,5 +534,4 @@ scan.test <- function(formula = NULL, data = NULL, fx = NULL, coor = NULL, case 
 
   class(scan) <- c("htest","scantest")
   scan
- # })
 }

@@ -105,9 +105,9 @@
 #'
 #' A simple features object square regular lattice 16x16.
 #'
-#' @format A simple features dataframe with 256 rows and 1 columns:
+#' @format A simple features dataframe with 256 rows and 1 column:
 #' \describe{
-#'   \item{BW}{A factor with . Black and White}
+#'   \item{BW}{A factor with two levels: Black and White}
 #' }
 #'
 #' @docType data
@@ -120,6 +120,9 @@
 #'   \itemize{
 #'     \item Boots, B. (2003). Developing local measures of spatial association
 #'     for categorical data. Journal of Geographical Systems, 5(2), 139-160.
+#'     \item Upton G, Fingleton B (1985) Spatial data analysis by example.
+#'     Volume 1: Point pattern and quantitative data.
+#'     John Wiley & Sons, Chichester
 #'   }
 #' @examples
 #'  data(Boots.sf)

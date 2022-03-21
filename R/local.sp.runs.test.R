@@ -5,10 +5,9 @@
 #' @param formula An (optional) formula with the factor included in \code{data}
 #' @param data An (optional) data frame or a sf object containing the variable to testing for.
 #' @param fx An (optional) factor of observations with the same length as the neighbors list in \code{listw}
-#' @param listw A neighborhood list (type knn or nb) or a W matrix that indicates the order of the elements in each  $m_i-environment$
-#' (for example of inverse distance). To calculate the number of rinss in each $m_i-environment$, an order must
-#' be established, for example from the nearest neighbor to the furthest one.
-#' @param fx a factor (optional).
+#' @param listw A neighbourhood list (an object type knn or nb) or a W matrix that indicates the order of the elements in each  $m_i-environment$
+#' (for example of inverse distance). To calculate the number of runs in each $m_i-environment$, an order must
+#' be established, for example from the nearest neighbour to the furthest one.
 #' @param alternative a character string specifying the alternative hypothesis, must be one
 #' of "two.sided" (default), "greater" or "less".
 #' @param distr a character string specifying the distribution "asymptotic" (default) or "bootstrap"
@@ -20,8 +19,8 @@
 #' control = list())
 #' @details The object \code{listw} can be the class:
 #' \tabular{ll}{
-#'     \code{knn} \tab Objetcs of the class knn that consider the neighbors in order of proximity.\cr
-#'     \code{nb} \tab If the neighbors are obtained from an sf object, the code internally
+#'     \code{knn} \tab Objects of the class knn that consider the neighbours in order of proximity.\cr
+#'     \code{nb} \tab If the neighbours are obtained from an sf object, the code internally
 #'     will call the function \code{\link{nb2nb_order}} it will order them in order of proximity of the centroids.\cr
 #'     \code{matrix} \tab
 #'     If a object of matrix class based in the inverse of the distance in introduced as argument, the function \code{\link{nb2nb_order}} will
@@ -32,15 +31,15 @@
 #'   \code{local.SRQ} A matrix with \cr
 #'   \tabular{ll}{
 #'     \code{runs.i} \tab number of runs in the localization 'i'. \cr
-#'     \code{E.i} \tab expectation of local local runs statistic. \cr
-#'     \code{Sd.i} \tab standard deviate of local runs statistic. \cr
+#'     \code{E.i} \tab expectation of local runs statistic in the localization 'i'. \cr
+#'     \code{Sd.i} \tab standard deviate of local runs statistic in the localization 'i'. \cr
 #'     \code{z.value} \tab standard value of local runs statistic (only for asymptotic version). \cr
 #'     \code{p.value} \tab p-value of local local runs statistic (only for asymptotic version). \cr
 #'     \code{zseudo.value} \tab standard value of local runs statistic (only for boots version). \cr
-#'     \code{pseudo.value} \tab p-value of local local runs statistic (only for boots version). \cr
+#'     \code{pseudo.value} \tab p-value of local runs statistic (only for boots version). \cr
 #'     }
 #'     \code{MeanNeig} Mean of run.i \cr
-#'     \code{MaxNeig} Max of run.i  \cr
+#'     \code{MaxNeig} Maximum of run.i  \cr
 #'     \code{listw} the object \code{listw} \cr
 #'     \code{alternative} a character string describing the alternative hypothesis \cr
 #'
