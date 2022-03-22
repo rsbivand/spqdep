@@ -131,13 +131,7 @@ summary(qmap[[1]]$mh)
 
 }
 \references{
-\itemize{
-    \item Ruiz M, López FA and A Páez (2011).
-    \emph{Comparison of Thematic Maps Using Symbolic Entropy}.
-      International Journal of Geographical Information Science, 26, 413-439.
-    \item Ruiz, M., López, FA, and Páez, A. (2010).
-    \emph{Testing for spatial association of qualitative data using symbolic dynamics}. Journal of Geographical Systems, 12(3), 281-309.0.
-  }
+
 }
 \seealso{
 \code{\link{dgp.spq}}, \code{\link{m.surround}}, \code{\link{Q.test}}

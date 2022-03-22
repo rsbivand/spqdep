@@ -35,7 +35,7 @@ for each observation.
 }
 \references{
 \itemize{
-    \item Paez, A., Ruiz, M, Lopez, F. & Logan, J. (2012). \emph{Measuring Ethnic Clustering
+    \item Paez, A., Ruiz, M., Lopez, F. & Logan, J. (2012). \emph{Measuring Ethnic Clustering
      and Exposure with the Q Statistic: An Exploratory Analysis of Irish, Germans, and Yankees in 1880 Newark.}. Annals of the Association of American Geographers.
   }
 }

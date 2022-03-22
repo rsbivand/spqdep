@@ -15,14 +15,14 @@ cr_symb(k = k, m = m)
 A list with two types of symbols. Permutation and Combinations-totals
  \tabular{ll}{
     \code{p_symb} \tab Matrix with symbols (permutations)\cr
-    \code{c_symb} \tab  Matrix with symbols (combinations)) c \cr
+    \code{c_symb} \tab  Matrix with symbols (combinations)\cr
     }
 }
 \description{
-This function obtains symbols ...
+This function obtains the set of symbols to get the Q-statistic
 }
 \details{
-Aquí Antonio escribe una linda historia ...
+...
 }
 \examples{
 

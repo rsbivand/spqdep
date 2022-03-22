@@ -27,12 +27,12 @@
 No return value, called for side effects
 }
 \description{
-A function to plots the m-surround give an object of the
+A function to plots the m-surrounds give an object of the
 class \emph{m_surr} obtain with the code \code{m.surround}.\cr
- The \code{plot()} function allows the user view the configuration of the m-surrounding.\cr
+ The \code{plot()} function allows the user view the configuration of the m-surroundings.\cr
  The argument \code{type} select the type o visualization. \cr
  The \code{print()} print the matrix of the m-surrounding. \cr.
- The \code{summary} give information about the characteristics of th m-surrounding \cr.
+ The \code{summary} give information about the characteristics of the m-surroundings. \cr.
 }
 \examples{
 

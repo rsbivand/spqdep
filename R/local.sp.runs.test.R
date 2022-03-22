@@ -12,19 +12,22 @@
 #' of "two.sided" (default), "greater" or "less".
 #' @param distr a character string specifying the distribution "asymptotic" (default) or "bootstrap"
 #' @param nsim Default value is NULL to obtain the asymptotic version of the local test.
-#' To obtain the boots version the number of permutations to obtain the statistics.
+#' For the bootstrap version nsim is the number of permutations to obtain the pseudo-value.
 #' @param control Optional argument. See Control Argument section.
 #' @usage local.sp.runs.test(formula = NULL, data = NULL, fx = NULL,
 #' distr = "asymptotic", listw = listw, alternative = "two.sided" , nsim = NULL,
 #' control = list())
 #' @details The object \code{listw} can be the class:
-#' \tabular{ll}{
-#'     \code{knn} \tab Objects of the class knn that consider the neighbours in order of proximity.\cr
-#'     \code{nb} \tab If the neighbours are obtained from an sf object, the code internally
-#'     will call the function \code{\link{nb2nb_order}} it will order them in order of proximity of the centroids.\cr
-#'     \code{matrix} \tab
-#'     If a object of matrix class based in the inverse of the distance in introduced as argument, the function \code{\link{nb2nb_order}} will
-#'     also be called internally to transform the object the class matrix to a matrix of the class nb with ordered neighbors. \cr
+#' \itemize{
+#'     \item{\code{knn}:} {Objects of the class knn that consider the neighbours in
+#'     order of proximity.}
+#'     \item {\code{nb}:} {If the neighbours are obtained from an sf object, the code internally
+#'     will call the function \code{\link{nb2nb_order}} it will order them in order
+#'     of proximity of the centroids.}
+#'     \item {\code{matrix}:} {If a object of matrix class based in the inverse of
+#'     the distance in introduced as argument, the function \code{\link{nb2nb_order}} will
+#'     also be called internally to transform the object the class matrix to a matrix of the
+#'      class nb with ordered neighbours.}
 #'     }
 #' @return The output is an object of the class localsrq \cr
 #' \cr
@@ -192,7 +195,8 @@ local.sp.runs.test <-  function(formula = NULL, data = NULL, fx = NULL, distr = 
 
   alternative <- match.arg(alternative, c("greater", "less", "two.sided"))
   distr <- match.arg(distr, c("asymptotic", "bootstrap"))
-
+  ###
+  if (distr =="bootstrap" & is.null(nsim) == TRUE)stop("Include number of permutations using the argument nsim" )
   ################################################
   # Solo admite matrices knn, nb o matrix
   if (!inherits(listw, "knn")){
@@ -401,7 +405,7 @@ local <- list(local.SRQP = local.SRQP, LSRQP = LSRQP, nsim = nsim , MeanNeig=sum
 }
 else
 {
-local <- list(local.SRQ = local.SRQ, MeanNeig = sum(lnnb)/n, listw = listw,
+local <- list(local.SRQ = local.SRQ, nsim = nsim, MeanNeig = sum(lnnb)/n, listw = listw,
               MaxNeig = MaxNeig, alternative = alternative, sf = sf)
 }
 class(local) <- "localsrq"

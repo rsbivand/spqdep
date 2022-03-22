@@ -48,6 +48,30 @@ An list of two object of the class \code{htest}. Each element of the list return
 \description{
 A function to compute Q test for spatial qualitative data
 }
+\details{
+Let \eqn{\{X_s\}_{s \in R}} be a discrete spatial process and m be a fixed embedding
+dimension. The statistic Q testing the null hypothesis:\cr
+\cr
+\eqn{H_0:\{X_s\}_{s \in R}} is spatially independent, against any other alternative.\cr
+\cr
+For a fixed \eqn{m \geq 2}, the relative frequency of symbols can be used to define the symbolic
+entropy of the spatial process as the Shanon entropy of the distinct symbols:\cr
+\deqn{h(m) = - \sum_j p_{\sigma_j}ln(p_{\sigma_j})}
+where
+\deqn{p_{\sigma_j}={ n_{\sigma_j} \over R}}
+with \eqn{n_{\sigma_j}} is simply the
+number of times that the symbol \eqn{\sigma_j} is observed and R the number of
+symbolized locations.
+The entropy function is bounded between \eqn{0 < h (m) \leq \eta}.\cr
+
+
+The Q statistic is essentially a likelihood ratio test between the symbolic entropy
+of the observed pattern and the entropy of the system under the null hypothesis
+of a random spatial sequence:
+ \deqn{Q(m)=2R(\eta-h(m))}
+with \eqn{\eta = ln(k^m)}. The statistic is asymptotically \eqn{\chi^2} distributed
+with degrees of freedom equal to the number of symbols minus one.\cr
+}
 \section{Control arguments}{
 
 \describe{
@@ -58,13 +82,36 @@ great circle distances are computed (see sf::st_distance())}
 \item{dtmaxabs}{Delete degenerate surrounding based on the absolute distance between observations.}
 \item{dtmaxpc}{A value between 0 and 1. Delete degenerate surrounding based on the distance. Delete m-surrounding when the maximum distance between observation
 is upper than k percentage of maximum distance between anywhere observation.}
-\item{dtmaxknn}{A integer value 'k'. Delete degenerate surrounding based on the near neighborhood criteria. Delete m-surrounding
-is a element of the m-surrounding is not include in the set of k near neighborhood of the first element}
+\item{dtmaxknn}{A integer value 'k'. Delete degenerate surrounding based on the near neighbourhood criteria. Delete m-surrounding
+is a element of the m-surrounding is not include in the set of k near neighbourhood of the first element}
 \item{nsim}{number of simulations for get the Monte Carlo distribution.
  Default = 999}
 \item{seedinit}{seed to select the initial element to star
 the algorithm to get compute the m-surroundings or to start the simulation}
 }
+}
+
+\section{Standard-Permutation vs Equivalent-Combination Symbols}{
+
+The symbolization protocol proposed by Ruiz et al. (2010) - call these
+Standard-Permutation Symbols — contains a large amount of topological information
+regarding the units of analysis, including proximity and direction.
+In this sense, the protocol is fairly general. On the other hand, it is easy to see
+that the combinatorial possibilities can very quickly become unmanageable.
+ For a process with k = 3 outcomes and m = 5, the number of symbols becomes
+ \eqn{3^5 = 243}; for k = 6 and m = 4 it is  \eqn{6^4 = 1,296}. Depending on the number
+ of observations N, the explosion in the number of symbols can very rapidly consume
+ degrees of freedom for hypothesis testing, because as a rule of thumb
+ it is recommended that the number of symbolized locations be at least five times
+ the number of symbols used (e.g., \eqn{R \geq 5k^m}), and R will usually be a fraction of N.\cr
+ As an alternative, we propose a symbolization protocol that sacrifices
+ some amount of topological detail for conciseness. The alternative is based
+ on the standard scheme; however, instead of retaining proximity and
+ direction relationships, it maintains only the total number of occurrences
+ of each outcome in an m-surrounding. We call these Equivalent-Combination Symbols.
+ Because order in the sequence is not considered in this protocol, instead of a
+ permutation with repetition, the number of symbols reflects a combination with
+ repetition. \cr
 }
 
 \examples{
@@ -167,9 +214,9 @@ plot(q.test)
 }
 \author{
 \tabular{ll}{
-  Fernando López  \tab \email{fernando.lopez@upct.es} \cr
-  Román Mínguez  \tab \email{roman.minguez@uclm.es} \cr
-  Antonio Páez \tab \email{paezha@gmail.com} \cr
-  Manuel Ruiz \tab \email{manuel.ruiz@upct.es} \cr
+Fernando López  \tab \email{fernando.lopez@upct.es} \cr
+Román Mínguez  \tab \email{roman.minguez@uclm.es} \cr
+Antonio Páez \tab \email{paezha@gmail.com} \cr
+Manuel Ruiz \tab \email{manuel.ruiz@upct.es} \cr
   }
 }

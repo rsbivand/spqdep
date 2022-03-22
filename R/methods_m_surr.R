@@ -1,11 +1,11 @@
 #' @name methods_m_surr
 #' @title Method for class m_surr
-#' @description A function to plots the m-surround give an object of the
+#' @description A function to plots the m-surrounds give an object of the
 #' class \emph{m_surr} obtain with the code \code{m.surround}.\cr
-#'  The \code{plot()} function allows the user view the configuration of the m-surrounding.\cr
+#'  The \code{plot()} function allows the user view the configuration of the m-surroundings.\cr
 #'  The argument \code{type} select the type o visualization. \cr
 #'  The \code{print()} print the matrix of the m-surrounding. \cr.
-#'  The \code{summary} give information about the characteristics of th m-surrounding \cr.
+#'  The \code{summary} give information about the characteristics of the m-surroundings. \cr.
 #'
 #' @param x object of class \emph{m_surr}
 #' @param type numeric. 1 (default) to get the plot with igraph.

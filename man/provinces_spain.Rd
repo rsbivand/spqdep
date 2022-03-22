@@ -43,8 +43,8 @@ A simple features object with the provinces in Spain and selected demographic an
 }
 \references{
 \itemize{
-    \item Paez, A., Lopez, F. A., Menezes, T., Cavalcanti, R., & Pitta, M. (2020). \emph{A Spatio‐Temporal Analysis of
-     the Environmental Correlates of COVID‐19 Incidence in Spain.}. Geographical Analysis. 53(3) 397-421
+    \item Paez, A., Lopez, F. A., Menezes, T., Cavalcanti, R., & Pitta, M. (2020). A Spatio‐Temporal Analysis of
+     the Environmental Correlates of COVID‐19 Incidence in Spain. \emph{Geographical Analysis}. 53(3) 397-421
   }
 }
 \keyword{datasets}

@@ -1,7 +1,7 @@
 #' Selection of fast food restaurants in Toronto
 #'
 #' A simple feature (sf) dataframe containing the locations of a selection of fast food restaurants
-#' in Toronto (data are from 2008). The data are projected using EPSG: 26917 (WGS 84/UTM Zone 17N).
+#' in the city of Toronto, Canada (data are from 2008). The data are projected using EPSG: 26917 (WGS 84/UTM Zone 17N).
 #'
 #' @docType data
 #'
@@ -11,7 +11,8 @@
 #'
 #' \describe{
 #'   \item{ID}{Unique identifier of record.}
-#'   \item{Class}{Factor with 3 types of fast food restaurants: Chicken, Hamburger, Pizza, Sub.}
+#'   \item{Class}{Factor with 3 types of fast food restaurants:
+#'   [P]izza, [S]andwich, and [H]amburger}
 #'   \item{geometry}{Geometry of simple features.}
 #' }
 #'
@@ -52,7 +53,7 @@
 #'
 #' @references
 #'   \itemize{
-#'     \item Paez, A., Ruiz, M, Lopez, F. & Logan, J. (2012). \emph{Measuring Ethnic Clustering
+#'     \item Paez, A., Ruiz, M., Lopez, F. & Logan, J. (2012). \emph{Measuring Ethnic Clustering
 #'      and Exposure with the Q Statistic: An Exploratory Analysis of Irish, Germans, and Yankees in 1880 Newark.}. Annals of the Association of American Geographers.
 #'   }
 #' @examples
@@ -93,8 +94,8 @@
 #'
 #' @references
 #'   \itemize{
-#'     \item Paez, A., Lopez, F. A., Menezes, T., Cavalcanti, R., & Pitta, M. (2020). \emph{A Spatio‐Temporal Analysis of
-#'      the Environmental Correlates of COVID‐19 Incidence in Spain.}. Geographical Analysis. 53(3) 397-421
+#'     \item Paez, A., Lopez, F. A., Menezes, T., Cavalcanti, R., & Pitta, M. (2020). A Spatio‐Temporal Analysis of
+#'      the Environmental Correlates of COVID‐19 Incidence in Spain. \emph{Geographical Analysis}. 53(3) 397-421
 #'   }
 #' @examples
 #'  data(provinces_spain)

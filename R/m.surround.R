@@ -33,27 +33,27 @@
 #'     }
 #'
 #' @section Control arguments:
-#'   \tabular{ll}{
-#'     \code{initobs} \tab Initial observation to begin the
-#'       m-surrounding process. Default = 1. \cr
-#'     \code{dtmaxabs} \tab Threshold of distance (in absolute
+#'   \itemize{
+#'     \item {\code{initobs}:} {Initial observation to begin the
+#'       m-surrounding process. Default = 1.}
+#'     \item {\code{dtmaxabs}:} {Threshold of distance (in absolute
 #'       value) to prune the m-surroundings. Any m-surrounding
 #'       exceeding the threshold is excluded.
 #'       If \code{dtmaxabs} = 0 there is no exclusion of m-surroundings.
-#'       Default = 0. \cr
-#'     \code{dtmaxpc} \tab Threshold of distance (as a percentage
+#'       Default = 0.}
+#'     \item {\code{dtmaxpc}:} {Threshold of distance (as a percentage
 #'       of the maximum distance between observations) to prune the m-surroundings. Any m-surrounding
 #'       exceeding the threshold is excluded.
 #'       Example if \code{dtmaxpc} = 0.1 the m-surrounding exceeding
 #'       the 10% of the maximum distance between observations are excluded.
 #'       If \code{dtmaxpc} = 0 there is no exclusion of m-surroundings.
-#'       Default = 0. \cr
-#'     \code{dtmaxknn} \tab Eliminate m-surroundings where some
+#'       Default = 0.}
+#'     \item {\code{dtmaxknn}:} {Eliminate m-surroundings where some
 #'       of the elements are not among the closest
 #'       knn (k-nearest-neighbors).
 #'       Example, if \code{dtmaxknn} = 4 exclude m-surroundings
 #'       where some of the elements are not between the 4 closest.
-#'       Default \code{dtmaxknn} = 0 (no exclusion) \cr
+#'       Default \code{dtmaxknn} = 0 (no exclusion)}
 #'    }
 #'
 #' @author
@@ -65,8 +65,8 @@
 #'   }
 #' @references
 #'   \itemize{
-#'     \item Ruiz M, López FA, A Páez. (2010). \emph{Testing for spatial association of qualitative
-#'     data using symbolic dynamics}. Journal of Geographical Systems. 12 (3) 281-309
+#'     \item Ruiz M, López FA, A Páez. (2010). Testing for spatial association of qualitative
+#'     data using symbolic dynamics. \emph{Journal of Geographical Systems}. 12 (3) 281-309
 #'   }
 #' @export
 #' @examples

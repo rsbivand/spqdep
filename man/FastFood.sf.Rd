@@ -9,7 +9,8 @@ A simple features object with 614 rows and 3 variables:
 
 \describe{
   \item{ID}{Unique identifier of record.}
-  \item{Class}{Factor with 3 types of fast food restaurants: Chicken, Hamburger, Pizza, Sub.}
+  \item{Class}{Factor with 3 types of fast food restaurants:
+  [P]izza, [S]andwich, and [H]amburger}
   \item{geometry}{Geometry of simple features.}
 }
 }
@@ -22,7 +23,7 @@ data(FastFood.sf)
 }
 \description{
 A simple feature (sf) dataframe containing the locations of a selection of fast food restaurants
-in Toronto (data are from 2008). The data are projected using EPSG: 26917 (WGS 84/UTM Zone 17N).
+in the city of Toronto, Canada (data are from 2008). The data are projected using EPSG: 26917 (WGS 84/UTM Zone 17N).
 }
 \references{
 \itemize{

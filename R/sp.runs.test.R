@@ -18,6 +18,7 @@
 #' @usage sp.runs.test(formula = NULL, data = NULL, fx = NULL,
 #' listw = listw, alternative = "two.sided" ,
 #' distr = "asymptotic", nsim = NULL,control = list())
+#'
 #' @details The order of the neighbourhoods (\eqn{m_i-environments}) is critical to obtain the test. \cr
 #' To obtain the number of runs observed in each \eqn{m_i-environment}, each element must be associated
 #' with a set of neighbours ordered by proximity.

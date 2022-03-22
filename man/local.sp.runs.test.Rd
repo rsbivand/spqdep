@@ -25,7 +25,7 @@ be established, for example from the nearest neighbour to the furthest one.}
 of "two.sided" (default), "greater" or "less".}
 
 \item{nsim}{Default value is NULL to obtain the asymptotic version of the local test.
-To obtain the boots version the number of permutations to obtain the statistics.}
+For the bootstrap version nsim is the number of permutations to obtain the pseudo-value.}
 
 \item{control}{Optional argument. See Control Argument section.}
 }
@@ -52,13 +52,16 @@ This function calculates the local spatial runs tests for all localizations.
 }
 \details{
 The object \code{listw} can be the class:
-\tabular{ll}{
-    \code{knn} \tab Objects of the class knn that consider the neighbours in order of proximity.\cr
-    \code{nb} \tab If the neighbours are obtained from an sf object, the code internally
-    will call the function \code{\link{nb2nb_order}} it will order them in order of proximity of the centroids.\cr
-    \code{matrix} \tab
-    If a object of matrix class based in the inverse of the distance in introduced as argument, the function \code{\link{nb2nb_order}} will
-    also be called internally to transform the object the class matrix to a matrix of the class nb with ordered neighbors. \cr
+\itemize{
+    \item{\code{knn}:} {Objects of the class knn that consider the neighbours in
+    order of proximity.}
+    \item {\code{nb}:} {If the neighbours are obtained from an sf object, the code internally
+    will call the function \code{\link{nb2nb_order}} it will order them in order
+    of proximity of the centroids.}
+    \item {\code{matrix}:} {If a object of matrix class based in the inverse of
+    the distance in introduced as argument, the function \code{\link{nb2nb_order}} will
+    also be called internally to transform the object the class matrix to a matrix of the
+     class nb with ordered neighbours.}
     }
 }
 \section{Control arguments}{
