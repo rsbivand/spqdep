@@ -8,7 +8,7 @@ spqdata
 <!-- badges: start -->
 <!-- Institutional logo: save in folder `images` -->
 
-<img src="man/figures/spqdep.png" align="right" width=300 />
+<img src="man/figures/spqdep.png" align="right" width=200 />
 <!-- badges: end -->
 
 <!-- badges: start -->
