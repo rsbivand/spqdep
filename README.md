@@ -6,6 +6,12 @@ spqdata
 # spqdata
 
 <!-- badges: start -->
+<!-- Institutional logo: save in folder `images` -->
+
+<img src="man/figures/spqdep.png" align="right" width=300 />
+<!-- badges: end -->
+
+<!-- badges: start -->
 
 [![R-CMD-check](https://github.com/f8l5h9/spqdep/workflows/R-CMD-check/badge.svg)](https://github.com/f8l5h9/spqdep/actions)
 \[![CRAN status](https://www.r-pkg.org/badges/version-ago/spqdep)

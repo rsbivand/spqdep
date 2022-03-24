@@ -30,7 +30,7 @@
 #               h_fill="orange",
 #               h_size = 2,
 #               h_color = "orange",
-#               url = "www.enrdados.net",
+#               url = "https://github.com/f8l5h9/spqdep",
 #               spotlight=F)
 # plot(st)
 #

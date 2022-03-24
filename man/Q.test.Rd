@@ -63,7 +63,6 @@ number of times that the symbol \eqn{\sigma_j} is observed and R the number of
 symbolized locations.
 The entropy function is bounded between \eqn{0 < h (m) \leq \eta}.\cr
 
-
 The Q statistic is essentially a likelihood ratio test between the symbolic entropy
 of the observed pattern and the entropy of the system under the null hypothesis
 of a random spatial sequence:
@@ -103,6 +102,7 @@ that the combinatorial possibilities can very quickly become unmanageable.
  degrees of freedom for hypothesis testing, because as a rule of thumb
  it is recommended that the number of symbolized locations be at least five times
  the number of symbols used (e.g., \eqn{R \geq 5k^m}), and R will usually be a fraction of N.\cr
+
  As an alternative, we propose a symbolization protocol that sacrifices
  some amount of topological detail for conciseness. The alternative is based
  on the standard scheme; however, instead of retaining proximity and
@@ -111,6 +111,21 @@ that the combinatorial possibilities can very quickly become unmanageable.
  Because order in the sequence is not considered in this protocol, instead of a
  permutation with repetition, the number of symbols reflects a combination with
  repetition. \cr
+}
+
+\section{Selection of m-surrounding with Controlled Degree of Overlapping}{
+
+ To select S locations for the analysis, coordinates are selected such that
+ for any two coordinates \eqn{s_i} , \eqn{s_j} the number of overlapping nearest
+ neighbours of \eqn{s_i} and \eqn{s_j} are at most r. The set S, which is a subset of all the
+ observations N, is defined recursively as follows. First choose a location \eqn{s_0} at random and fix an integer r
+ with \eqn{0 \leq r < m}. The integer r is the degree of overlap, the maximum number of observations that contiguous
+ m-surroundings are allowed to have in common.\cr
+ Let \eqn{ \{s_1^0, s_2^0,...,s_{m-1}^0 \}} be the set of nearest neighbours
+ to \eqn{s_0}, where the \eqn{s_i^0} are ordered by distance to \eqn{s_0}, or angle in the case of ties.
+ Let us call \eqn{s_1 = s_{m-r-1}^0} and define . Take the set of
+ nearest neighbours to \eqn{s_1}, namely, in the
+ set of locations. \cr
 }
 
 \examples{
