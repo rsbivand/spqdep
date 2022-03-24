@@ -1,7 +1,7 @@
 #' @name Q.test
 #' @rdname Q.test
-#' @title A function to compute Q test for spatial qualitative data using
-#'        asymptotic distribution
+#' @title A function to compute Q test for spatial qualitative data
+#' @description A function to compute Q test for spatial qualitative data.
 #' @usage Q.test(formula = NULL, data = NULL, na.action,
 #' fx = NULL, coor = NULL, m = 3, r = 1, distr = "asymptotic",
 #' control = list())
@@ -11,13 +11,13 @@
 #'             variable(s) to be tested.
 #' @param fx  a factor  or a matrix of factors in columns
 #' @param na.action action with NA values
-#' @param m length of m-surrounding (default = 3).
-#' @param r maximum overlapping between any two m-surroundings (default = 1).
 #' @param distr character. Distribution type "asymptotic" (default) or "mc".
+#' @param m length of m-surrounding (default = 3).
+#' @param r only for asimtotic distribution. Maximum overlapping between any two m-surroundings (default = 1).
 #' @param coor (optional) a 2xN vector with spatial coordinates.
 #'             Used when *data* is not a spatial object
 #' @param control Optional argument. See Control Argument section.
-#' @description A function to compute Q test for spatial qualitative data
+#'
 #' @return An list of two object of the class \code{htest}. Each element of the list return the:
 #'   \tabular{ll}{
 #'     \code{data.name} \tab a character string giving the names of the data.\cr

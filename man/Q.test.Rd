@@ -2,8 +2,7 @@
 % Please edit documentation in R/Q.test.R
 \name{Q.test}
 \alias{Q.test}
-\title{A function to compute Q test for spatial qualitative data using
-       asymptotic distribution}
+\title{A function to compute Q test for spatial qualitative data}
 \usage{
 Q.test(formula = NULL, data = NULL, na.action,
 fx = NULL, coor = NULL, m = 3, r = 1, distr = "asymptotic",
@@ -25,7 +24,7 @@ Used when *data* is not a spatial object}
 
 \item{m}{length of m-surrounding (default = 3).}
 
-\item{r}{maximum overlapping between any two m-surroundings (default = 1).}
+\item{r}{only for asimtotic distribution. Maximum overlapping between any two m-surroundings (default = 1).}
 
 \item{distr}{character. Distribution type "asymptotic" (default) or "mc".}
 
@@ -46,7 +45,7 @@ An list of two object of the class \code{htest}. Each element of the list return
     }
 }
 \description{
-A function to compute Q test for spatial qualitative data
+A function to compute Q test for spatial qualitative data.
 }
 \details{
 Let \eqn{\{X_s\}_{s \in R}} be a discrete spatial process and m be a fixed embedding
