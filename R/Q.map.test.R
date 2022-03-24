@@ -57,7 +57,7 @@
 #'     Comparison of Thematic Maps Using Symbolic Entropy.
 #'       \emph{International Journal of Geographical Information Science}, 26, 413-439.
 #'     \item Ruiz, M., López, FA, and Páez, A. (2010).
-#'     \emph{Testing for spatial association of qualitative data using symbolic dynamics.
+#'     Testing for spatial association of qualitative data using symbolic dynamics.
 #'     \emph{Journal of Geographical Systems}, 12(3), 281-309.0.
 #'   }
 #'

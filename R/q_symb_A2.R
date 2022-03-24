@@ -7,6 +7,7 @@ q_symb_A2 <- function(data, ms, symb) {
     fx <- as.factor(fx)
     warning("variable is not factor")
   }
+
   R <- nrow(ms)  # R: number of symbolized locations
   m <- ncol(ms)  # m: size of m-surrounding
   N <- length(fx)  # N: number of observations
@@ -14,11 +15,13 @@ q_symb_A2 <- function(data, ms, symb) {
   pk <- summary(fx) / length(fx)
   n <- nrow(symb$p_symb)  # n: number of standard permutation symbols
   # Collapse the symbols to characters to then use as factors
-  PSymb <- paste(symb$p_symb[, 1])
+
+  PSymb <- paste0(symb$p_symb[, 1])
   for (i in 2:m) {
     PSymb <- paste(PSymb, symb$p_symb[, i])
   }
   PSymb <- as.factor(PSymb)
+
   # Standard symbols in equivalents by combination-totals
   p_symbi <- matrix(rep(0, n * k), ncol = k)
   for (i in 1:n) {
@@ -27,7 +30,7 @@ q_symb_A2 <- function(data, ms, symb) {
     }
   }
   # Collapse the symbols to characters to then use as factors
-  PSymbi <- paste(p_symbi[, 1])
+  PSymbi <- paste0(p_symbi[, 1])
   for (i in 2:k) {
     PSymbi <- paste(PSymbi, p_symbi[, i])
   }
@@ -36,6 +39,7 @@ q_symb_A2 <- function(data, ms, symb) {
   CSymb <- as.factor(levels(PSymbi))
   # Evaluate the probabilities of each symbol under the null, standard
   # permutation symbols.
+
   qp_symb <- rep(0, n)
   for (i in 1:n) {
     qp_symb[i] <- 1
@@ -43,7 +47,7 @@ q_symb_A2 <- function(data, ms, symb) {
       qp_symb[i] <- qp_symb[i] * pk[symb$p_symb[i, j]]  # frequency of symbols, is the joint probability of classes in symbols
     }
   }
-  names(qp_symb) <- PSymb
+
   # Expected frequency of standard permutation symbols under the null
   sfp_0 <- R * qp_symb  # The probability of the symbol under the null times the number of symbolized locations
   # Symbolize locations
@@ -55,19 +59,26 @@ q_symb_A2 <- function(data, ms, symb) {
   Zpf <- as.factor(Zpf)
   efp_symb <- summary(Zpf)
   nZpf <- length(efp_symb)
+
   # Check levels in PSymb missing in Zpf
   if (nZpf < n) {
-    indxmislevZpf <- !(levels(PSymb) %in% levels(Zpf))
-    mislevZpf <- levels(PSymb)[indxmislevZpf]
-    efp_symb <- c(efp_symb, rep(0, length(mislevZpf)))
-    names(efp_symb)[(nZpf+1):(nZpf+length(mislevZpf))] <- mislevZpf
+    kk <- rep(0,n)
+    kk[(levels(PSymb) %in% levels(Zpf))] <- efp_symb
+    names(kk) <- levels(PSymb)
+    efp_symb <- kk
+    # indxmislevZpf <- !(levels(PSymb) %in% levels(Zpf))
+    # mislevZpf <- levels(PSymb)[indxmislevZpf]
+    # efp_symb <- c(efp_symb, rep(0, length(mislevZpf)))
+    # names(efp_symb)[(nZpf+1):(nZpf+length(mislevZpf))] <- mislevZpf
   }
+
   # Evaluate the probabilities of each symbol under the null, combination
   # symbols.
   qc_symb <- rep(0, nc_symb)
   for (i in 1:nc_symb) {
     qc_symb[i] = sum((PSymbi == CSymb[i]) * qp_symb)  #frequency of combination symbols
   }
+
   names(qc_symb) <- CSymb
   # Expected frequency of standard permutation symbols under the null
   sfc_0 <- R * qc_symb  #The probability of the symbol under the null times the number of symbolized locations
@@ -78,6 +89,7 @@ q_symb_A2 <- function(data, ms, symb) {
       Zc[i, j] <- sum(Zp[i, ] == j)
     }
   }
+
   Zcf <- as.character(Zc[, 1])
   for (i in 2:k) {
     Zcf <- paste(Zcf, as.character(Zc[, i]))
@@ -86,19 +98,20 @@ q_symb_A2 <- function(data, ms, symb) {
   efc_symb <- summary(Zcf)
   nZcf <- length(efc_symb)
   # Check levels in CSymb missing in Zcf
+
   if (nZcf < nc_symb) {
-    indxmislevZcf <- !(levels(CSymb) %in% levels(Zcf))
-    mislevZcf <- levels(CSymb)[indxmislevZcf]
-    efc_symb <- c(efc_symb, rep(0, length(mislevZcf)))
-    names(efc_symb)[(nZcf+1):(nZcf+length(mislevZcf))] <- mislevZcf
+    kk <- rep(0,nc_symb)
+    kk[(levels(CSymb) %in% levels(Zcf))] <- efc_symb
+    names(kk) <- levels(CSymb)
+    efc_symb <- kk
+    # indxmislevZcf <- !(levels(CSymb) %in% levels(Zcf))
+    # mislevZcf <- levels(CSymb)[indxmislevZcf]
+    # efc_symb <- c(efc_symb, rep(0, length(mislevZcf)))
+    # names(efc_symb)[(nZcf+1):(nZcf+length(mislevZcf))] <- mislevZcf
   }
   # Calculate statistics With standard permutations symbols
-  lnp <- rep(0, n)
-  for (i in 1:n) {
-    if (efp_symb[i] != 0) {
-      lnp[i] <- log(efp_symb[i]/R)
-    }
-  }
+  lnp <- log(efp_symb/R)
+  lnp[lnp==-Inf] <- 0
   names(lnp) <- PSymb
   hmp <- -sum((efp_symb/R) * lnp)  #Empirical
   hmp_0 <- sum((efp_symb/R) * log(qp_symb))  #Expected under the null
@@ -111,9 +124,11 @@ q_symb_A2 <- function(data, ms, symb) {
     }
   }
   names(lnc) <- CSymb
+
   hmc <- -sum((efc_symb/R) * lnc)  #Empirical
   hmc_0 <- sum((efc_symb/R) * log(qc_symb))  #Expected under the null
   qc <- -2 * R * sum(hmc + hmc_0)  # Likelihood ratio statistic for combinations-totals symbols
+
   results <- list(qp, qc, efp_symb, efc_symb,
                   qp_symb, qc_symb,
                   PSymb, CSymb)

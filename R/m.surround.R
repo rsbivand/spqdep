@@ -161,7 +161,7 @@ m.surround <- function(x , m, r = 1, distance = "Euclidean", control = list()) {
 
   if (!is.null(r)) {
     if (r < 1 || r > (m-1))
-      stop("overlapping degree must be between 1 and m-1")
+      warning("overlapping degree must be between 1 and m-1")
   }
 
   # Transform matrix coordinates into SpatialPoints class

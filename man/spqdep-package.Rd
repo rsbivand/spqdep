@@ -3,7 +3,7 @@
 \docType{package}
 \name{spqdep-package}
 \alias{spqdep-package}
-\title{Testing for Spatial Structure of Qualitative Data in Cross Section.}
+\title{Testing for Spatial Dependence of Qualitative Data in Cross Section.}
 \description{
 \pkg{spqdep} offers the user a collection of functions to testing for spatial independence of categorical cross-section datasets.
 }

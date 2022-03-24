@@ -109,12 +109,12 @@
 #' @examples
 #'
 #' # Case 1: With coordinates
-#' N <- 100
+#' N <- 200
 #' cx <- runif(N)
 #' cy <- runif(N)
 #' coor <- cbind(cx,cy)
 #' p <- c(1/6,3/6,2/6)
-#' rho = 0.5
+#' rho = 0.3
 #' listw <- spdep::nb2listw(spdep::knn2nb(spdep::knearneigh(cbind(cx,cy), k = 4)))
 #' fx <- dgp.spq(list = listw, p = p, rho = rho)
 #' q.test <- Q.test(fx = fx, coor = coor, m = 3, r = 1)
@@ -122,7 +122,7 @@
 #' plot(q.test)
 #' print(q.test)
 #' \donttest{
-#' q.test.mc <- Q.test(fx = fx, coor = coor, m = 3, r = 1, distr = "mc")
+#' q.test.mc <- Q.test(fx = fx, coor = coor, m = 3, distr = "mc", control = list(nsim = 999))
 #' summary(q.test.mc)
 #' plot(q.test.mc)
 #' print(q.test.mc)
@@ -215,6 +215,11 @@ Q.test <- function(formula = NULL, data = NULL, na.action,
   dtmaxknn <- con$dtmaxknn
   cl <- match.call()
    # Lectura Datos.
+  if (!is.null(formula) && !is.null(coor) && !is.null(data)) {
+    data$Lat <- coor[,1]
+    data$Lon <- coor[,2]
+    data <- sf::st_as_sf(data, coords = c("Lat","Lon"))
+  }
   if (!is.null(formula) && !is.null(data)) {
     if (inherits(data, "Spatial")) data <- as(data, "sf")
     mfx <- model.frame(formula, data, na.action = na.action)
@@ -245,6 +250,7 @@ Q.test <- function(formula = NULL, data = NULL, na.action,
       mj <- m[j]
       symbi <- cr_symb(ki, mj)
       if (distr == "asymptotic") {
+
         rcut <- r[!(r > (mj - 1))]
         lms[[j]] <- vector(mode = "list",
                            length = length(rcut))
@@ -273,6 +279,7 @@ Q.test <- function(formula = NULL, data = NULL, na.action,
           #                        control = list(dtmaxabs = dtmaxabs,
           #                                       dtmaxpc = dtmaxpc))
           # } else stop("Value for argument 'typems' not valid.")
+
           qi <- q_symb_A2(xfi, lms[[j]][[h]]$ms, symbi)
           qi$qp_df <- nrow(symbi$p_symb) - 1
           qi$qc_df <- nrow(symbi$c_symb) - 1

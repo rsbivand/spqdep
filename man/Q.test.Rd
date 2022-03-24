@@ -117,12 +117,12 @@ that the combinatorial possibilities can very quickly become unmanageable.
 \examples{
 
 # Case 1: With coordinates
-N <- 100
+N <- 200
 cx <- runif(N)
 cy <- runif(N)
 coor <- cbind(cx,cy)
 p <- c(1/6,3/6,2/6)
-rho = 0.5
+rho = 0.3
 listw <- spdep::nb2listw(spdep::knn2nb(spdep::knearneigh(cbind(cx,cy), k = 4)))
 fx <- dgp.spq(list = listw, p = p, rho = rho)
 q.test <- Q.test(fx = fx, coor = coor, m = 3, r = 1)
@@ -130,7 +130,7 @@ summary(q.test)
 plot(q.test)
 print(q.test)
 \donttest{
-q.test.mc <- Q.test(fx = fx, coor = coor, m = 3, r = 1, distr = "mc")
+q.test.mc <- Q.test(fx = fx, coor = coor, m = 3, distr = "mc", control = list(nsim = 999))
 summary(q.test.mc)
 plot(q.test.mc)
 print(q.test.mc)

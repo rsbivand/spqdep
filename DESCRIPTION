@@ -13,7 +13,7 @@ Authors@R:
           person("Manuel", "Ruiz", email = "manuel.ruiz@upct.es", 
                   role = c("aut"), comment = c(ORCID = "0000-0001-9228-6410")))
 Maintainer: Fernando Lopez <fernando.lopez@upct.es>
-Description: Testing for spatial structure of qualitative data in cross section. The list of functions includes join-count test, Q test, scan test, similarity test and spatial runs test. The methodology of these models can be found in <doi:10.1007/s10109-009-0100-1> and <doi:10.1080/13658816.2011.586327>.
+Description: Testing for Spatial Dependence of Qualitative Data in Cross Section. The list of functions includes join-count tests, Q test, spatial scan test, similarity test and spatial runs test. The methodology of these models can be found in <doi:10.1007/s10109-009-0100-1> and <doi:10.1080/13658816.2011.586327>.
 LazyData: true
 Encoding: UTF-8
 License: MIT + file LICENSE
