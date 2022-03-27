@@ -1,8 +1,8 @@
 #'
-#' @title Compute the scan test.
+#' @title Compute the scan test
 #'
 #' @description This function compute the spatial scan test for Bernoulli and
-#' Multinomial categorical spatial process, and detect spatial clusters.
+#' Multinomial categorical spatial process, and detect spatial clusters
 #'
 #' @param data an (optional) data frame or a sf object containing the variable to testing for.
 #' @param formula a symbolic description of the factor (optional).
@@ -16,10 +16,11 @@
 #' of "High" (default), "Both" or "Low".
 #' @param distr distribution of the spatial process: "bernoulli" for two levels or "multinomial" for three or more levels.
 #' @param windows a string to select the type of cluster "circular" (default) of "elliptic".
+#' @param listw only for flexible windows. A neighbours list (an object of the class listw, nb or knn frop spdep) or an adjacency matrix.
 #' @param minsize Minimum number of observations inside of Most Likely Cluster and secondary clusters.
 #' @param control List of additional control arguments.
-#' @usage scan.test(formula = NULL, data = NULL, fx = NULL, coor = NULL,
-#' case = NULL, nv = NULL, nsim = NULL, distr = NULL, windows = "circular",
+#' @usage scan.test(formula = NULL, data = NULL, fx = NULL, coor = NULL, case = NULL,
+#' nv = NULL, nsim = NULL, distr = NULL, windows = "circular", listw = NULL,
 #' alternative = "High", minsize = 1, control = list())
 #' @details
 #' Two alternative sets of arguments can be included in this function to compute the scan test:
@@ -98,7 +99,8 @@
 #'      Clustering and co-occurrence of cancer types: A comparison of techniques with
 #'      an application to pediatric cancer in Murcia, Spain.
 #'      \emph{Spatial Analysis in Health Geography}, 69-90.
-#'
+#'      \item Tango T., Takahashi K. (2005). A flexibly shaped spatial scan statistic
+#'      for detecting clusters, \emph{International Journal of Health Geographics} 4:11.
 #'   }
 #' @details
 #' \strong{Bernoulli version}\cr
@@ -228,10 +230,23 @@
 #' distr = "multinomial", windows = "elliptic")
 #' print(scan)
 #' plot(scan)
+#'
+#' # Case 6: Flexible windows
+#' data(provinces_spain)
+#' sf::sf_use_s2(FALSE)
+#' provinces_spain$Male2Female <- factor(provinces_spain$Male2Female > 100)
+#' levels(provinces_spain$Male2Female) = c("men","woman")
+#' formula <- ~ Male2Female
+#' listw <- spdep::poly2nb(provinces_spain, queen = FALSE)
+#' scan <- scan.test(formula = formula, data = provinces_spain, case="men", listw = listw, nv = 6,
+#'                   nsim = 99, distr = "bernoulli", windows = "flexible")
+#' print(scan)
+#' summary(scan)
+#' plot(scan, sf = provinces_spain)
 #' }
 
 scan.test <- function(formula = NULL, data = NULL, fx = NULL, coor = NULL, case = NULL,
-                      nv = NULL, nsim = NULL, distr = NULL, windows = "circular",
+                      nv = NULL, nsim = NULL, distr = NULL, windows = "circular", listw = NULL,
                       alternative = "High", minsize = 1, control = list()) {
 
   if (is.null(distr))
@@ -239,8 +254,21 @@ scan.test <- function(formula = NULL, data = NULL, fx = NULL, coor = NULL, case 
 
   coor.input <- coor
   distr <- match.arg(distr, c("bernoulli", "multinomial"))
-  windows <- match.arg(windows, c("circular", "elliptic"))
-
+  windows <- match.arg(windows, c("circular", "elliptic","flexible"))
+  # if flexible windows
+  if (windows=="flexible" && is.null(listw)) stop("A list of neigbourhood must be included")
+  ## Define the W matrix
+  if (windows=="flexible"){
+    if (inherits(listw, "knn")){
+      listw <- nb2listw(knn2nb(listw),zero.policy = TRUE)
+    } else if (inherits(listw, "matrix")){
+      listw <- (listw > 0)*1
+      listw <- mat2listw(listw)
+    } else if (inherits(listw, "nb")){
+      listw <- nb2listw(listw,zero.policy = TRUE)
+    }
+  }
+  #'
   # Select the arguments: (formula + data) or bien incluye la variable (fx)
   if (!is.null(formula) && !is.null(data)) {
     if (inherits(data, "Spatial")) data <- as(data, "sf")
@@ -301,7 +329,9 @@ scan.test <- function(formula = NULL, data = NULL, fx = NULL, coor = NULL, case 
   if (windows=="elliptic"){
     nn <- suppressWarnings(nn_ellipse(coor = cbind(cx,cy), nv = nv, p = 30)$ellipses)
   }
-
+  if (windows=="flexible"){
+    nn <- nn_flexible(W = listw$neighbours, nv = nv)
+  }
   # XF <- matrix(mfx[nn], ncol = nv, nrow = N)
   XF <- matrix(mfx[nn], ncol = nv, nrow = dim(nn)[1])
 
@@ -344,8 +374,10 @@ scan.test <- function(formula = NULL, data = NULL, fx = NULL, coor = NULL, case 
     #   MLC <- nn[a[1,1],1:a[1,2]]
     #   loglik <- max(lnlz)} ## With out restrictions in the number of cases in the MLC
     # else{
+
     a <- which(lnlz[,minsize:nv] == max(lnlz[,minsize:nv]), arr.ind = TRUE)
-    MLC <- nn[a[1,1],1:(minsize+a[1,2])]
+    # MLC <- nn[a[1,1],1:(minsize+a[1,2])]
+    MLC <- nn[a[1,1],1:min(dim(nn)[2],minsize+a[1,2])]
     loglik <- max(lnlz[,minsize:nv])
     # }
     a2 <- a
@@ -427,43 +459,15 @@ scan.test <- function(formula = NULL, data = NULL, fx = NULL, coor = NULL, case 
     if (!is.null(seedinit)) set.seed(seedinit)
     scan.mc <- rep(0,nsim)
 
-    # cl <- parallel::makeCluster(detectCores())
-    # doParallel::registerDoParallel(cl)
-    # scan.mc <- foreach(1:nsim,.combine = rbind) %dopar% {
-    #   fxp <- mfx[sample(N)]
-    #   XF <- matrix(fxp[nn], ncol = nv, nrow = dim(nn)[1])
-    #   oz <- t(apply(XF==case, 1 , cumsum))
-    #   oznz <- oz/nz
-    #   OozNnz <- (O-oz)/(N-nz)
-    #   OozNnz.1 <- 1 - OozNnz
-    #   OozNnz.1[OozNnz.1 < 0] <- 0
-    #   a <- log(oznz)
-    #   a[a==-Inf] <- 0
-    #   b <- log(1-oznz)
-    #   b[b==-Inf] <- 0
-    #   c <- log(OozNnz)
-    #   c[c==-Inf] <- 0
-    #   d <- log(OozNnz.1)
-    #   d[d==-Inf] <- 0
-    #   if (alternative == "Both"){
-    #     lnlz <- exp(oz*a + (nz-oz)*b + (O-oz)*c + (N-O-nz+oz)*d)
-    #   }
-    #   if (alternative == "High"){
-    #     lnlz <- exp(oz*a + (nz-oz)*b + (O-oz)*c + (N-O-nz+oz)*d)*(oznz > OozNnz)
-    #   }
-    #   if (alternative == "Low"){
-    #     lnlz <- exp(oz*a + (nz-oz)*b + (O-oz)*c + (N-O-nz+oz)*d)*(oznz < OozNnz)
-    #   }
-    #   lnlz <- log(lnlz/lnlz0)
-    #   lnlz[lnlz==-Inf] <- 0
-    #   lnlz[is.na(lnlz)] <- 0
-    #   # scan.mc[f] <- max(lnlz)
-    #   scan.mc <- as.numeric(max(lnlz))
-    # }
     for (f in 1:nsim){
       fxp <- mfx[sample(N)]
       XF <- matrix(fxp[nn], ncol = nv, nrow = dim(nn)[1])
       oz <- t(apply(XF==case, 1 , cumsum))
+      # XF2 <- XF == case
+      # XF2 <- split(XF2, row(XF2))
+      # oz2 <- lapply(XF2, cumsum)
+      # oz2 <- do.call("rbind", oz2)
+
       # oz <- t(apply_cumsum_col(t(XF == case)))
       oznz <- oz/nz
       OozNnz <- (O-oz)/(N-nz)
@@ -544,8 +548,11 @@ scan.test <- function(formula = NULL, data = NULL, fx = NULL, coor = NULL, case 
     loglik.second[f] <- max(LNLZ[,minsize:nv], na.rm = TRUE)
     cc <- which(LNLZ == max(LNLZ[,minsize:nv], na.rm = TRUE), arr.ind = TRUE)
     # Este es el cluster secundario
-    MLC2[[f]] <- nn[cc[1,1],1:(minsize+cc[1,2])]
-    mlc <- c(mlc,nn[cc[1,1],1:(minsize+cc[1,2])])
+
+    # MLC2[[f]] <- nn[cc[1,1],1:(minsize+cc[1,2])]
+    # mlc <- c(mlc,nn[cc[1,1],1:(minsize+cc[1,2])])
+    MLC2[[f]] <- nn[cc[1,1],1:min(dim(nn)[2],(minsize+cc[1,2]))]
+    mlc <- c(mlc,nn[cc[1,1],1:min(dim(nn)[2],(minsize+cc[1,2]))])
   }
   rm(pp,LNLZ,cc,mlc)
 

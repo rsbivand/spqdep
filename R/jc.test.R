@@ -37,7 +37,7 @@
 #'   tests for spatial qualitative data. This function
 #'   is a wrapper of \code{\link[spdep]{joincount.multi}}
 #'   and \code{\link[spdep]{joincount.test}}
-#'   inv\pkg{spdep} package.
+#'   in \pkg{spdep} package.
 #'
 #' @return An \code{spjctest} object. This type of object
 #'   is a list of \code{htest} objects.

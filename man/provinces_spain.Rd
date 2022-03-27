@@ -29,7 +29,8 @@ Instituto Nacional de Estadistica http://www.ine.es/
 
 Climatic data: Agencia Estatal de Meteorologia http://www.aemet.es/
 
-Páez et al. (2020) \url{https://onlinelibrary.wiley.com/doi/full/10.1111/gean.12241}
+Páez et al. (2020)
+\doi{10.1111/gean.12241}
 }
 \usage{
 data(provinces_spain)
@@ -43,7 +44,7 @@ A simple features object with the provinces in Spain and selected demographic an
 }
 \references{
 \itemize{
-    \item Paez, A., Lopez, F. A., Menezes, T., Cavalcanti, R., & Pitta, M. (2020). A Spatio‐Temporal Analysis of
+    \item Paez, A., Lopez, F.A., Menezes, T., Cavalcanti, R., & Pitta, M. (2020). A Spatio‐Temporal Analysis of
      the Environmental Correlates of COVID‐19 Incidence in Spain. \emph{Geographical Analysis}. 53(3) 397-421
   }
 }

@@ -70,7 +70,7 @@ A function to compute joincount
   tests for spatial qualitative data. This function
   is a wrapper of \code{\link[spdep]{joincount.multi}}
   and \code{\link[spdep]{joincount.test}}
-  inv\pkg{spdep} package.
+  in \pkg{spdep} package.
 }
 \section{Control arguments}{
 

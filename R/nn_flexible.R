@@ -1,9 +1,8 @@
-nn_flexible = function(sf = sf, nv = nv){
-  sf::sf_use_s2(FALSE)
-  W <- poly2nb(sf, queen = FALSE)
+nn_flexible = function(W = W, nv = nv){
+  # sf::sf_use_s2(FALSE)
+  # W <- poly2nb(sf, queen = FALSE)
   fl <- NULL
   fl.list <- list()
-  start.time <- Sys.time()
   for (f in 1:length(W)){
     if (W[[f]][1] != 0){
       nvi <- length(W[[f]])
@@ -31,5 +30,6 @@ nn_flexible = function(sf = sf, nv = nv){
     }
   }
   fl <- do.call("rbind", fl.list)
+  cat("end")
   return(fl)
 }

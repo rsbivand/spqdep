@@ -2,10 +2,10 @@
 % Please edit documentation in R/scan.test.R
 \name{scan.test}
 \alias{scan.test}
-\title{Compute the scan test.}
+\title{Compute the scan test}
 \usage{
-scan.test(formula = NULL, data = NULL, fx = NULL, coor = NULL,
-case = NULL, nv = NULL, nsim = NULL, distr = NULL, windows = "circular",
+scan.test(formula = NULL, data = NULL, fx = NULL, coor = NULL, case = NULL,
+nv = NULL, nsim = NULL, distr = NULL, windows = "circular", listw = NULL,
 alternative = "High", minsize = 1, control = list())
 }
 \arguments{
@@ -27,6 +27,8 @@ and the upper limit (nv) defined by the user.}
 \item{distr}{distribution of the spatial process: "bernoulli" for two levels or "multinomial" for three or more levels.}
 
 \item{windows}{a string to select the type of cluster "circular" (default) of "elliptic".}
+
+\item{listw}{only for flexible windows. A neighbours list or an adjacency matrix.}
 
 \item{alternative}{Only for Bernoulli spatial process. A character string specifying the type of cluster, must be one
 of "High" (default), "Both" or "Low".}
@@ -62,7 +64,7 @@ A object of the \emph{htest} and \emph{scantest} class
 }
 \description{
 This function compute the spatial scan test for Bernoulli and
-Multinomial categorical spatial process, and detect spatial clusters.
+Multinomial categorical spatial process, and detect spatial clusters
 }
 \details{
 Two alternative sets of arguments can be included in this function to compute the scan test:
@@ -224,7 +226,21 @@ scan <- scan.test(fx = fx, nsim = 19, coor = cbind(cx,cy), nv = 30,
 distr = "multinomial", windows = "elliptic")
 print(scan)
 plot(scan)
+
+# Case 6: Flexible windows
+data(provinces_spain)
+sf::sf_use_s2(FALSE)
+provinces_spain$Male2Female <- factor(provinces_spain$Male2Female > 100)
+levels(provinces_spain$Male2Female) = c("men","woman")
+formula <- ~ Male2Female
+listw <- spdep::poly2nb(provinces_spain, queen = FALSE)
+scan <- scan.test(formula = formula, data = provinces_spain, case="men", listw = listw, nv = 6,
+                  nsim = 99, distr = "bernoulli", windows = "flexible")
+print(scan)
+summary(scan)
+plot(scan, sf = provinces_spain)
 }
+
 }
 \references{
 \itemize{
@@ -238,7 +254,8 @@ plot(scan)
      Clustering and co-occurrence of cancer types: A comparison of techniques with
      an application to pediatric cancer in Murcia, Spain.
      \emph{Spatial Analysis in Health Geography}, 69-90.
-
+     \item Tango T., Takahashi K. (2005). A flexibly shaped spatial scan statistic
+     for detecting clusters, \emph{International Journal of Health Geographics} 4:11.
   }
 }
 \seealso{

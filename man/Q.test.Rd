@@ -48,6 +48,42 @@ An list of two object of the class \code{htest}. Each element of the list return
 A function to compute Q test for spatial qualitative data.
 }
 \details{
+The Q(m) statistic was introduced by Ruiz et al. (2010) as a tool to explore geographical
+co-location/co-occurrence of qualitative data. Consider a spatial variable X which is the
+result of a qualitative process with a set number of categorical outcomes \eqn{a_j} (j=1,...,k).
+The spatial variable is observed at a set of fixed locations indexed by their coordinates
+\eqn{s_i} (i=1,..., N), so that at each location si where an event is observed,
+\eqn{X_i} takes one of the possible values \eqn{a_j}.\cr
+
+Since the observations are georeferenced, a spatial embedding protocol can be devised
+to assess the spatial property of co-location. Let us define, for an observation at
+a specified location, say \eqn{s_0}, a surrounding of size m, called an m-surrounding.\cr
+The m-surrounding is the set of m-1 nearest neighbours from the perspective
+of location \eqn{s_0}. In the case of distance ties, a secondary criterion can be
+invoked based on direction.\cr
+Once that an embedding protocol is adopted and the elements of the m-surrounding
+for location \eqn{s_0} have been determined, a string can be obtained that collects
+the elements of the local neighborhood (the m-1 nearest neighbors) of the observation
+at \eqn{s_0}. The m-surrounding can then be represented in the following way:
+
+\deqn{X_m(s_0)=(X_{s_0},X_{s_1},...X_{s_{m-1}})}
+Since each observation Xs takes one of k possible values, and there are m observations in
+the m-surrounding, there are exactly k possible unique ways in which those values can
+co-locate. This is the number of permutations with replacement.\cr
+For instance, if k=2
+(e.g. the possible outcomes are a1=0 and a2=1) and m=3, the following eight unique
+patterns of co-location are possible (the number of symbols is \eqn{n_{\sigma}}=8): {0,0,0}, {1,0,0},
+{0,1,0}, {0,0,1}, {1,1,0}, {1,0,1}, {0,1,1}, and {1,1,1}. Each unique co-locationtype
+can be denoted in a convenient way by means of a symbol \eqn{\sigma_i} \eqn{(i=1, 2,...,k^m)}. It follows
+that each site can be uniquely associated with a specific symbol, in a process termed
+symbolization. In this way, we say that a location s is of type \eqn{\sigma_i} if and only if \eqn{X_m(s)=\sigma_i}.\cr
+Equivalent symbols (see Páez, et al. 2012) can be obtained by counting the number of
+occurrences of each category within an m-surrounding. This surrenders some
+topological information (ordering within the m-surrounding is lost) in favor of a more
+compact set of symbols, since the number of combinations with replacement.\cr
+\cr
+\strong{Definition of Q(m) statistic}\cr
+\cr
 Let \eqn{\{X_s\}_{s \in R}} be a discrete spatial process and m be a fixed embedding
 dimension. The statistic Q testing the null hypothesis:\cr
 \cr
@@ -113,7 +149,7 @@ that the combinatorial possibilities can very quickly become unmanageable.
  repetition. \cr
 }
 
-\section{Selection of m-surrounding with Controlled Degree of Overlapping}{
+\section{Selection of m-surrounding with Controlled Degree of Overlapping (r)}{
 
  To select S locations for the analysis, coordinates are selected such that
  for any two coordinates \eqn{s_i} , \eqn{s_j} the number of overlapping nearest
@@ -123,9 +159,17 @@ that the combinatorial possibilities can very quickly become unmanageable.
  m-surroundings are allowed to have in common.\cr
  Let \eqn{ \{s_1^0, s_2^0,...,s_{m-1}^0 \}} be the set of nearest neighbours
  to \eqn{s_0}, where the \eqn{s_i^0} are ordered by distance to \eqn{s_0}, or angle in the case of ties.
- Let us call \eqn{s_1 = s_{m-r-1}^0} and define . Take the set of
- nearest neighbours to \eqn{s_1}, namely, in the
- set of locations. \cr
+ Let us call \eqn{s_1 = s_{m-r-1}^0} and define \eqn{ A_0 = \{s_0,s_0^1,...,s^0_{m-r-2} \}  } . Take the set of
+ nearest neighbours to \eqn{s_1}, namely, \eqn{ \{ s_1^1, s_2^1,...,s^1_{m-1} \} } in the
+ set of locations \eqn{S \setminus A_0 } and define \eqn{s_2=s^1_{m-r-1} }. Nor for i>1 we define
+ \eqn{s_i = s^{i-1}_{m-r-1}} where \eqn{s^{i-1}_{m-r-1}} is in the ser of nearest neighbors to \eqn{s_{i-1}},
+  \eqn{ \{ s_1^{i-1},s_2^{i-1},...,s_{m-1}^{i-1} \} } ,of the set \eqn{S \setminus \{ \cup_{j=0}^{i-1} A_j \} }. Continue this process while there are locations to symbolize.\cr
+}
+
+\section{Selection of m-surroundings for bootstrap distribution}{
+
+The bootstrapped-based testing can provide an advantage since overlapping between
+m-surroundings is not a consideration, and the full sample can be used.\cr
 }
 
 \examples{
@@ -220,10 +264,10 @@ plot(q.test)
 }
 \references{
 \itemize{
-    \item Ruiz M, López FA, A Páez. (2010). \emph{Testing for spatial association of qualitative
-    data using symbolic dynamics}. Journal of Geographical Systems. 12 (3) 281-309
-    \item López, FA, and A Páez. (2012). \emph{Distribution-free inference for Q(m) based on permutational bootstrapping: an application
-    to the spatial co-location pattern of firms in Madrid} Estadística Española, 177, 135-156.
+    \item Ruiz M, López FA, A Páez. (2010). Testing for spatial association of qualitative
+    data using symbolic dynamics. \emph{Journal of Geographical Systems}. 12 (3) 281-309
+    \item López, FA, and A Páez. (2012). Distribution-free inference for Q(m) based on permutational bootstrapping: an application
+    to the spatial co-location pattern of firms in Madrid \emph{Estadística Española}, 177, 135-156.
   }
 }
 \author{
