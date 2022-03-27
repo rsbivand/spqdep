@@ -329,17 +329,31 @@ plot(lsrq, sf = provinces_spain, sig = 0.10)
 
 - For qualitative spatial process with two categories the bernoulli scan test is obtain with the next code
 
-```{r, warning = FALSE}
+```{r bernoulli-scan, warning = FALSE}
 formula <- ~ Male2Female
-scan.spain <- spqdep::scan.test(formula = formula, data = provinces_spain, case="men", nsim = 99, distr = "bernoulli")
+scan.spain <- spqdep::scan.test(formula = formula, data = provinces_spain, 
+                                case="men", nsim = 99, distr = "bernoulli")
 print(scan.spain)
 ```
+
+### Scan test with flexible windows
+
+- The flexible windows is an option. Note that is slow. Consider maximum nv of 12.
+
+```{r flexible-scan, warning = FALSE, collapse = TRUE}
+listw <- spdep::poly2nb(provinces_spain, queen = FALSE)
+scan.spain <- spqdep::scan.test(formula = formula, data = provinces_spain, 
+                                case="men", nsim = 99, windows = "flexible", 
+                                listw = listw, nv = 6, distr = "bernoulli")
+print(scan.spain)
+```
+
 
 ## scan multinomial
 
 - In case of a spatial process with three or more categories
 
-```{r}
+```{r multinomial-scan}
 data(FastFood.sf)
 formula <- ~ Type
 scan.fastfood <- scan.test(formula = formula, data = FastFood.sf, nsim = 99, distr = "multinomial", windows = "elliptic", 

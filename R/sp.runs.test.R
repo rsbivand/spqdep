@@ -22,25 +22,60 @@
 #' @details The order of the neighbourhoods (\eqn{m_i-environments}) is critical to obtain the test. \cr
 #' To obtain the number of runs observed in each \eqn{m_i-environment}, each element must be associated
 #' with a set of neighbours ordered by proximity.
-#' Three kinds of lists can be included to identify \eqn{m_i-environments}:
+#' Three kinds of lists can be included to identify \eqn{m_i-environments}:\cr
 #'
-#' \tabular{ll}{
-#'     \code{knn} \tab Objects of the class knn that consider the neighbours in order of proximity.\cr
-#'     \code{nb} \tab If the neighbours are obtained from an sf object, the code internally
+#' \itemize{
+#'     \item {\code{knn}:} {Objects of the class knn that consider the neighbours in order of proximity.}\cr
+#'     \item {\code{nb}:} {If the neighbours are obtained from an sf object, the code internally
 #'     will call the function \code{\link{nb2nb_order}} it will order them in order
-#'     of proximity of the centroids.\cr
-#'     \code{matrix} \tab
-#'     If a object of matrix class based in the inverse of the distance in introduced
+#'     of proximity of the centroids.}\cr
+#'     \item {\code{matrix}:} {If a object of matrix class based in the inverse of the distance in introduced
 #'     as argument, the function \code{\link{nb2nb_order}} will also be called internally
-#'     to transform the object the class matrix to a matrix of the class nb with ordered neighbours. \cr
+#'     to transform the object the class matrix to a matrix of the class nb with ordered neighbours.} \cr
 #'     }
 #'
 #' Two alternative sets of arguments can be included in this function to compute the spatial runs test:
 #'
 #'   \tabular{ll}{
 #'     \code{Option 1} \tab A factor (fx) and a list of neighborhood (\code{listw}) of the class knn. \cr
-#'     \code{Option 2} \tab A sf object (data) and formula to specify the factor. A list of neighborhood (listw) \cr
+#'     \code{Option 2} \tab A sf object (data) and formula to specify the factor. A list of neighbourhood (listw) \cr
 #'     }
+#'
+#' @section Definition of spatial run:
+#'
+#' In this section define the concepts of spatial encoding and runs, and construct the main statistics necessary
+#' for testing spatial homogeneity of categorical variables. In order to develop a general theoretical setting,
+#' let us consider \eqn{\{X_s\}_{s \in S}}  to be the categorical spatial process of interest with Q different
+#' categories, where S is a set of coordinates.\cr
+#'
+#' \strong{Spatial encoding:}
+#' For a location \eqn{s \in S} denote by \eqn{N_s = \{s_1,s_2 ...,s_{n_s}\}}  the set of neighbours according
+#' to the interaction scheme W, which are ordered from lesser to higher Euclidean distance with respect to location s.\cr
+#' The sequence as \eqn{X_{s_i} , X_{s_i+1},...,, X_{s_i+r}} its elements have the same value (or are identified by the same class)
+#' is called a \strong{spatial run} at location s of length r.\cr
+#'
+#' @section Spatial run statistic:
+#'
+#' The total number of runs is defined as:\cr
+#' \deqn{SR^Q=n+\sum_{s \in S}\sum_{j=1}^{n_s}I_j^s}\cr
+#' where \eqn{I_j^s = 1 \ if \ X_{s_j-1} \neq X_{s_j} \ and 0 \ otherwise} for \eqn{j=1,2,...,n_s}\cr
+#' Following result by the Central Limit Theorem, the asymtotical distribution of \eqn{SR^Q} is:\cr
+#' \deqn{SR^Q = N(\mu_{SR^Q},\sigma_{SR^Q})}
+#'
+#' In the one-tailed case, we must distinguish the lower-tailed test and the upper-tailed, which are associated
+#'  with homogeneity and heterogeneity respectively. In the case of the lower-tailed test,
+#'  the following hypotheses are used:\cr
+#'
+#' \eqn{H_0:\{X_s\}_{s \in S}} is i.i.d.\cr
+#' \eqn{H_1}: The spatial distribution of the values of the categorical variable is more homogeneous than under the null hypothesis (according to the fixed association scheme).
+#' In the upper-tailed test, the following hypotheses are used:\cr
+#'
+#' \eqn{H_0:\{X_s\}_{s \in S}} is i.i.d.\cr
+#' \eqn{H_1}: The spatial distribution of the values of the categorical variable is more
+#' heterogeneous than under the null hypothesis (according to the fixed association scheme).\cr
+#'
+#' These hypotheses provide a decision rule regarding the degree of homogeneity in the spatial distribution
+#' of the values of the spatial categorical random variable.\cr
 #'
 #' @return A object of the \emph{htest} and \emph{sprunstest} class
 #'   \tabular{ll}{
@@ -59,10 +94,12 @@
 #'     \code{SRGP} \tab nsim simulated values of statistic. \cr
 #'     \code{SRLP} \tab matrix with the number of runs for eacl localization. \cr
 #'     }
+#'
 #' @section Control arguments:
 #'   \tabular{ll}{
 #'     \code{seedinit} \tab Numerical value for the seed (only for boot version). Default value seedinit=123 \cr
 #'       }
+#'
 #' @author
 #'   \tabular{ll}{
 #'   Fernando López  \tab \email{fernando.lopez@@upct.es} \cr
@@ -70,12 +107,13 @@
 #'   Antonio Páez \tab \email{paezha@@gmail.com} \cr
 #'   Manuel Ruiz \tab \email{manuel.ruiz@@upct.es} \cr
 #'   }
-#'   @references
+#' @references
 #'   \itemize{
 #'     \item Ruiz, M., López, F., and Páez, A. (2021).
 #'     A test for global and local homogeneity of categorical data based on spatial runs.
 #'       \emph{Working paper}.
 #'   }
+#'
 #' @seealso
 #' \code{\link{local.sp.runs.test}}, \code{\link{dgp.spq}}, \code{\link{Q.test}},
 #' @export

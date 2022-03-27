@@ -461,13 +461,13 @@ scan.test <- function(formula = NULL, data = NULL, fx = NULL, coor = NULL, case 
 
     for (f in 1:nsim){
       fxp <- mfx[sample(N)]
+
       XF <- matrix(fxp[nn], ncol = nv, nrow = dim(nn)[1])
       oz <- t(apply(XF==case, 1 , cumsum))
       # XF2 <- XF == case
       # XF2 <- split(XF2, row(XF2))
       # oz2 <- lapply(XF2, cumsum)
       # oz2 <- do.call("rbind", oz2)
-
       # oz <- t(apply_cumsum_col(t(XF == case)))
       oznz <- oz/nz
       OozNnz <- (O-oz)/(N-nz)

@@ -28,7 +28,7 @@ and the upper limit (nv) defined by the user.}
 
 \item{windows}{a string to select the type of cluster "circular" (default) of "elliptic".}
 
-\item{listw}{only for flexible windows. A neighbours list or an adjacency matrix.}
+\item{listw}{only for flexible windows. A neighbours list (an object of the class listw, nb or knn frop spdep) or an adjacency matrix.}
 
 \item{alternative}{Only for Bernoulli spatial process. A character string specifying the type of cluster, must be one
 of "High" (default), "Both" or "Low".}
