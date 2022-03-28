@@ -91,7 +91,6 @@
 #' @source Instituto Nacional de Estadistica http://www.ine.es/
 #' @source Climatic data: Agencia Estatal de Meteorologia http://www.aemet.es/
 #' @source Páez et al. (2020)
-#' \doi{10.1111/gean.12241}
 #'
 #' @references
 #'   \itemize{

@@ -49,7 +49,7 @@ This guide show the functionalities of the **spqdep** package to test spatial de
 
 Two data sets will be used as examples in this guide:
 
-- **provinces_spain**: The division of Spain into provinces. It is a multypolygon geometry with isolated provinces (islands without neighbouring provinces). See by example @paez2021.
+- **provinces_spain**: The division of Spain into provinces. It is a multypolygon geometry with isolated provinces (islands without neighbouring provinces). See by example Paez et al. 2021.
 
 - **FastFood.sf**: The data set used as example in @ruiz2010. It is a geometry of points.
 
@@ -379,7 +379,7 @@ plot(scan.fastfood, sf = FastFood.sf)
 
 # Similarity test
 
-The @Farber2014 paper develop the similarity test
+The Farber et al. (2014) paper develop the similarity test
 
 ## Simiarity test
 
@@ -415,3 +415,7 @@ summary(jc1)
 ```
 
 # References
+
+Farber, S., Marin, M. R., & Páez, A. (2015). Testing for spatial independence using similarity relations. Geographical Analysis, 47(2), 97-120.
+
+Paez, A., Lopez, F. A., Menezes, T., Cavalcanti, R., & Pitta, M. G. D. R. (2021). A spatio‐temporal analysis of the environmental correlates of COVID‐19 incidence in Spain. Geographical analysis, 53(3), 397-421.

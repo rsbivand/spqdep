@@ -169,14 +169,14 @@
 #' print(scan)
 #' summary(scan)
 #' plot(scan, sf = provinces_spain)
-#'
+#' \donttest{
 #' ## With maximum number of neighborhood
 #' scan <- scan.test(formula = formula, data = provinces_spain, case = "woman",
 #' nsim = 99, distr = "bernoulli")
 #' print(scan)
 #' plot(scan, sf = provinces_spain)
 #'
-#' \donttest{
+#'
 #' ## With elliptic windows
 #' scan <- scan.test(formula = formula, data = provinces_spain, case = "men", nv = 25,
 #' nsim = 99, distr = "bernoulli", windows ="elliptic")

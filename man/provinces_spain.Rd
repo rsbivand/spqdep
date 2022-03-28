@@ -30,7 +30,6 @@ Instituto Nacional de Estadistica http://www.ine.es/
 Climatic data: Agencia Estatal de Meteorologia http://www.aemet.es/
 
 Páez et al. (2020)
-\doi{10.1111/gean.12241}
 }
 \usage{
 data(provinces_spain)
