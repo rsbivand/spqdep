@@ -104,7 +104,10 @@
 
 #' Boots.sf.
 #'
-#' A simple features object square regular lattice 16x16.
+#' A simple features object square regular lattice 16x16. from Fig. 3.3 in Upton
+#' and Fingleton (1985). In this figure, the cells coded black/white correspond
+#' to quadrats where the perennial shrub Atriplex hymenelytra is present/absent
+#' in a sample area in Death Valley, California.
 #'
 #' @format A simple features dataframe with 256 rows and 1 column:
 #' \describe{
@@ -121,7 +124,7 @@
 #'   \itemize{
 #'     \item Boots, B. (2003). Developing local measures of spatial association
 #'     for categorical data. Journal of Geographical Systems, 5(2), 139-160.
-#'     \item Upton G, Fingleton B (1985) Spatial data analysis by example.
+#'     \item Upton G., Fingleton B. (1985) Spatial data analysis by example.
 #'     Volume 1: Point pattern and quantitative data.
 #'     John Wiley & Sons, Chichester
 #'   }
