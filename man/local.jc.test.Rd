@@ -16,6 +16,9 @@ local.jc.test(formula = NULL, data = NULL, fx = NULL, case = NULL, coor = NULL,
 
 \item{case}{level of the factor used to obtain the local Join Count test. See details.}
 
+\item{coor}{(optional) a 2xN vector with spatial coordinates.
+Used when *data* is not a spatial object.}
+
 \item{listw}{A neighbourhood list (an object type knn, listw or nb).}
 
 \item{nsim}{The number of permutation to obtain the local Join Count tests. Default value 999.}
@@ -27,17 +30,21 @@ The output is an object of the class localjc \cr
 \cr
   \code{local.SRQ} A matrix with \cr
   \tabular{ll}{
-    \code{nn} \tab number of neingbourhood in the localization 'i'. \cr
+    \code{nn} \tab number of neighbourhood in the localization 'i'. \cr
     \code{ljc} \tab local Join Count statistics. \cr
     \code{pseudo.value} \tab p-value of local jc tests. \cr
     }
 }
 \description{
-This function calculates the local Join Count tests.
+This function calculates the local Join Count tests.This function
+  is a wrapper of \code{\link[rgeoda]{local_joincount}} in \pkg{rgeoda} package.
 }
 \details{
-This test can be apply only for binary variables (usually named B and W), and count the number of joins of type B-B
-where the proportion of observations with B is larger than half, then the probability of a small number of neighbors will be small, which is counter our logic coded as 1 and 1\cr
+This test develop by Anselin and Li (2019) can be apply only for binary variables
+(usually named B and W), and count the number of joins of type B-B where the proportion of
+ observations with B is lower than half. The interest lies in identifying co-occurrences of
+uncommon events, i.e., situations where observations that take on the value of B constitute
+much less than half of the sample. \cr
 The statistic is defined as:\cr
 \deqn{BB_i = x_i  \sum_j{w_{ij}x_j}}\cr
 only meaningful for those observations where \eqn{x_i=1}, since for \eqn{x_i=0} the result will always equal zero.\cr
@@ -134,9 +141,9 @@ plot(scan, sf = Boots.sf)
 }
 \references{
 \itemize{
-    \item Anselin, L., & Li, X. (2019).
+    \item Anselin, L., and Li, X. (2019).
     Operational local join Count statistics for cluster detection.
-      \emph{Journal of geographical systems, 21(2), 189-210}.
+      \emph{Journal of Geographical Systems, 21(2), 189-210}.
   }
 }
 \seealso{

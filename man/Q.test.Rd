@@ -48,6 +48,11 @@ An list of two object of the class \code{htest}. Each element of the list return
 A function to compute Q test for spatial qualitative data.
 }
 \details{
+The Q-test is a simple, consistent, and powerful statistic for qualitative spatial
+ independence that we develop using concepts from symbolic dynamics and symbolic
+  entropy. The Q test can be used to detect, given a spatial distribution of events,
+  patterns of spatial association of qualitative variables in a wide variety of
+  settings. \cr
 The Q(m) statistic was introduced by Ruiz et al. (2010) as a tool to explore geographical
 co-location/co-occurrence of qualitative data. Consider a spatial variable X which is the
 result of a qualitative process with a set number of categorical outcomes \eqn{a_j} (j=1,...,k).
@@ -163,7 +168,8 @@ that the combinatorial possibilities can very quickly become unmanageable.
  nearest neighbours to \eqn{s_1}, namely, \eqn{ \{ s_1^1, s_2^1,...,s^1_{m-1} \} } in the
  set of locations \eqn{S \setminus A_0 } and define \eqn{s_2=s^1_{m-r-1} }. Nor for i>1 we define
  \eqn{s_i = s^{i-1}_{m-r-1}} where \eqn{s^{i-1}_{m-r-1}} is in the ser of nearest neighbors to \eqn{s_{i-1}},
-  \eqn{ \{ s_1^{i-1},s_2^{i-1},...,s_{m-1}^{i-1} \} } ,of the set \eqn{S \setminus \{ \cup_{j=0}^{i-1} A_j \} }. Continue this process while there are locations to symbolize.\cr
+  \eqn{ \{ s_1^{i-1},s_2^{i-1},...,s_{m-1}^{i-1} \} } ,of the set \eqn{S \setminus \{ \cup_{j=0}^{i-1} A_j \} }.
+  Continue this process while there are locations to symbolize.\cr
 }
 
 \section{Selection of m-surroundings for bootstrap distribution}{

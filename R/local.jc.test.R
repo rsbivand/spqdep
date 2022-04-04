@@ -1,18 +1,24 @@
 #'
 #' @title A function to calculate the local Join Count tests.
 #'
-#' @description This function calculates the local Join Count tests.
+#' @description This function calculates the local Join Count tests.This function
+#'   is a wrapper of \code{\link[rgeoda]{local_joincount}} in \pkg{rgeoda} package.
 #' @param formula An (optional) formula with the factor included in \code{data}
 #' @param data An (optional) data frame or a sf object containing the variable to testing for.
 #' @param fx An (optional) factor of observations with the same length as the neighbours list in \code{listw}
 #' @param listw A neighbourhood list (an object type knn, listw or nb).
+#' @param coor (optional) a 2xN vector with spatial coordinates.
+#'             Used when *data* is not a spatial object.
 #' @param case level of the factor used to obtain the local Join Count test. See details.
 #' @param nsim The number of permutation to obtain the local Join Count tests. Default value 999.
 #' @param control Optional argument. See Control argument section.
 #' @usage local.jc.test(formula = NULL, data = NULL, fx = NULL, case = NULL, coor = NULL,
 #'  listw = listw, nsim = 999, control = list())
-#' @details This test can be apply only for binary variables (usually named B and W), and count the number of joins of type B-B
-#' where the proportion of observations with B is larger than half, then the probability of a small number of neighbors will be small, which is counter our logic coded as 1 and 1\cr
+#' @details This test develop by Anselin and Li (2019) can be apply only for binary variables
+#' (usually named B and W), and count the number of joins of type B-B where the proportion of
+#'  observations with B is lower than half. The interest lies in identifying co-occurrences of
+#' uncommon events, i.e., situations where observations that take on the value of B constitute
+#' much less than half of the sample. \cr
 #' The statistic is defined as:\cr
 #' \deqn{BB_i = x_i  \sum_j{w_{ij}x_j}}\cr
 #' only meaningful for those observations where \eqn{x_i=1}, since for \eqn{x_i=0} the result will always equal zero.\cr
@@ -33,7 +39,7 @@
 #' \cr
 #'   \code{local.SRQ} A matrix with \cr
 #'   \tabular{ll}{
-#'     \code{nn} \tab number of neingbourhood in the localization 'i'. \cr
+#'     \code{nn} \tab number of neighbourhood in the localization 'i'. \cr
 #'     \code{ljc} \tab local Join Count statistics. \cr
 #'     \code{pseudo.value} \tab p-value of local jc tests. \cr
 #'     }
@@ -52,9 +58,9 @@
 #'   }
 #' @references
 #'   \itemize{
-#'     \item Anselin, L., & Li, X. (2019).
+#'     \item Anselin, L., and Li, X. (2019).
 #'     Operational local join Count statistics for cluster detection.
-#'       \emph{Journal of geographical systems, 21(2), 189-210}.
+#'       \emph{Journal of Geographical Systems, 21(2), 189-210}.
 #'   }
 #'
 #' @seealso
@@ -184,7 +190,7 @@ local.jc.test <- function(formula = NULL, data = NULL, fx = NULL,case = NULL,
   } else stop("input data wrong")
 
 ## Wrapper the local_joincount function from rgeoda
-  ljc <- local_joincount(W, mfx, permutations = nsim)
+  ljc <- rgeoda::local_joincount(W, mfx, permutations = nsim)
   local <- list(ljc = data.frame(nn = ljc$nn_vals,
                 ljc = ljc$lisa_vals,
                 pseudo.value = ljc$p_vals),
