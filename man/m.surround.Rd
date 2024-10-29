@@ -47,26 +47,26 @@ This function obtains the m-surroundings
 \section{Control arguments}{
 
   \itemize{
-    \item {\code{initobs}:} {Initial observation to begin the
-      m-surrounding process. Default = 1.}
-    \item {\code{dtmaxabs}:} {Threshold of distance (in absolute
+    \item \code{initobs}: Initial observation to begin the
+      m-surrounding process. Default = 1.
+    \item \code{dtmaxabs}: Threshold of distance (in absolute
       value) to prune the m-surroundings. Any m-surrounding
       exceeding the threshold is excluded.
       If \code{dtmaxabs} = 0 there is no exclusion of m-surroundings.
-      Default = 0.}
-    \item {\code{dtmaxpc}:} {Threshold of distance (as a percentage
+      Default = 0.
+    \item  \code{dtmaxpc}: Threshold of distance (as a percentage
       of the maximum distance between observations) to prune the m-surroundings. Any m-surrounding
       exceeding the threshold is excluded.
       Example if \code{dtmaxpc} = 0.1 the m-surrounding exceeding
       the 10% of the maximum distance between observations are excluded.
       If \code{dtmaxpc} = 0 there is no exclusion of m-surroundings.
-      Default = 0.}
-    \item {\code{dtmaxknn}:} {Eliminate m-surroundings where some
+      Default = 0.
+    \item  \code{dtmaxknn}: Eliminate m-surroundings where some
       of the elements are not among the closest
       knn (k-nearest-neighbors).
       Example, if \code{dtmaxknn} = 4 exclude m-surroundings
       where some of the elements are not between the 4 closest.
-      Default \code{dtmaxknn} = 0 (no exclusion)}
+      Default \code{dtmaxknn} = 0 (no exclusion)
    }
 }
 
@@ -116,7 +116,7 @@ summary(msurr_points)
 
 # Example 3: With isolated areas
 data(provinces_spain)
-sf::sf_use_s2(FALSE)
+# sf::sf_use_s2(FALSE)
 plot(sf::st_geometry(provinces_spain))
 m <- 3
 r <- 1

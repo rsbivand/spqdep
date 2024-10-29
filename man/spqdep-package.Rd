@@ -2,6 +2,7 @@
 % Please edit documentation in R/spqdata-package.R
 \docType{package}
 \name{spqdep-package}
+\alias{spqdep}
 \alias{spqdep-package}
 \title{Testing for Spatial Dependence of Qualitative Data in Cross Section.}
 \description{
@@ -75,6 +76,13 @@ Testing for spatial dependence with the Similarity test. See references
      Clustering and co-occurrence of cancer types: A comparison of techniques with an application to pediatric cancer in Murcia, Spain.
      \emph{Spatial Analysis in Health Geography}, 69-90.
   }
+}
+\seealso{
+Useful links:
+\itemize{
+  \item \url{https://f8l5h9.github.io/spqdep/}
+}
+
 }
 \author{
 \tabular{ll}{

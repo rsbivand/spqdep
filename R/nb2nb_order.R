@@ -2,7 +2,7 @@
 #' @title A function to order the elements of the m_i-subrrounds
 #'
 #' @description An auxiliary function. In the case of obtaining the list of neighbors of class
-#' nb or \code{\link{poly2nb}}, it is necessary to reorder the elements based on distance and/or angle.
+#' nb or poly2nb, it is necessary to reorder the elements based on distance and/or angle.
 #' @param listw an object of the nb class.
 #' @param sf the sf object used to get the \code{listw} .
 #' @usage nb2nb_order(listw = listw, sf = NULL)

@@ -77,8 +77,8 @@
 #' co-locate. This is the number of permutations with replacement.\cr
 #' For instance, if k=2
 #' (e.g. the possible outcomes are a1=0 and a2=1) and m=3, the following eight unique
-#' patterns of co-location are possible (the number of symbols is \eqn{n_{\sigma}}=8): {0,0,0}, {1,0,0},
-#' {0,1,0}, {0,0,1}, {1,1,0}, {1,0,1}, {0,1,1}, and {1,1,1}. Each unique co-locationtype
+#' patterns of co-location are possible (the number of symbols is \eqn{n_{\sigma}}=8): (0,0,0), (1,0,0),
+#' (0,1,0), (0,0,1), (1,1,0), (1,0,1), (0,1,1), and (1,1,1). Each unique co-locationtype
 #' can be denoted in a convenient way by means of a symbol \eqn{\sigma_i} \eqn{(i=1, 2,...,k^m)}. It follows
 #' that each site can be uniquely associated with a specific symbol, in a process termed
 #' symbolization. In this way, we say that a location s is of type \eqn{\sigma_i} if and only if \eqn{X_m(s)=\sigma_i}.\cr
@@ -202,11 +202,11 @@
 #' # Case 3: With a sf object with isolated areas
 #' data("provinces_spain")
 #' sf::sf_use_s2(FALSE)
-#' provinces_spain$Male2Female <- factor(provinces_spain$Male2Female > 100)
-#' levels(provinces_spain$Male2Female) = c("men","woman")
+#' provinces_spain$Mal2Fml<- factor(provinces_spain$Mal2Fml > 100)
+#' levels(provinces_spain$Mal2Fml) = c("men","woman")
 #' provinces_spain$Older <- cut(provinces_spain$Older, breaks = c(-Inf,19,22.5,Inf))
 #' levels(provinces_spain$Older) = c("low","middle","high")
-#' f1 <- ~ Older + Male2Female
+#' f1 <- ~ Older + Mal2Fml
 #' q.test <- Q.test(formula = f1,
 #' data = provinces_spain, m = 3, r = 1, control = list(seedinit = 1111))
 #' summary(q.test)

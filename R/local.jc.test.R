@@ -80,9 +80,11 @@
 #' p <- c(1/2,1/2)
 #' rho <- 0.5
 #' fx <- dgp.spq(p = p, listw = listw, rho = rho)
+#' if (requireNamespace("rgeoda", quietly=TRUE)) {
 #' ljc <- local.jc.test(fx = fx, coor = coor, case= "A", listw = listw)
 #' print(ljc)
 #' plot(ljc, coor = coor, sig = 0.1)
+#' }
 #'
 #' \donttest{
 #' # Case 2:Fastfood example. sf (points)
@@ -92,9 +94,11 @@
 #' x <- sf::st_coordinates(sf::st_centroid(FastFood.sf))
 #' listw <- spdep::knearneigh(x, k = 6)
 #' formula <- ~ Type
+#' if (requireNamespace("rgeoda", quietly=TRUE)) {
 #' ljc <- local.jc.test(formula = formula, data = FastFood.sf, case = "H",listw = listw)
 #' print(ljc)
 #' plot(ljc, sf = FastFood.sf, sig = 0.05)
+#' }
 #'
 #' # Case 3: With a sf object (poligons)
 #' library(lwgeom)
@@ -105,10 +109,12 @@
 #' rho = 0.5
 #' nc$fx <- dgp.spq(p = p, listw = listw, rho = rho)
 #' plot(nc["fx"])
+#' if (requireNamespace("rgeoda", quietly=TRUE)) {
 #' formula <- ~ fx
 #' ljc <- local.jc.test(formula = formula, data = nc, case = "A", listw = listw)
 #' ljc
 #' plot(ljc, sf = nc)
+#' }
 #'
 #' # Case 4: With isolated areas
 #' library(lwgeom)
@@ -118,17 +124,21 @@
 #' provinces_spain$Male2Female <- factor(provinces_spain$Male2Female > 100)
 #' levels(provinces_spain$Male2Female) = c("men","woman")
 #' formula <- ~ Male2Female
+#' if (requireNamespace("rgeoda", quietly=TRUE)) {
 #' ljc <- local.jc.test(formula = formula, data = provinces_spain, listw = listw)
 #' print(ljc)
 #' plot(ljc, sf = provinces_spain, sig = 0.1)
+#' }
 #'
 #' # Case 5: Regular lattice
 #' data(Boots.sf)
 #' listw <- spdep::poly2nb(as(Boots.sf,"Spatial"), queen = TRUE)
 #' formula <- ~ BW
+#' if (requireNamespace("rgeoda", quietly=TRUE)) {
 #' ljc <- local.jc.test(formula = formula, data = Boots.sf, case="B", listw = listw)
 #' print(ljc)
 #' plot(ljc, sf = Boots.sf, sig = 0.05)
+#' }
 #' lsr <- local.sp.runs.test(formula = formula, data = Boots.sf,
 #' distr = "bootstrap", nsim= 99, listw = listw)
 #' print(lsr)
@@ -165,6 +175,7 @@ local.jc.test <- function(formula = NULL, data = NULL, fx = NULL,case = NULL,
   }
   ### Building the W matrix
   N <- as.numeric(length(listw$neighbours))
+  if (requireNamespace("rgeoda", quietly=TRUE)) {
   W <- rgeoda::create_weights(N)
   for (i in 1:N){
     rgeoda::set_neighbors(W, i, as.numeric(listw$neighbours[[i]]))
@@ -196,5 +207,9 @@ local.jc.test <- function(formula = NULL, data = NULL, fx = NULL,case = NULL,
                 pseudo.value = ljc$p_vals),
                 nsim         = nsim)
   class(local) <- "localjc"
+  } else {
+    local <- NULL
+    message("install rgeoda to use this wrapper function")
+  }
   return <- local
 }

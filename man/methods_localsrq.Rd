@@ -31,7 +31,6 @@ expected values and standard deviation, z-value ans p-value is prited for each o
 }
 \examples{
 # Example 1: Local spatial runs test based on knn
-library(lwgeom)
 N <- 100
 cx <- runif(N)
 cy <- runif(N)

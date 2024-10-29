@@ -38,9 +38,9 @@
 #' formula <- ~ Older
 #' srq <- sp.runs.test(formula = formula, data = provinces_spain, listw = listw, nsim = 299)
 #' plot(srq)
-#' provinces_spain$Male2Female <- factor(provinces_spain$Male2Female > 100)
-#' levels(provinces_spain$Male2Female) = c("men","woman")
-#' formula <- ~ Male2Female
+#' provinces_spain$Mal2Fml <- factor(provinces_spain$Mal2Fml > 100)
+#' levels(provinces_spain$Mal2Fml) = c("men","woman")
+#' formula <- ~ Mal2Fml
 #' srq <- sp.runs.test(formula = formula, data = provinces_spain, listw = listw, nsim = 299)
 #' plot(srq)
 

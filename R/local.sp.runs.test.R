@@ -19,15 +19,15 @@
 #' control = list())
 #' @details The object \code{listw} can be the class:
 #' \itemize{
-#'     \item{\code{knn}:} {Objects of the class knn that consider the neighbours in
-#'     order of proximity.}
-#'     \item {\code{nb}:} {If the neighbours are obtained from an sf object, the code internally
+#'     \item \code{knn}: Objects of the class knn that consider the neighbours in
+#'     order of proximity.
+#'     \item \code{nb}: If the neighbours are obtained from an sf object, the code internally
 #'     will call the function \code{\link{nb2nb_order}} it will order them in order
-#'     of proximity of the centroids.}
-#'     \item {\code{matrix}:} {If a object of matrix class based in the inverse of
+#'     of proximity of the centroids.
+#'     \item \code{matrix}: If a object of matrix class based in the inverse of
 #'     the distance in introduced as argument, the function \code{\link{nb2nb_order}} will
 #'     also be called internally to transform the object the class matrix to a matrix of the
-#'      class nb with ordered neighbours.}
+#'      class nb with ordered neighbours.
 #'     }
 #' @return The output is an object of the class localsrq \cr
 #' \cr
@@ -71,7 +71,6 @@
 #' @examples
 #'
 #' # Case 1: Local spatial runs test based on knn
-#' library(lwgeom)
 #' N <- 100
 #' cx <- runif(N)
 #' cy <- runif(N)
@@ -93,9 +92,8 @@
 
 #' \donttest{
 #' # Case 2:Fastfood example. sf (points)
-#' library(lwgeom)
 #' data("FastFood.sf")
-#' sf::sf_use_s2(FALSE)
+#' # sf::sf_use_s2(FALSE)
 #' x <- sf::st_coordinates(sf::st_centroid(FastFood.sf))
 #' listw <- spdep::knearneigh(x, k = 10)
 #' formula <- ~ Type
@@ -105,7 +103,6 @@
 #' }
 #'
 #' # Case 3: With a sf object (poligons)
-#' library(lwgeom)
 #' fname <- system.file("shape/nc.shp", package="sf")
 #' nc <- sf::st_read(fname)
 #' listw <- spdep::poly2nb(as(nc,"Spatial"), queen = FALSE)
@@ -124,13 +121,12 @@
 #' plot(lsrq, sf = nc)
 #'
 #' # Case 4: With isolated areas
-#' library(lwgeom)
 #' data(provinces_spain)
 #' listw <- spdep::poly2nb(as(provinces_spain,"Spatial"), queen = FALSE)
-#' provinces_spain$Male2Female <- factor(provinces_spain$Male2Female > 100)
-#' levels(provinces_spain$Male2Female) = c("men","woman")
-#' plot(provinces_spain["Male2Female"])
-#' formula <- ~ Male2Female
+#' provinces_spain$Mal2Fml<- factor(provinces_spain$Mal2Fml > 100)
+#' levels(provinces_spain$Mal2Fml) = c("men","woman")
+#' plot(provinces_spain["Mal2Fml"])
+#' formula <- ~ Mal2Fml
 #' lsrq <- local.sp.runs.test(formula = formula, data = provinces_spain, listw = listw)
 #' print(lsrq)
 #' plot(lsrq, sf = provinces_spain, sig = 0.1)
@@ -143,7 +139,6 @@
 #'
 #' # Case 5: SRQ test based on a distance matrix (inverse distance)
 #' \donttest{
-#' library(lwgeom)
 #' N <- 100
 #' cx <- runif(N)
 #' cy <- runif(N)
@@ -169,9 +164,8 @@
 #' plot(lsrq, sf = coor)
 #'
 #' # SRQ test based on inverse distance
-#' library(lwgeom)
 #' data("FastFood.sf")
-#' sf::sf_use_s2(FALSE)
+#' # sf::sf_use_s2(FALSE)
 #' n = dim(FastFood.sf)[1]
 #' dis <- 1000000/matrix(as.numeric(
 #'           sf::st_distance(FastFood.sf, FastFood.sf)),
@@ -181,7 +175,7 @@
 #' formula <- ~ Type
 #' lsrq <- local.sp.runs.test(formula = formula, data = FastFood.sf, listw = dis)
 #' print(lsrq)
-#' plot(lsrq, sf = FastFood.sf)
+#' # plot(lsrq, sf = FastFood.sf)
 #' }
 
 

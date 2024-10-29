@@ -23,11 +23,11 @@ This function summarizes estimated \emph{spjctest} objects.
 ## Multinomial + Binomial using a sf multipolygon
 data("provinces_spain")
 sf::sf_use_s2(FALSE)
-provinces_spain$Male2Female <- factor(provinces_spain$Male2Female > 100)
-levels(provinces_spain$Male2Female) = c("men","woman")
+provinces_spain$Mal2Fml <- factor(provinces_spain$Mal2Fml > 100)
+levels(provinces_spain$Mal2Fml) = c("men","woman")
 provinces_spain$Older <- cut(provinces_spain$Older, breaks = c(-Inf,19,22.5,Inf))
 levels(provinces_spain$Older) = c("low","middle","high")
-f1 <- ~ Older + Male2Female
+f1 <- ~ Older + Mal2Fml
 jc1 <- jc.test(formula = f1,
                data = provinces_spain,
                distr = "mc",

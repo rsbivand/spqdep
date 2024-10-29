@@ -51,15 +51,15 @@ only meaningful for those observations where \eqn{x_i=1}, since for \eqn{x_i=0} 
 \cr
 The object \code{listw} can be the class:
 \itemize{
-    \item{\code{knn}:} {Objects of the class knn that consider the neighbours in
-    order of proximity.}
-    \item {\code{nb}:} {If the neighbours are obtained from an sf object, the code internally
+    \item \code{knn}: Objects of the class knn that consider the neighbours in
+    order of proximity.
+    \item \code{nb}: If the neighbours are obtained from an sf object, the code internally
     will call the function \code{\link{nb2nb_order}} it will order them in order
-    of proximity of the centroids.}
-    \item {\code{matrix}:} {If a object of matrix class based in the inverse of
+    of proximity of the centroids.
+    \item \code{matrix}: If a object of matrix class based in the inverse of
     the distance in introduced as argument, the function \code{\link{nb2nb_order}} will
     also be called internally to transform the object the class matrix to a matrix of the
-     class nb with ordered neighbours.}
+     class nb with ordered neighbours.
     }
 }
 \section{Control arguments}{
@@ -72,7 +72,6 @@ The object \code{listw} can be the class:
 \examples{
 
 # Case 1: Local spatial runs test based on knn
-library(lwgeom)
 N <- 100
 cx <- runif(N)
 cy <- runif(N)
@@ -87,9 +86,8 @@ plot(ljc, coor = coor, sig = 0.1)
 
 \donttest{
 # Case 2:Fastfood example. sf (points)
-library(lwgeom)
 data("FastFood.sf")
-sf::sf_use_s2(FALSE)
+# sf::sf_use_s2(FALSE)
 x <- sf::st_coordinates(sf::st_centroid(FastFood.sf))
 listw <- spdep::knearneigh(x, k = 6)
 formula <- ~ Type
@@ -98,7 +96,6 @@ print(ljc)
 plot(ljc, sf = FastFood.sf, sig = 0.05)
 
 # Case 3: With a sf object (poligons)
-library(lwgeom)
 fname <- system.file("shape/nc.shp", package="sf")
 nc <- sf::st_read(fname)
 listw <- spdep::poly2nb(as(nc,"Spatial"), queen = FALSE)
@@ -112,13 +109,12 @@ ljc
 plot(ljc, sf = nc)
 
 # Case 4: With isolated areas
-library(lwgeom)
 data(provinces_spain)
-sf::sf_use_s2(FALSE)
+# sf::sf_use_s2(FALSE)
 listw <- spdep::poly2nb(as(provinces_spain,"Spatial"), queen = FALSE)
-provinces_spain$Male2Female <- factor(provinces_spain$Male2Female > 100)
-levels(provinces_spain$Male2Female) = c("men","woman")
-formula <- ~ Male2Female
+provinces_spain$Mal2Fml<- factor(provinces_spain$Mal2Fml > 100)
+levels(provinces_spain$Mal2Fml) = c("men","woman")
+formula <- ~ Mal2Fml
 ljc <- local.jc.test(formula = formula, data = provinces_spain, listw = listw)
 print(ljc)
 plot(ljc, sf = provinces_spain, sig = 0.1)

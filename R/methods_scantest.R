@@ -82,6 +82,7 @@ plot.scantest <- function(x, ..., sf = NULL, coor = NULL){
     mysize = 4
   }
   if (!is.null(sf)){
+    mysize = .2
     if (inherits(st_geometry(sf)[1],
         "sfc_MULTIPOLYGON")) mysize = .2
     if (inherits(st_geometry(sf)[1],

@@ -53,7 +53,7 @@ data("FastFood.sf")
 m = 6
 r = 1
 msurr_points <-  m.surround(x = FastFood.sf, m = m, r = r, distance = "Euclidean",
-                            control = list(dtmaxpc = .01))
+                            control = list(dtmaxpc = .2))
 plot(msurr_points, type = 1)
 plot(msurr_points, type = 2)
 print(msurr_points)

@@ -14,7 +14,7 @@ A simple features dataframe with 50 rows and 15 columns:
   \item{Density}{Population density in the province in persons/km^2}
   \item{Older}{Percentage of population 65 and older in the provice in 2020}
   \item{Median_Age}{Median age of population in the province in 2020}
-  \item{Male2Female}{Ratio of male to female population in the province in 2020}
+  \item{Mal2Fml}{Ratio of male to female population in the province in 2020}
   \item{GDPpc}{GDP per capita in the province in 2016}
   \item{Transit}{Dummy variable for mass transit system in province; 1: YES}
   \item{Area}{Area of the province}

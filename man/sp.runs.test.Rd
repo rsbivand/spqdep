@@ -59,13 +59,13 @@ with a set of neighbours ordered by proximity.
 Three kinds of lists can be included to identify \eqn{m_i-environments}:\cr
 
 \itemize{
-    \item {\code{knn}:} {Objects of the class knn that consider the neighbours in order of proximity.}\cr
-    \item {\code{nb}:} {If the neighbours are obtained from an sf object, the code internally
+    \item  \code{knn}: Objects of the class knn that consider the neighbours in order of proximity.
+    \item  \code{nb}: If the neighbours are obtained from an sf object, the code internally
     will call the function \code{\link{nb2nb_order}} it will order them in order
-    of proximity of the centroids.}\cr
-    \item {\code{matrix}:} {If a object of matrix class based in the inverse of the distance in introduced
+    of proximity of the centroids.
+    \item  \code{matrix}: If a object of matrix class based in the inverse of the distance in introduced
     as argument, the function \code{\link{nb2nb_order}} will also be called internally
-    to transform the object the class matrix to a matrix of the class nb with ordered neighbours.} \cr
+    to transform the object the class matrix to a matrix of the class nb with ordered neighbours.
     }
 
 Two alternative sets of arguments can be included in this function to compute the spatial runs test:
@@ -176,7 +176,7 @@ plot(srq)
 
 # Case 4: SRQ test (Asymptotic) using formula with a sf object (polygons) and nb
 data(provinces_spain)
-sf::sf_use_s2(FALSE)
+# sf::sf_use_s2(FALSE)
 listw <- spdep::poly2nb(provinces_spain, queen = FALSE)
 provinces_spain$Coast <- factor(provinces_spain$Coast)
 levels(provinces_spain$Coast) = c("no","yes")
@@ -220,7 +220,7 @@ plot(srq)
 
 # Case 6: SRQ test based on a distance matrix (inverse distance)
 data("FastFood.sf")
-sf::sf_use_s2(FALSE)
+# sf::sf_use_s2(FALSE)
 n = dim(FastFood.sf)[1]
 dis <- 1000000/matrix(as.numeric(sf::st_distance(FastFood.sf,FastFood.sf)), ncol = n, nrow = n)
 diag(dis) <- 0

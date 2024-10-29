@@ -45,7 +45,7 @@
 #' m = 6
 #' r = 1
 #' msurr_points <-  m.surround(x = FastFood.sf, m = m, r = r, distance = "Euclidean",
-#'                             control = list(dtmaxpc = .01))
+#'                             control = list(dtmaxpc = .2))
 #' plot(msurr_points, type = 1)
 #' plot(msurr_points, type = 2)
 #' print(msurr_points)
@@ -96,6 +96,7 @@ summary.m_surr <- function(object, ...) {
 #'
 plot.m_surr <- function(x, ..., type = 1){
   m_surr <- x
+  if (dim(m_surr$ms)[1]==0){stop("The length of the m-sourronding is 0")}
   m <- dim(m_surr$ms)[2]
   W <- matrix(0, ncol =  m_surr$N, nrow =  m_surr$N)
   for (i in 1:dim(m_surr$ms)[1]){

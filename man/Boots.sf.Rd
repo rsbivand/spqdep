@@ -11,7 +11,7 @@ A simple features dataframe with 256 rows and 1 column:
 }
 }
 \source{
-Boots, B. (2003) \url{https://link.springer.com/content/pdf/10.1007/s10109-003-0110-3.pdf}
+Boots, B. (2003) Developing local measures of spatial association for categorical data, Journal of Geographical Systems, 5(2), 139-160. \doi{10.1007/s10109-003-0110-3}
 }
 \usage{
 data(Boots.sf)
@@ -30,7 +30,7 @@ in a sample area in Death Valley, California.
 \references{
 \itemize{
     \item Boots, B. (2003). Developing local measures of spatial association
-    for categorical data. Journal of Geographical Systems, 5(2), 139-160.
+    for categorical data. Journal of Geographical Systems, 5(2), 139-160. \doi{10.1007/s10109-003-0110-3}
     \item Upton G., Fingleton B. (1985) Spatial data analysis by example.
     Volume 1: Point pattern and quantitative data.
     John Wiley & Sons, Chichester

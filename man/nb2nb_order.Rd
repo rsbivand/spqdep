@@ -16,7 +16,7 @@ An object of the nb class with the elements in order.
 }
 \description{
 An auxiliary function. In the case of obtaining the list of neighbors of class
-nb or \code{\link{poly2nb}}, it is necessary to reorder the elements based on distance and/or angle.
+nb or poly2nb, it is necessary to reorder the elements based on distance and/or angle.
 }
 \details{
 Sort the elements of a list nb. First by distance and

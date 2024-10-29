@@ -12,7 +12,6 @@
 #' @return No return value, called for side effects
 #' @examples
 #' # Example 1: Local spatial runs test based on knn
-#' library(lwgeom)
 #' N <- 100
 #' cx <- runif(N)
 #' cy <- runif(N)
@@ -87,6 +86,7 @@ plot.localsrq <- function(x, ..., sf = NULL, coor = NULL,  sig = 0.05){
     mysize = 4
   }
   if (!is.null(sf)){
+    mysize = .2
     if (inherits(st_geometry(sf),
         "sfc_MULTIPOLYGON")) mysize = .2
     if (inherits(st_geometry(sf),

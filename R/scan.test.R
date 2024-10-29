@@ -161,9 +161,9 @@
 #' # Case 1: Scan test bernoulli
 #' data(provinces_spain)
 #' sf::sf_use_s2(FALSE)
-#' provinces_spain$Male2Female <- factor(provinces_spain$Male2Female > 100)
-#' levels(provinces_spain$Male2Female) = c("men","woman")
-#' formula <- ~ Male2Female
+#' provinces_spain$Mal2Fml <- factor(provinces_spain$Mal2Fml > 100)
+#' levels(provinces_spain$Mal2Fml) = c("men","woman")
+#' formula <- ~ Mal2Fml
 #' scan <- scan.test(formula = formula, data = provinces_spain, case="men",
 #' nsim = 99, distr = "bernoulli")
 #' print(scan)
@@ -234,9 +234,9 @@
 #' # Case 6: Flexible windows
 #' data(provinces_spain)
 #' sf::sf_use_s2(FALSE)
-#' provinces_spain$Male2Female <- factor(provinces_spain$Male2Female > 100)
-#' levels(provinces_spain$Male2Female) = c("men","woman")
-#' formula <- ~ Male2Female
+#' provinces_spain$Mal2Fml <- factor(provinces_spain$Mal2Fml > 100)
+#' levels(provinces_spain$Mal2Fml) = c("men","woman")
+#' formula <- ~ Mal2Fml
 #' listw <- spdep::poly2nb(provinces_spain, queen = FALSE)
 #' scan <- scan.test(formula = formula, data = provinces_spain, case="men", listw = listw, nv = 6,
 #'                   nsim = 99, distr = "bernoulli", windows = "flexible")

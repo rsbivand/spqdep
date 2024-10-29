@@ -74,7 +74,7 @@
 #'   \item{Density}{Population density in the province in persons/km^2}
 #'   \item{Older}{Percentage of population 65 and older in the provice in 2020}
 #'   \item{Median_Age}{Median age of population in the province in 2020}
-#'   \item{Male2Female}{Ratio of male to female population in the province in 2020}
+#'   \item{Mal2Fml}{Ratio of male to female population in the province in 2020}
 #'   \item{GDPpc}{GDP per capita in the province in 2016}
 #'   \item{Transit}{Dummy variable for mass transit system in province; 1: YES}
 #'   \item{Area}{Area of the province}
@@ -118,12 +118,12 @@
 #' @keywords datasets
 #' @name Boots.sf
 #' @usage data(Boots.sf)
-#' @source Boots, B. (2003) \url{https://link.springer.com/content/pdf/10.1007/s10109-003-0110-3.pdf}
+#' @source Boots, B. (2003) Developing local measures of spatial association for categorical data, Journal of Geographical Systems, 5(2), 139-160. \doi{10.1007/s10109-003-0110-3}
 #'
 #' @references
 #'   \itemize{
 #'     \item Boots, B. (2003). Developing local measures of spatial association
-#'     for categorical data. Journal of Geographical Systems, 5(2), 139-160.
+#'     for categorical data. Journal of Geographical Systems, 5(2), 139-160. \doi{10.1007/s10109-003-0110-3}
 #'     \item Upton G., Fingleton B. (1985) Spatial data analysis by example.
 #'     Volume 1: Point pattern and quantitative data.
 #'     John Wiley & Sons, Chichester

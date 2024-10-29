@@ -107,15 +107,15 @@ plot(qmap)
 
 # Case 2:
 data(provinces_spain)
-sf::sf_use_s2(FALSE)
+# sf::sf_use_s2(FALSE)
 m = 3
 r = 1
 
-provinces_spain$Male2Female <- factor(provinces_spain$Male2Female > 100)
-levels(provinces_spain$Male2Female) = c("men","woman")
+provinces_spain$Mal2Fml <- factor(provinces_spain$Mal2Fml > 100)
+levels(provinces_spain$Mal2Fml) = c("men","woman")
 provinces_spain$Coast <- factor(provinces_spain$Coast)
 levels(provinces_spain$Coast) = c("no","yes")
-formula <- ~ Coast + Male2Female
+formula <- ~ Coast + Mal2Fml
 qmap <- Q.map.test(formula = formula, data = provinces_spain, m = m, r = r,
                    type ="combinations")
 print(qmap)
