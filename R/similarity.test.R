@@ -99,7 +99,7 @@
 #'
 #' # Case 3:
 #' data(provinces_spain)
-#' listw <- spdep::poly2nb(as(provinces_spain,"Spatial"), queen = FALSE)
+#' listw <- spdep::poly2nb(provinces_spain, queen = FALSE)
 #' provinces_spain$Mal2Fml <- factor(provinces_spain$Mal2Fml > 100)
 #' levels(provinces_spain$Mal2Fml) = c("men","woman")
 #' formula <- ~ Mal2Fml

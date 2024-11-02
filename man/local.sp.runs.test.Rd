@@ -107,7 +107,7 @@ plot(lsrq, sf = FastFood.sf, sig = 0.05)
 # Case 3: With a sf object (poligons)
 fname <- system.file("shape/nc.shp", package="sf")
 nc <- sf::st_read(fname)
-listw <- spdep::poly2nb(as(nc,"Spatial"), queen = FALSE)
+listw <- spdep::poly2nb(nc, queen = FALSE)
 p <- c(1/6,3/6,2/6)
 rho = 0.5
 nc$fx <- dgp.spq(p = p, listw = listw, rho = rho)
@@ -124,7 +124,7 @@ plot(lsrq, sf = nc)
 
 # Case 4: With isolated areas
 data(provinces_spain)
-listw <- spdep::poly2nb(as(provinces_spain,"Spatial"), queen = FALSE)
+listw <- spdep::poly2nb(provinces_spain, queen = FALSE)
 provinces_spain$Mal2Fml<- factor(provinces_spain$Mal2Fml > 100)
 levels(provinces_spain$Mal2Fml) = c("men","woman")
 plot(provinces_spain["Mal2Fml"])

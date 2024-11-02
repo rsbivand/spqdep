@@ -158,7 +158,7 @@
 #' library(sf)
 #' fname <- system.file("shape/nc.shp", package="sf")
 #' nc <- sf::st_read(fname)
-#' listw <- spdep::poly2nb(as(nc,"Spatial"), queen = FALSE)
+#' listw <- spdep::poly2nb(nc, queen = FALSE)
 #' p <- c(1/6,3/6,2/6)
 #' rho = 0.5
 #' co <- sf::st_coordinates(sf::st_centroid(nc))

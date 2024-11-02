@@ -424,7 +424,7 @@ plot(lsrq, sig = 0.05)
 
 ```{r, warning = FALSE}
 data("provinces_spain")
-listw <- spdep::poly2nb(as(provinces_spain,"Spatial"), queen = FALSE)
+listw <- spdep::poly2nb(provinces_spain, queen = FALSE)
 provinces_spain$Mal2Fml <- factor(provinces_spain$Mal2Fml > 100)
 levels(provinces_spain$Mal2Fml) = c("men","woman")
 plot(provinces_spain["Mal2Fml"])
@@ -551,7 +551,7 @@ To apply the local Join Count statistic we consider the example of a regular lat
 
 ```{r}
 data(Boots.sf)
-listw <- spdep::poly2nb(as(Boots.sf,"Spatial"), queen = TRUE)
+listw <- spdep::poly2nb(Boots.sf, queen = TRUE)
 formula <- ~ BW
 ljc <- local.jc.test(formula = formula, data = Boots.sf, case="B", listw = listw)
 ```

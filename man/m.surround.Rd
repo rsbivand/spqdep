@@ -142,7 +142,7 @@ plot(msurr_polygonsf, type = 2)
 sfc = sf::st_sfc(sf::st_polygon(list(rbind(c(0,0), c(1,0), c(1,1), c(0,1), c(0,0)))))
 hexs <- sf::st_make_grid(sfc, cellsize = 0.1, square = FALSE)
 hexs.sf <- sf::st_sf(hexs)
-listw  <- spdep::poly2nb(as(hexs.sf, "Spatial"), queen = FALSE)
+listw  <- spdep::poly2nb(hexs.sf, queen = FALSE)
 m <- 3
 r <- 1
 msurr_polygonsf <- m.surround(x = hexs.sf, m = m, r = r)

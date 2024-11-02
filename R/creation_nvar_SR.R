@@ -32,7 +32,7 @@ creation_nvar_SR = function(listw=listw){
 
   ######
   # if (inherits(W, "sf")){
-  #    W <- poly2nb(as(hexs.sf, "Spatial"), queen = FALSE)
+  #    W <- poly2nb(hexs.sf, queen = FALSE)
   #    R <- length(W)
   #    co <- sf::st_coordinates(sf::st_centroid(hexs.sf))
   #    ang <- useful::cart2pol(co[,1],co[,2],degrees = T)[,2]$theta

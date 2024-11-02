@@ -33,7 +33,7 @@ plot(srq)
 # Example 2: Spain example (poligons with 0 neinghbourhood)
 data("provinces_spain")
 sf::sf_use_s2(FALSE)
-listw <- spdep::poly2nb(as(provinces_spain,"Spatial"), queen = FALSE)
+listw <- spdep::poly2nb(provinces_spain, queen = FALSE)
 provinces_spain$Older <- cut(provinces_spain$Older, breaks = c(-Inf,19,22.5,Inf))
 levels(provinces_spain$Older) = c("low","middle","high")
 formula <- ~ Older
