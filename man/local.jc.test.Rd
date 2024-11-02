@@ -51,15 +51,15 @@ only meaningful for those observations where \eqn{x_i=1}, since for \eqn{x_i=0} 
 \cr
 The object \code{listw} can be the class:
 \itemize{
-    \item \code{knn}: Objects of the class knn that consider the neighbours in
-    order of proximity.
-    \item \code{nb}: If the neighbours are obtained from an sf object, the code internally
+    \item{\code{knn}:} {Objects of the class knn that consider the neighbours in
+    order of proximity.}
+    \item {\code{nb}:} {If the neighbours are obtained from an sf object, the code internally
     will call the function \code{\link{nb2nb_order}} it will order them in order
-    of proximity of the centroids.
-    \item \code{matrix}: If a object of matrix class based in the inverse of
+    of proximity of the centroids.}
+    \item {\code{matrix}:} {If a object of matrix class based in the inverse of
     the distance in introduced as argument, the function \code{\link{nb2nb_order}} will
     also be called internally to transform the object the class matrix to a matrix of the
-     class nb with ordered neighbours.
+     class nb with ordered neighbours.}
     }
 }
 \section{Control arguments}{
@@ -80,20 +80,24 @@ listw <- spdep::knearneigh(coor, k = 4)
 p <- c(1/2,1/2)
 rho <- 0.5
 fx <- dgp.spq(p = p, listw = listw, rho = rho)
+if (requireNamespace("rgeoda", quietly=TRUE)) {
 ljc <- local.jc.test(fx = fx, coor = coor, case= "A", listw = listw)
 print(ljc)
 plot(ljc, coor = coor, sig = 0.1)
+}
 
 \donttest{
 # Case 2:Fastfood example. sf (points)
 data("FastFood.sf")
-# sf::sf_use_s2(FALSE)
+sf::sf_use_s2(FALSE)
 x <- sf::st_coordinates(sf::st_centroid(FastFood.sf))
 listw <- spdep::knearneigh(x, k = 6)
 formula <- ~ Type
+if (requireNamespace("rgeoda", quietly=TRUE)) {
 ljc <- local.jc.test(formula = formula, data = FastFood.sf, case = "H",listw = listw)
 print(ljc)
 plot(ljc, sf = FastFood.sf, sig = 0.05)
+}
 
 # Case 3: With a sf object (poligons)
 fname <- system.file("shape/nc.shp", package="sf")
@@ -103,29 +107,35 @@ p <- c(1/3,2/3)
 rho = 0.5
 nc$fx <- dgp.spq(p = p, listw = listw, rho = rho)
 plot(nc["fx"])
+if (requireNamespace("rgeoda", quietly=TRUE)) {
 formula <- ~ fx
 ljc <- local.jc.test(formula = formula, data = nc, case = "A", listw = listw)
 ljc
 plot(ljc, sf = nc)
+}
 
 # Case 4: With isolated areas
 data(provinces_spain)
-# sf::sf_use_s2(FALSE)
+sf::sf_use_s2(FALSE)
 listw <- spdep::poly2nb(as(provinces_spain,"Spatial"), queen = FALSE)
-provinces_spain$Mal2Fml<- factor(provinces_spain$Mal2Fml > 100)
-levels(provinces_spain$Mal2Fml) = c("men","woman")
-formula <- ~ Mal2Fml
+provinces_spain$Male2Female <- factor(provinces_spain$Male2Female > 100)
+levels(provinces_spain$Male2Female) = c("men","woman")
+formula <- ~ Male2Female
+if (requireNamespace("rgeoda", quietly=TRUE)) {
 ljc <- local.jc.test(formula = formula, data = provinces_spain, listw = listw)
 print(ljc)
 plot(ljc, sf = provinces_spain, sig = 0.1)
+}
 
 # Case 5: Regular lattice
 data(Boots.sf)
 listw <- spdep::poly2nb(as(Boots.sf,"Spatial"), queen = TRUE)
 formula <- ~ BW
+if (requireNamespace("rgeoda", quietly=TRUE)) {
 ljc <- local.jc.test(formula = formula, data = Boots.sf, case="B", listw = listw)
 print(ljc)
 plot(ljc, sf = Boots.sf, sig = 0.05)
+}
 lsr <- local.sp.runs.test(formula = formula, data = Boots.sf,
 distr = "bootstrap", nsim= 99, listw = listw)
 print(lsr)

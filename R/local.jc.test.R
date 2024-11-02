@@ -71,7 +71,6 @@
 #' @examples
 #'
 #' # Case 1: Local spatial runs test based on knn
-#' library(lwgeom)
 #' N <- 100
 #' cx <- runif(N)
 #' cy <- runif(N)
@@ -88,7 +87,6 @@
 #'
 #' \donttest{
 #' # Case 2:Fastfood example. sf (points)
-#' library(lwgeom)
 #' data("FastFood.sf")
 #' sf::sf_use_s2(FALSE)
 #' x <- sf::st_coordinates(sf::st_centroid(FastFood.sf))
@@ -101,7 +99,6 @@
 #' }
 #'
 #' # Case 3: With a sf object (poligons)
-#' library(lwgeom)
 #' fname <- system.file("shape/nc.shp", package="sf")
 #' nc <- sf::st_read(fname)
 #' listw <- spdep::poly2nb(as(nc,"Spatial"), queen = FALSE)
@@ -117,7 +114,6 @@
 #' }
 #'
 #' # Case 4: With isolated areas
-#' library(lwgeom)
 #' data(provinces_spain)
 #' sf::sf_use_s2(FALSE)
 #' listw <- spdep::poly2nb(as(provinces_spain,"Spatial"), queen = FALSE)
