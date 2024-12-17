@@ -40,3 +40,4 @@ Depends:
     R (>= 2.10)
 Suggests: 
     knitr
+BugReports: https://github.com/f8l5h9/spqdep/issues

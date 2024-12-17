@@ -12,6 +12,7 @@ Testing for Spatial Dependence of Qualitative Data in Cross Section. The list of
 Useful links:
 \itemize{
   \item \url{https://f8l5h9.github.io/spqdep/}
+  \item Report bugs at \url{https://github.com/f8l5h9/spqdep/issues}
 }
 
 }
