@@ -1,37 +1,26 @@
 ---
-title: "spqdep user guide"
-subtitle: "The user guide <br>  <br>  <br>"
+title: "User Guide"
 author:
 - Fernando A. López, Technical University of Cartagena (Spain)
 - Román Mínguez, University of Castilla-La Mancha (Spain)
 - Antonio Páez, McMaster University (Canada)
 - Manuel Ruiz, Technical University of Cartagena (Spain) <br> <br> <br>
 date: "`r Sys.Date()` <br>"
-output:
-  bookdown::html_document2:
-    number_sections: yes
-    toc: yes
-    toc_depth: 2
-    toc_float:
-      collapsed: no
-      smooth_scroll: no
-    toc_title: Article Outline
-    self_contained: TRUE
-    linkcolor: red
 link-citations: yes
 bibliography: ["bibliospq.bib"]
-vignette: |
-  %\VignetteIndexEntry{spq_userguide}
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{user-guide}
+  %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
-  %\VignetteEngine{knitr::rmarkdown} 
-editor_options: 
-  chunk_output_type: inline
 ---
 
-<style>
-body {
-text-align: justify}
-</style>
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
@@ -54,7 +43,7 @@ Global and local statistics give information about the spatial structure of the 
 
 Three data sets will be used as examples in this guide:
 
-- **provinces_spain**: The division of Spain into provinces. It is a multypolygon geometry with isolated provinces (Canary and Balearic islands without neighbouring provinces). See by example Paez et al. 2021.
+- **provinces_spain**: The division of Spain into provinces. It is a multypolygon geometry with isolated provinces (Canary and Balearic islands without neighbouring provinces). See for example @paezSpatioTemporalAnalysisEnvironmental2021.
 
 - **FastFood.sf**: A simple feature (sf) dataframe containing the locations of a selection of fast food restaurants in the city of Toronto, Canada (data are from 2008). The data set used as example in @ruiz2010. It is a geometry of points.
 
@@ -503,7 +492,7 @@ data(FastFood.sf)
 
 # Similarity test
 
-The Farber et al. (2014) paper develop the similarity test
+@farber_testing_2015 develop the similarity test.
 
 The \code{similarity.test()} function calculates the similarity test for both asymptotic distribution and permutational resampling.
 
@@ -537,7 +526,3 @@ summary(jc1)
 ```
 
 # References
-
-Farber, S., Marin, M. R., & Páez, A. (2015). Testing for spatial independence using similarity relations. Geographical Analysis, 47(2), 97-120.
-
-Paez, A., Lopez, F. A., Menezes, T., Cavalcanti, R., & Pitta, M. G. D. R. (2021). A spatio‐temporal analysis of the environmental correlates of COVID‐19 incidence in Spain. Geographical analysis, 53(3), 397-421.

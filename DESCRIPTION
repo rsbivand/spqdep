@@ -39,5 +39,6 @@ Imports:
 Depends: 
     R (>= 2.10)
 Suggests: 
-    knitr
+    knitr,
+    rmarkdown
 BugReports: https://github.com/f8l5h9/spqdep/issues

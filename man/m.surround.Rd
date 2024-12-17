@@ -126,19 +126,7 @@ msurr_points <- m.surround(x = provinces_spain, m = m, r = r,
 plot(msurr_points, type = 1)
 plot(msurr_points, type = 2)
 
-# Example 4: Examples with multipolygons
-fname <- system.file("shape/nc.shp", package="sf")
-nc <- sf::st_read(fname)
-plot(sf::st_geometry(nc))
-m <- 3
-r <- 1
-msurr_polygonsf <- m.surround(x = nc, m = m, r = r,
-                   distance = "Great Circle",
-                   control=list(dtmaxpc = 0.20))
-plot(msurr_polygonsf, type = 1)
-plot(msurr_polygonsf, type = 2)
-
-# Example 5: With regular lattice
+# Example 4: With regular lattice
 sfc = sf::st_sfc(sf::st_polygon(list(rbind(c(0,0), c(1,0), c(1,1), c(0,1), c(0,0)))))
 hexs <- sf::st_make_grid(sfc, cellsize = 0.1, square = FALSE)
 hexs.sf <- sf::st_sf(hexs)
