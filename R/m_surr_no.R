@@ -45,7 +45,7 @@ m_surr_no <- function(mdtfull, m = m, r = 1, initobs = 1,
   # dentro de los k vecinos mas proximos
   # if (is.null(control_knn)==FALSE){
   if ((control_knn != 0) && !is.null(coor)){
-    knn <- cbind(1:N,knearneigh(coor, control_knn)$nn)
+    knn <- cbind(1:N,spdep::knearneigh(coor, control_knn)$nn)
     int <- numeric()
     for (i in 1:dim(nnlist1)[1]){
       int[i] <- length(intersect(nnlist1[i,],knn[nnlist1[i,1],]))

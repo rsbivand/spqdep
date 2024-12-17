@@ -161,9 +161,9 @@
 #' # Case 1: Scan test bernoulli
 #' data(provinces_spain)
 #' sf::sf_use_s2(FALSE)
-#' provinces_spain$Male2Female <- factor(provinces_spain$Male2Female > 100)
-#' levels(provinces_spain$Male2Female) = c("men","woman")
-#' formula <- ~ Male2Female
+#' provinces_spain$Mal2Fml <- factor(provinces_spain$Mal2Fml > 100)
+#' levels(provinces_spain$Mal2Fml) = c("men","woman")
+#' formula <- ~ Mal2Fml
 #' scan <- scan.test(formula = formula, data = provinces_spain, case="men",
 #' nsim = 99, distr = "bernoulli")
 #' print(scan)
@@ -234,9 +234,9 @@
 #' # Case 6: Flexible windows
 #' data(provinces_spain)
 #' sf::sf_use_s2(FALSE)
-#' provinces_spain$Male2Female <- factor(provinces_spain$Male2Female > 100)
-#' levels(provinces_spain$Male2Female) = c("men","woman")
-#' formula <- ~ Male2Female
+#' provinces_spain$Mal2Fml <- factor(provinces_spain$Mal2Fml > 100)
+#' levels(provinces_spain$Mal2Fml) = c("men","woman")
+#' formula <- ~ Mal2Fml
 #' listw <- spdep::poly2nb(provinces_spain, queen = FALSE)
 #' scan <- scan.test(formula = formula, data = provinces_spain, case="men", listw = listw, nv = 6,
 #'                   nsim = 99, distr = "bernoulli", windows = "flexible")
@@ -260,20 +260,20 @@ scan.test <- function(formula = NULL, data = NULL, fx = NULL, coor = NULL, case 
   ## Define the W matrix
   if (windows=="flexible"){
     if (inherits(listw, "knn")){
-      listw <- nb2listw(knn2nb(listw),zero.policy = TRUE)
+      listw <- spdep::nb2listw(spdep::knn2nb(listw),zero.policy = TRUE)
     } else if (inherits(listw, "matrix")){
       listw <- (listw > 0)*1
-      listw <- mat2listw(listw)
+      listw <- spdep::mat2listw(listw)
     } else if (inherits(listw, "nb")){
-      listw <- nb2listw(listw,zero.policy = TRUE)
+      listw <- spdep::nb2listw(listw,zero.policy = TRUE)
     }
   }
   #'
   # Select the arguments: (formula + data) or bien incluye la variable (fx)
   if (!is.null(formula) && !is.null(data)) {
-    if (inherits(data, "Spatial")) data <- as(data, "sf")
-    mfx <- get_all_vars(formula, data)[,1]
-    data.name <- names(get_all_vars(formula, data))
+    if (inherits(data, "Spatial")) data <- methods::as(data, "sf")
+    mfx <- stats::get_all_vars(formula, data)[,1]
+    data.name <- names(stats::get_all_vars(formula, data))
   } else if (!is.null(fx)) {
     mfx <- fx
     if (is.null(names(fx))) data.name <- "fx"
@@ -316,14 +316,14 @@ scan.test <- function(formula = NULL, data = NULL, fx = NULL, coor = NULL, case 
 
   if (is.null(coor) &&
       sum(inherits(data, "sf")) > 0){
-    coor <- suppressWarnings(st_coordinates(st_centroid(data)))
+    coor <- suppressWarnings(sf::st_coordinates(sf::st_centroid(data)))
   }
 
   cx <- coor[,1]
   cy <- coor[,2]
 
   if (windows=="circular"){
-    nn <- suppressWarnings(cbind(1:N, knearneigh(cbind(cx, cy),
+    nn <- suppressWarnings(cbind(1:N, spdep::knearneigh(cbind(cx, cy),
                                                  k = (nv-1))$nn))
   }
   if (windows=="elliptic"){
@@ -428,8 +428,8 @@ scan.test <- function(formula = NULL, data = NULL, fx = NULL, coor = NULL, case 
     # if (dim(a)[1] > 1) {
     #   a <- a[1,]
     # }
-    cases.observ <- addmargins(table(mfx[MLC]))
-    cases.expect <- addmargins(table(mfx)*length(MLC)/N)
+    cases.observ <- stats::addmargins(table(mfx[MLC]))
+    cases.expect <- stats::addmargins(table(mfx)*length(MLC)/N)
     cases.names <- names(table(mfx[MLC]))
     # Alternative clusters with the same loglik that MLC
     # Es posible encontrar más de un cluster con la misma loglik

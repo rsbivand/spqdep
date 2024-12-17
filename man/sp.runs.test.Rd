@@ -31,22 +31,22 @@ Default value is NULL to don`t get CI of number of runs.}
 }
 \value{
 A object of the \emph{htest} and \emph{sprunstest} class
-  \tabular{ll}{
-    \code{data.name} \tab a character string giving the names of the data.\cr
-    \code{method} \tab the type of test applied ().\cr
-    \code{SR} \tab total number of runs \cr
-    \code{dnr} \tab empirical distribution of the number of runs \cr
-    \code{statistic} \tab Value of the homogeneity runs statistic. Negative sign indicates global homogeneity \cr
-    \code{alternative} \tab a character string describing the alternative hypothesis. \cr
-    \code{p.value} \tab p-value of the SRQ \cr
-    \code{pseudo.value} \tab the pseudo p-value of the SRQ test if nsim is not NULL\cr
-    \code{MeanNeig} \tab Mean of the Maximum number of neighborhood \cr
-    \code{MaxNeig} \tab Maximum number of neighborhood \cr
-    \code{listw} \tab The list of neighborhood \cr
-    \code{nsim} \tab number of boots (only for boots version) \cr
-    \code{SRGP} \tab nsim simulated values of statistic. \cr
-    \code{SRLP} \tab matrix with the number of runs for eacl localization. \cr
-    }
+\tabular{ll}{
+\code{data.name} \tab a character string giving the names of the data.\cr
+\code{method} \tab the type of test applied ().\cr
+\code{SR} \tab total number of runs \cr
+\code{dnr} \tab empirical distribution of the number of runs \cr
+\code{statistic} \tab Value of the homogeneity runs statistic. Negative sign indicates global homogeneity \cr
+\code{alternative} \tab a character string describing the alternative hypothesis. \cr
+\code{p.value} \tab p-value of the SRQ \cr
+\code{pseudo.value} \tab the pseudo p-value of the SRQ test if nsim is not NULL\cr
+\code{MeanNeig} \tab Mean of the Maximum number of neighborhood \cr
+\code{MaxNeig} \tab Maximum number of neighborhood \cr
+\code{listw} \tab The list of neighborhood \cr
+\code{nsim} \tab number of boots (only for boots version) \cr
+\code{SRGP} \tab nsim simulated values of statistic. \cr
+\code{SRLP} \tab matrix with the number of runs for eacl localization. \cr
+}
 }
 \description{
 This function compute the global spatial runs test for spatial independence of a
@@ -59,21 +59,21 @@ with a set of neighbours ordered by proximity.
 Three kinds of lists can be included to identify \eqn{m_i-environments}:\cr
 
 \itemize{
-    \item {\code{knn}:} {Objects of the class knn that consider the neighbours in order of proximity.}\cr
-    \item {\code{nb}:} {If the neighbours are obtained from an sf object, the code internally
-    will call the function \code{\link{nb2nb_order}} it will order them in order
-    of proximity of the centroids.}\cr
-    \item {\code{matrix}:} {If a object of matrix class based in the inverse of the distance in introduced
-    as argument, the function \code{\link{nb2nb_order}} will also be called internally
-    to transform the object the class matrix to a matrix of the class nb with ordered neighbours.} \cr
-    }
+\item  \code{knn}: Objects of the class knn that consider the neighbours in order of proximity.
+\item  \code{nb}: If the neighbours are obtained from an sf object, the code internally
+will call the function \code{\link{nb2nb_order}} it will order them in order
+of proximity of the centroids.
+\item  \code{matrix}: If a object of matrix class based in the inverse of the distance in introduced
+as argument, the function \code{\link{nb2nb_order}} will also be called internally
+to transform the object the class matrix to a matrix of the class nb with ordered neighbours.
+}
 
 Two alternative sets of arguments can be included in this function to compute the spatial runs test:
 
-  \tabular{ll}{
-    \code{Option 1} \tab A factor (fx) and a list of neighborhood (\code{listw}) of the class knn. \cr
-    \code{Option 2} \tab A sf object (data) and formula to specify the factor. A list of neighbourhood (listw) \cr
-    }
+\tabular{ll}{
+\code{Option 1} \tab A factor (fx) and a list of neighborhood (\code{listw}) of the class knn. \cr
+\code{Option 2} \tab A sf object (data) and formula to specify the factor. A list of neighbourhood (listw) \cr
+}
 }
 \section{Definition of spatial run}{
 
@@ -100,8 +100,8 @@ Following result by the Central Limit Theorem, the asymtotical distribution of \
 \deqn{SR^Q = N(\mu_{SR^Q},\sigma_{SR^Q})}
 
 In the one-tailed case, we must distinguish the lower-tailed test and the upper-tailed, which are associated
- with homogeneity and heterogeneity respectively. In the case of the lower-tailed test,
- the following hypotheses are used:\cr
+with homogeneity and heterogeneity respectively. In the case of the lower-tailed test,
+the following hypotheses are used:\cr
 
 \eqn{H_0:\{X_s\}_{s \in S}} is i.i.d.\cr
 \eqn{H_1}: The spatial distribution of the values of the categorical variable is more homogeneous than under the null hypothesis (according to the fixed association scheme).
@@ -117,9 +117,9 @@ of the values of the spatial categorical random variable.\cr
 
 \section{Control arguments}{
 
-  \tabular{ll}{
-    \code{seedinit} \tab Numerical value for the seed (only for boot version). Default value seedinit=123 \cr
-      }
+\tabular{ll}{
+\code{seedinit} \tab Numerical value for the seed (only for boot version). Default value seedinit=123 \cr
+}
 }
 
 \examples{
@@ -176,7 +176,7 @@ plot(srq)
 
 # Case 4: SRQ test (Asymptotic) using formula with a sf object (polygons) and nb
 data(provinces_spain)
-sf::sf_use_s2(FALSE)
+# sf::sf_use_s2(FALSE)
 listw <- spdep::poly2nb(provinces_spain, queen = FALSE)
 provinces_spain$Coast <- factor(provinces_spain$Coast)
 levels(provinces_spain$Coast) = c("no","yes")
@@ -220,7 +220,7 @@ plot(srq)
 
 # Case 6: SRQ test based on a distance matrix (inverse distance)
 data("FastFood.sf")
-sf::sf_use_s2(FALSE)
+# sf::sf_use_s2(FALSE)
 n = dim(FastFood.sf)[1]
 dis <- 1000000/matrix(as.numeric(sf::st_distance(FastFood.sf,FastFood.sf)), ncol = n, nrow = n)
 diag(dis) <- 0
@@ -242,19 +242,19 @@ plot(srq)
 }
 \references{
 \itemize{
-    \item Ruiz, M., López, F., and Páez, A. (2021).
-    A test for global and local homogeneity of categorical data based on spatial runs.
-      \emph{Working paper}.
-  }
+\item Ruiz, M., López, F., and Páez, A. (2021).
+A test for global and local homogeneity of categorical data based on spatial runs.
+\emph{Working paper}.
+}
 }
 \seealso{
 \code{\link{local.sp.runs.test}}, \code{\link{dgp.spq}}, \code{\link{Q.test}},
 }
 \author{
 \tabular{ll}{
-  Fernando López  \tab \email{fernando.lopez@upct.es} \cr
-  Román Mínguez  \tab \email{roman.minguez@uclm.es} \cr
-  Antonio Páez \tab \email{paezha@gmail.com} \cr
-  Manuel Ruiz \tab \email{manuel.ruiz@upct.es} \cr
-  }
+Fernando López  \tab \email{fernando.lopez@upct.es} \cr
+Román Mínguez  \tab \email{roman.minguez@uclm.es} \cr
+Antonio Páez \tab \email{paezha@gmail.com} \cr
+Manuel Ruiz \tab \email{manuel.ruiz@upct.es} \cr
+}
 }

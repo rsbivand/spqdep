@@ -12,7 +12,6 @@
 #' @return No return value, called for side effects
 #' @examples
 #' # Example 1: Local spatial runs test based on knn
-#' library(lwgeom)
 #' N <- 100
 #' cx <- runif(N)
 #' cy <- runif(N)
@@ -83,15 +82,16 @@ plot.localsrq <- function(x, ..., sf = NULL, coor = NULL,  sig = 0.05){
         (!inherits(lsrq$listw, "knn"))){
       coor <- as.data.frame(coor)
     }
-    sf <- st_as_sf(coor,coords = names(coor))
+    sf <- sf::st_as_sf(coor,coords = names(coor))
     mysize = 4
   }
   if (!is.null(sf)){
-    if (inherits(st_geometry(sf),
+    mysize = .2
+    if (inherits(sf::st_geometry(sf),
         "sfc_MULTIPOLYGON")) mysize = .2
-    if (inherits(st_geometry(sf),
+    if (inherits(sf::st_geometry(sf),
         "sfc_POLYGON")) mysize = .2
-    if (inherits(st_geometry(sf),
+    if (inherits(sf::st_geometry(sf),
         "sfc_POINT")) mysize = 4
   }
      sf$levels <- addNA(a)
@@ -99,16 +99,16 @@ plot.localsrq <- function(x, ..., sf = NULL, coor = NULL,  sig = 0.05){
       levels(sf$levels)[levels(sf$levels)=="1"] <- "sig +"
       levels(sf$levels)[levels(sf$levels)=="2"] <- "sig -"
       cols <- c("non-sig" = "grey77", "sig +" = "red", "sig -" = "blue")
-      lplot_runs <- ggplot(sf) +
-        geom_sf(aes(fill = levels),
+      lplot_runs <- ggplot2::ggplot(sf) +
+        ggplot2::geom_sf(ggplot2::aes(fill = levels),
                          color = "black", shape = 21,
                          size = mysize) +
-        theme_bw() +
-        theme(axis.text.x = element_blank(),
-                       axis.text.y = element_blank()) +
-        xlab(paste0("Significance p-value = ",
+        ggplot2::theme_bw() +
+        ggplot2::theme(axis.text.x = ggplot2::element_blank(),
+                       axis.text.y = ggplot2::element_blank()) +
+        ggplot2::xlab(paste0("Significance p-value = ",
                              sig)) +
-        scale_fill_manual(values = cols,
+        ggplot2::scale_fill_manual(values = cols,
                                    na.value ="grey",
                                    drop = FALSE)
       lplot_runs

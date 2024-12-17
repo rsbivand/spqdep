@@ -78,15 +78,16 @@ plot.scantest <- function(x, ..., sf = NULL, coor = NULL){
   #####################
   if (!is.null(z$coor)){
     coor <- as.data.frame(z$coor)
-    sf <- st_as_sf(coor,coords = names(coor))
+    sf <- sf::st_as_sf(coor,coords = names(coor))
     mysize = 4
   }
   if (!is.null(sf)){
-    if (inherits(st_geometry(sf)[1],
+    mysize = .2
+    if (inherits(sf::st_geometry(sf)[1],
         "sfc_MULTIPOLYGON")) mysize = .2
-    if (inherits(st_geometry(sf)[1],
+    if (inherits(sf::st_geometry(sf)[1],
         "sfc_POLYGON")) mysize = .2
-    if (inherits(st_geometry(sf)[1],
+    if (inherits(sf::st_geometry(sf)[1],
         "sfc_POINT")) mysize = 2
   }
   sf$levels <- addNA(a)
@@ -109,16 +110,16 @@ plot.scantest <- function(x, ..., sf = NULL, coor = NULL){
               "sig High (secondary)"="#FC856B","sig Low (secondary)"="#86E8FE")
   }
 
-  lplot_scan <- ggplot(sf) +
-    geom_sf(aes(fill = levels),
+  lplot_scan <- ggplot2::ggplot(sf) +
+    ggplot2::geom_sf(ggplot2::aes(fill = levels),
                      color = "black",
                      shape = 21, size = mysize) +
-    theme_bw() +
-    theme(axis.text.x = element_blank(),
-                   axis.text.y = element_blank()) +
-    xlab(paste0("Significance p-value of MLC = ",
+    ggplot2::theme_bw() +
+    ggplot2::theme(axis.text.x = ggplot2::element_blank(),
+                   axis.text.y = ggplot2::element_blank()) +
+    ggplot2::xlab(paste0("Significance p-value of MLC = ",
                          z$p.value)) +
-    scale_fill_manual(values = cols,
+    ggplot2::scale_fill_manual(values = cols,
                                na.value ="orange",
                                drop = FALSE)
 

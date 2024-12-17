@@ -82,27 +82,27 @@ summary.spqtest <- function(object, ...) {
   distance <- unique(table_res$distance)
   distribution <- unique(table_res$distr)
   if (distribution == "asymptotic") {
-    tbl <- table_res %>%
+    tbl <- table_res |>
       dplyr::select(var.name, type, Q, df, p.value,
              k, N, m, r, R,
-             n, `R/n`, `5k^m`) %>%
+             n, `R/n`, `5k^m`) |>
       dplyr::group_by(var.name, type)
   } else if (distribution == "mc") {
-    tbl <- table_res %>%
+    tbl <- table_res |>
     dplyr::select(var.name, type, Q, p.value,
            k, N, m, R,
-           n, `R/n`, `5k^m`) %>%
+           n, `R/n`, `5k^m`) |>
     dplyr::group_by(var.name, type)
   } else stop("distribution must be asymptotic or mc")
-  gt_tbl <- gt::gt(tbl) %>%
+  gt_tbl <- gt::gt(tbl) |>
     gt::tab_header(
       title = "Qualitative Dependence Test (Q)",
       subtitle = paste("Distribution: ",distribution,
                        ". Distance: ", distance,
-                       sep = "") ) %>%
+                       sep = "") ) |>
     gt::fmt_number(
       columns = c("Q","R/n"),
-      decimals = 2) %>%
+      decimals = 2) |>
     gt::fmt_number(
       columns = c("p.value"),
       decimals = 5)

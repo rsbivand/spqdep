@@ -16,8 +16,8 @@ An object of class \emph{summary.spqtest}
 }
 \description{
 This function summarizes estimated \emph{spqtest} objects.
-  The tables in the output include basic information for each test.
-  blablabla...
+The tables in the output include basic information for each test.
+blablabla...
 }
 \examples{
 # Example 1: With coordinates
@@ -39,9 +39,9 @@ plot(q.test)
 }
 \author{
 \tabular{ll}{
-  Fernando López  \tab \email{fernando.lopez@upct.es} \cr
-  Román Mínguez  \tab \email{roman.minguez@uclm.es} \cr
-  Antonio Páez \tab \email{paezha@gmail.com} \cr
-  Manuel Ruiz \tab \email{manuel.ruiz@upct.es} \cr
-  }
+Fernando López  \tab \email{fernando.lopez@upct.es} \cr
+Román Mínguez  \tab \email{roman.minguez@uclm.es} \cr
+Antonio Páez \tab \email{paezha@gmail.com} \cr
+Manuel Ruiz \tab \email{manuel.ruiz@upct.es} \cr
+}
 }

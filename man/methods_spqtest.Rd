@@ -21,22 +21,22 @@ This functions does not return any value
 \description{
 The \code{plot()} function allows the user obtain the plot of relative frequency
 of each symbol (standard and equivalent) with the confidence interval.
- The \code{print()} function is used to get a list with the values of Q test
- for standard symbolization based on permutations and for equivalent symbolization
- based on combinations. \code{summary()} print a table with the output of the Q test.
+The \code{print()} function is used to get a list with the values of Q test
+for standard symbolization based on permutations and for equivalent symbolization
+based on combinations. \code{summary()} print a table with the output of the Q test.
 }
 \references{
 \itemize{
-    \item Ruiz, M., López, F., and Páez, A. (2021).
-    A test for global and local homogeneity of categorical data based on spatial runs.
-      \emph{working paper}.
-  }
+\item Ruiz, M., López, F., and Páez, A. (2021).
+A test for global and local homogeneity of categorical data based on spatial runs.
+\emph{working paper}.
+}
 }
 \author{
 \tabular{ll}{
-  Fernando López  \tab \email{fernando.lopez@upct.es} \cr
-  Román Mínguez  \tab \email{roman.minguez@uclm.es} \cr
-  Antonio Páez \tab \email{paezha@gmail.com} \cr
-  Manuel Ruiz \tab \email{manuel.ruiz@upct.es} \cr
-  }
+Fernando López  \tab \email{fernando.lopez@upct.es} \cr
+Román Mínguez  \tab \email{roman.minguez@uclm.es} \cr
+Antonio Páez \tab \email{paezha@gmail.com} \cr
+Manuel Ruiz \tab \email{manuel.ruiz@upct.es} \cr
+}
 }

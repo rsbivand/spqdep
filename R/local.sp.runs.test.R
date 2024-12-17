@@ -19,15 +19,15 @@
 #' control = list())
 #' @details The object \code{listw} can be the class:
 #' \itemize{
-#'     \item{\code{knn}:} {Objects of the class knn that consider the neighbours in
-#'     order of proximity.}
-#'     \item {\code{nb}:} {If the neighbours are obtained from an sf object, the code internally
+#'     \item \code{knn}: Objects of the class knn that consider the neighbours in
+#'     order of proximity.
+#'     \item \code{nb}: If the neighbours are obtained from an sf object, the code internally
 #'     will call the function \code{\link{nb2nb_order}} it will order them in order
-#'     of proximity of the centroids.}
-#'     \item {\code{matrix}:} {If a object of matrix class based in the inverse of
+#'     of proximity of the centroids.
+#'     \item \code{matrix}: If a object of matrix class based in the inverse of
 #'     the distance in introduced as argument, the function \code{\link{nb2nb_order}} will
 #'     also be called internally to transform the object the class matrix to a matrix of the
-#'      class nb with ordered neighbours.}
+#'      class nb with ordered neighbours.
 #'     }
 #' @return The output is an object of the class localsrq \cr
 #' \cr
@@ -71,7 +71,6 @@
 #' @examples
 #'
 #' # Case 1: Local spatial runs test based on knn
-#' library(lwgeom)
 #' N <- 100
 #' cx <- runif(N)
 #' cy <- runif(N)
@@ -93,9 +92,8 @@
 
 #' \donttest{
 #' # Case 2:Fastfood example. sf (points)
-#' library(lwgeom)
 #' data("FastFood.sf")
-#' sf::sf_use_s2(FALSE)
+#' # sf::sf_use_s2(FALSE)
 #' x <- sf::st_coordinates(sf::st_centroid(FastFood.sf))
 #' listw <- spdep::knearneigh(x, k = 10)
 #' formula <- ~ Type
@@ -105,7 +103,6 @@
 #' }
 #'
 #' # Case 3: With a sf object (poligons)
-#' library(lwgeom)
 #' fname <- system.file("shape/nc.shp", package="sf")
 #' nc <- sf::st_read(fname)
 #' listw <- spdep::poly2nb(as(nc,"Spatial"), queen = FALSE)
@@ -124,13 +121,12 @@
 #' plot(lsrq, sf = nc)
 #'
 #' # Case 4: With isolated areas
-#' library(lwgeom)
 #' data(provinces_spain)
 #' listw <- spdep::poly2nb(as(provinces_spain,"Spatial"), queen = FALSE)
-#' provinces_spain$Male2Female <- factor(provinces_spain$Male2Female > 100)
-#' levels(provinces_spain$Male2Female) = c("men","woman")
-#' plot(provinces_spain["Male2Female"])
-#' formula <- ~ Male2Female
+#' provinces_spain$Mal2Fml<- factor(provinces_spain$Mal2Fml > 100)
+#' levels(provinces_spain$Mal2Fml) = c("men","woman")
+#' plot(provinces_spain["Mal2Fml"])
+#' formula <- ~ Mal2Fml
 #' lsrq <- local.sp.runs.test(formula = formula, data = provinces_spain, listw = listw)
 #' print(lsrq)
 #' plot(lsrq, sf = provinces_spain, sig = 0.1)
@@ -143,7 +139,6 @@
 #'
 #' # Case 5: SRQ test based on a distance matrix (inverse distance)
 #' \donttest{
-#' library(lwgeom)
 #' N <- 100
 #' cx <- runif(N)
 #' cy <- runif(N)
@@ -169,9 +164,8 @@
 #' plot(lsrq, sf = coor)
 #'
 #' # SRQ test based on inverse distance
-#' library(lwgeom)
 #' data("FastFood.sf")
-#' sf::sf_use_s2(FALSE)
+#' # sf::sf_use_s2(FALSE)
 #' n = dim(FastFood.sf)[1]
 #' dis <- 1000000/matrix(as.numeric(
 #'           sf::st_distance(FastFood.sf, FastFood.sf)),
@@ -181,7 +175,7 @@
 #' formula <- ~ Type
 #' lsrq <- local.sp.runs.test(formula = formula, data = FastFood.sf, listw = dis)
 #' print(lsrq)
-#' plot(lsrq, sf = FastFood.sf)
+#' # plot(lsrq, sf = FastFood.sf)
 #' }
 
 
@@ -224,7 +218,7 @@ local.sp.runs.test <-  function(formula = NULL, data = NULL, fx = NULL, distr = 
       listw <- nb2nb_order(listw=listw, sf = data)
     }
     if (inherits(listw, "matrix")){ # hay que ordenar los elementos
-      listw <- mat2listw(listw)$neighbours
+      listw <- spdep::mat2listw(listw)$neighbours
       class(listw) <- "nb"
       listw <- nb2nb_order(listw=listw, sf = data)
     }
@@ -238,8 +232,8 @@ local.sp.runs.test <-  function(formula = NULL, data = NULL, fx = NULL, distr = 
 
 # Selecciona los argumentos. Bien con (formula + data) o bien incluye la variable (fx)
   if (!is.null(formula) && !is.null(data)) {
-    if (inherits(data, "Spatial")) data <- as(data, "sf")
-    mxf <- get_all_vars(formula, data)
+    if (inherits(data, "Spatial")) data <- methods::as(data, "sf")
+    mxf <- stats::get_all_vars(formula, data)
   } else if (!is.null(fx)) {
     mxf <- fx
     # if (!is.matrix(mxf)) mxf <- as.matrix(mxf, ncol = 1)
@@ -281,7 +275,7 @@ for (i in 1:q){
 if (inherits(listw, "knn")){
 lnnb <- matrix(dim(listw$nn)[2],ncol = 1,nrow = dim(listw$nn)[1])}
 if (inherits(listw, "nb")){
-lnnb <- rowSums(nb2mat(listw,
+lnnb <- rowSums(spdep::nb2mat(listw,
                               style = 'B',
                               zero.policy = TRUE))
 }
@@ -349,11 +343,11 @@ MeanR <- 1 + lnnb*p
 StdR <- suppressWarnings(sqrt(lnnb*p*(1-p)+2*(lnnb-1)*(var2-p^2)+(lnnb-1)*(lnnb-2)*(var1-p^2)))
 ZZ <- (nruns-MeanR)/StdR
 if (alternative =="two.sided"){
-pZ <- 2*(1 - pnorm(abs(ZZ), mean = 0, sd = 1))
+pZ <- 2*(1 - stats::pnorm(abs(ZZ), mean = 0, sd = 1))
 } else if (alternative =="less"){
-pZ <- pnorm(ZZ, mean = 0, sd = 1)
+pZ <- stats::pnorm(ZZ, mean = 0, sd = 1)
 } else if (alternative =="greater"){
-pZ <- 1 - pnorm(ZZ, mean = 0, sd = 1)
+pZ <- 1 - stats::pnorm(ZZ, mean = 0, sd = 1)
 }
 
 local.SRQ <- cbind(nruns,MeanR,StdR,ZZ,pZ)
@@ -380,17 +374,17 @@ if (is.null(nsim) == FALSE && (distr != "asymptotic")){
   local.SRQP <- as.data.frame(local.SRQ[,1])
   names(local.SRQP) <- "SRQ"
   local.SRQP$EP.i <- rowMeans(LSRQP)
-  local.SRQP$SdP.i <- apply(LSRQP,1, sd, na.rm = TRUE)
+  local.SRQP$SdP.i <- apply(LSRQP,1, stats::sd, na.rm = TRUE)
 
   local.SRQP$zseudo.value <- (local.SRQP$SRQ - local.SRQP$EP.i)/local.SRQP$SdP.i
   if (alternative =="two.sided"){
-    pZ <- 2*(1 - pnorm(abs(local.SRQP$zseudo.value),
+    pZ <- 2*(1 - stats::pnorm(abs(local.SRQP$zseudo.value),
                               mean = 0, sd = 1))
   } else if (alternative =="less"){
-    pZ <- pnorm(local.SRQP$zseudo.value,
+    pZ <- stats::pnorm(local.SRQP$zseudo.value,
                        mean = 0, sd = 1)
   } else if (alternative =="greater"){
-    pZ <- 1 - pnorm(local.SRQP$zseudo.value,
+    pZ <- 1 - stats::pnorm(local.SRQP$zseudo.value,
                            mean = 0, sd = 1)
   }
   local.SRQP$pseudo.value <- pZ

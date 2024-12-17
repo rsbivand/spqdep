@@ -25,13 +25,13 @@
 #' Three kinds of lists can be included to identify \eqn{m_i-environments}:\cr
 #'
 #' \itemize{
-#'     \item {\code{knn}:} {Objects of the class knn that consider the neighbours in order of proximity.}\cr
-#'     \item {\code{nb}:} {If the neighbours are obtained from an sf object, the code internally
+#'     \item  \code{knn}: Objects of the class knn that consider the neighbours in order of proximity.
+#'     \item  \code{nb}: If the neighbours are obtained from an sf object, the code internally
 #'     will call the function \code{\link{nb2nb_order}} it will order them in order
-#'     of proximity of the centroids.}\cr
-#'     \item {\code{matrix}:} {If a object of matrix class based in the inverse of the distance in introduced
+#'     of proximity of the centroids.
+#'     \item  \code{matrix}: If a object of matrix class based in the inverse of the distance in introduced
 #'     as argument, the function \code{\link{nb2nb_order}} will also be called internally
-#'     to transform the object the class matrix to a matrix of the class nb with ordered neighbours.} \cr
+#'     to transform the object the class matrix to a matrix of the class nb with ordered neighbours.
 #'     }
 #'
 #' Two alternative sets of arguments can be included in this function to compute the spatial runs test:
@@ -172,7 +172,7 @@
 #'
 #' # Case 4: SRQ test (Asymptotic) using formula with a sf object (polygons) and nb
 #' data(provinces_spain)
-#' sf::sf_use_s2(FALSE)
+#' # sf::sf_use_s2(FALSE)
 #' listw <- spdep::poly2nb(provinces_spain, queen = FALSE)
 #' provinces_spain$Coast <- factor(provinces_spain$Coast)
 #' levels(provinces_spain$Coast) = c("no","yes")
@@ -216,7 +216,7 @@
 #'
 #' # Case 6: SRQ test based on a distance matrix (inverse distance)
 #' data("FastFood.sf")
-#' sf::sf_use_s2(FALSE)
+#' # sf::sf_use_s2(FALSE)
 #' n = dim(FastFood.sf)[1]
 #' dis <- 1000000/matrix(as.numeric(sf::st_distance(FastFood.sf,FastFood.sf)), ncol = n, nrow = n)
 #' diag(dis) <- 0
@@ -269,7 +269,7 @@ if (inherits(listw, "nb")){ # hay que ordenar los elementos
   listw <- nb2nb_order(listw=listw, sf = data)
 }
 if (inherits(listw, "matrix")){ # hay que ordenar los elementos
-      listw <- mat2listw(listw)$neighbours
+      listw <- spdep::mat2listw(listw)$neighbours
       class(listw) <- "nb"
       listw <- nb2nb_order(listw=listw, sf = data)
 }
@@ -285,8 +285,8 @@ if (sum(inherits(data, "sf")) == 0){
 ################################################
 # Selecciona los argumentos. Bien con (formula + data) o bien incluye la variable (fx)
   if (!is.null(formula) && !is.null(data)) {
-    if (inherits(data, "Spatial")) data <- as(data, "sf")
-    mxf <- get_all_vars(formula, data)
+    if (inherits(data, "Spatial")) data <- methods::as(data, "sf")
+    mxf <- stats::get_all_vars(formula, data)
   } else if (!is.null(fx)) {
     mxf <- fx
     # if (!is.matrix(mxf)) mxf <- as.matrix(mxf, ncol = 1)
@@ -330,7 +330,7 @@ for (i in 1:q){
 if (inherits(listw, "knn")){
 lnnb <- matrix(dim(listw$nn)[2],ncol = 1,nrow = dim(listw$nn)[1])}
 if (inherits(listw, "nb")){
-lnnb <- rowSums(nb2mat(listw, style = 'B',
+lnnb <- rowSums(spdep::nb2mat(listw, style = 'B',
                               zero.policy = TRUE))
 }
 
@@ -405,11 +405,11 @@ names(vec) <- c("Total runs","Mean total runs","Variance total runs")
 # The SRQ global test statistic which is N(0,1) distributed
 SRQ <- (SR-meanSR)/sqrt(varSR)
 if (alternative =="two.sided"){
-p.value <- 2*(1 - pnorm(abs(SRQ), mean = 0, sd = 1))
+p.value <- 2*(1 - stats::pnorm(abs(SRQ), mean = 0, sd = 1))
 } else if (alternative =="less"){
-p.value <- pnorm(SRQ, mean = 0, sd = 1)
+p.value <- stats::pnorm(SRQ, mean = 0, sd = 1)
 } else if (alternative =="greater"){
-p.value <- 1 - pnorm(SRQ, mean = 0, sd = 1)
+p.value <- 1 - stats::pnorm(SRQ, mean = 0, sd = 1)
 }
 
 ############################################################################
@@ -427,7 +427,7 @@ SRLP <- matrix(0,ncol = nsim, nrow = n)
     }
 
 vec <- c(SR,mean(colSums(SRLP)),
-         sd(colSums(SRLP))^2)
+         stats::sd(colSums(SRLP))^2)
 names(vec) <- c("Observed Total runs","Mean total runs boots","Variance total runs boots")
 
 if (alternative =="greater"){

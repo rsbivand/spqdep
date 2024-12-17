@@ -18,7 +18,7 @@ creation_nvar_SR = function(listw=listw){
 
 # Debe ser una matrix nb con elementos ordenados por DISTANCIA
   if (inherits(listw, "nb")){
-    m <- rowSums(nb2mat(listw, style = 'B',
+    m <- rowSums(spdep::nb2mat(listw, style = 'B',
                         zero.policy = TRUE))
     n <- length(listw)
     NNB <- matrix(-99,ncol=max(m),nrow=n)

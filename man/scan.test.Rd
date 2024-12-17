@@ -39,28 +39,28 @@ of "High" (default), "Both" or "Low".}
 }
 \value{
 A object of the \emph{htest} and \emph{scantest} class
-  \tabular{ll}{
-    \code{method} \tab The type of test applied ().\cr
-    \code{fx} \tab Factor included as input to get the scan test.\cr
-    \code{MLC} \tab Observations included into the Most Likelihood Cluster (MLC).\cr
-    \code{statistic} \tab Value of the scan test (maximum Log-likelihood ratio). \cr
-    \code{N} \tab Total number of observations.\cr
-    \code{nn} \tab Windows used to get the cluster.\cr
-    \code{nv} \tab Maximum number of observations into the cluster.\cr
-    \code{data.name} \tab A character string giving the name of the factor.\cr
-    \code{coor} \tab coordinates.\cr
-    \code{alternative} \tab Only for bernoulli spatial process. A character string describing
-    the alternative hypothesis select by the user.\cr
-    \code{p.value} \tab p-value of the scan test.\cr
-    \code{cases.expect} \tab Expected cases into the MLC.\cr
-    \code{cases.observ} \tab Observed cases into the MLC.\cr
-    \code{nsim} \tab Number of permutations.\cr
-    \code{scan.mc} \tab a (nsim x 1) vector with the loglik values under bootstrap permutation.\cr
-    \code{secondary.clusters} \tab a list with the observations included into the secondary clusters.\cr
-    \code{loglik.second} \tab a vector with the value of the secondary scan tests (maximum Log-likelihood ratio).\cr
-    \code{p.value.secondary} \tab a vector with the p-value of the secondary scan tests.\cr
-    \code{Alternative.MLC} \tab A vector with the observations included in another cluster with the same loglik than MLC.\cr
-    }
+\tabular{ll}{
+\code{method} \tab The type of test applied ().\cr
+\code{fx} \tab Factor included as input to get the scan test.\cr
+\code{MLC} \tab Observations included into the Most Likelihood Cluster (MLC).\cr
+\code{statistic} \tab Value of the scan test (maximum Log-likelihood ratio). \cr
+\code{N} \tab Total number of observations.\cr
+\code{nn} \tab Windows used to get the cluster.\cr
+\code{nv} \tab Maximum number of observations into the cluster.\cr
+\code{data.name} \tab A character string giving the name of the factor.\cr
+\code{coor} \tab coordinates.\cr
+\code{alternative} \tab Only for bernoulli spatial process. A character string describing
+the alternative hypothesis select by the user.\cr
+\code{p.value} \tab p-value of the scan test.\cr
+\code{cases.expect} \tab Expected cases into the MLC.\cr
+\code{cases.observ} \tab Observed cases into the MLC.\cr
+\code{nsim} \tab Number of permutations.\cr
+\code{scan.mc} \tab a (nsim x 1) vector with the loglik values under bootstrap permutation.\cr
+\code{secondary.clusters} \tab a list with the observations included into the secondary clusters.\cr
+\code{loglik.second} \tab a vector with the value of the secondary scan tests (maximum Log-likelihood ratio).\cr
+\code{p.value.secondary} \tab a vector with the p-value of the secondary scan tests.\cr
+\code{Alternative.MLC} \tab A vector with the observations included in another cluster with the same loglik than MLC.\cr
+}
 }
 \description{
 This function compute the spatial scan test for Bernoulli and
@@ -69,45 +69,45 @@ Multinomial categorical spatial process, and detect spatial clusters
 \details{
 Two alternative sets of arguments can be included in this function to compute the scan test:
 \itemize{
-    \item {\code{Option 1}: A factor (fx) and coordinates (coor)}.
-    \item {\code{Option 2}: A sf object (data) and the formula to specify the factor.
-    The function consider the coordinates of the centroids of the elements of th sf object.}
-    }
- The spatial scan statistics are widely used in epidemiology, criminology or ecology.
- Their purpose is to analyse the spatial distribution of points or geographical
- regions by testing the hypothesis of spatial randomness distribution on the
- basis of different distributions (e.g. Bernoulli, Poisson or Normal distributions).
- The \code{scan.test} function obtain the scan statistic for two relevant distributions related
- with categorical variables: the Bernoulli and Multinomial distribution.\cr
- The spatial scan statistic is based on the likelihood ratio test statistic and
- is formulated as follows:\cr
- \deqn{\Delta = { \max_{z \in Z,H_A} L(\theta|z) \over \max_{z \in Z,H_0} L(\theta|z)}}
- where Z represents the collection of scanning windows constructed on the study region,
- \eqn{H_A} is an alternative hypothesis, \eqn{H_0} is a null hypothesis, and \eqn{L(\theta|z)}
-  is the likelihood function with parameter \eqn{\theta} given window Z\cr.
-  The null hypothesis says that there is no spatial clustering on the study region, and
-  the alternative hypothesis is that there is a certain area with high (or low) rates of
-  outcome variables. The null and alternative hypotheses and the likelihood function may
-  be expressed in different ways depending on the probability model under consideration.\cr
- To test independence in a spatial process, under the null, the type of windows is
- irrelevant but under the alternative the elliptic
- windows can to identify with more precision the cluster.
+\item {\code{Option 1}: A factor (fx) and coordinates (coor)}.
+\item {\code{Option 2}: A sf object (data) and the formula to specify the factor.
+The function consider the coordinates of the centroids of the elements of th sf object.}
+}
+The spatial scan statistics are widely used in epidemiology, criminology or ecology.
+Their purpose is to analyse the spatial distribution of points or geographical
+regions by testing the hypothesis of spatial randomness distribution on the
+basis of different distributions (e.g. Bernoulli, Poisson or Normal distributions).
+The \code{scan.test} function obtain the scan statistic for two relevant distributions related
+with categorical variables: the Bernoulli and Multinomial distribution.\cr
+The spatial scan statistic is based on the likelihood ratio test statistic and
+is formulated as follows:\cr
+\deqn{\Delta = { \max_{z \in Z,H_A} L(\theta|z) \over \max_{z \in Z,H_0} L(\theta|z)}}
+where Z represents the collection of scanning windows constructed on the study region,
+\eqn{H_A} is an alternative hypothesis, \eqn{H_0} is a null hypothesis, and \eqn{L(\theta|z)}
+is the likelihood function with parameter \eqn{\theta} given window Z\cr.
+The null hypothesis says that there is no spatial clustering on the study region, and
+the alternative hypothesis is that there is a certain area with high (or low) rates of
+outcome variables. The null and alternative hypotheses and the likelihood function may
+be expressed in different ways depending on the probability model under consideration.\cr
+To test independence in a spatial process, under the null, the type of windows is
+irrelevant but under the alternative the elliptic
+windows can to identify with more precision the cluster.
 
- For big data sets (N >>) the windows = "elliptic" can be so slowly
+For big data sets (N >>) the windows = "elliptic" can be so slowly
 
 \strong{Bernoulli version}\cr
 \cr
 When we have dichotomous outcome variables, such as cases and noncases of certain
- diseases, the Bernoulli model is used. The null hypothesis is written as
- \deqn{H_0 : p = q  \ \ for \ \  all  \ \ Z}
- and the alternative hypothesis is \cr
- \deqn{H_A : p \neq q  \ \ for  \ \ some  \ \ Z}
- where p and q are the outcome probabilities (e.g., the probability of being a case)
- inside and outside scanning window Z, respectively. Given window Z, the test statistic is:\cr
+diseases, the Bernoulli model is used. The null hypothesis is written as
+\deqn{H_0 : p = q  \ \ for \ \  all  \ \ Z}
+and the alternative hypothesis is \cr
+\deqn{H_A : p \neq q  \ \ for  \ \ some  \ \ Z}
+where p and q are the outcome probabilities (e.g., the probability of being a case)
+inside and outside scanning window Z, respectively. Given window Z, the test statistic is:\cr
 
 where cz and nz are the numbers of cases and observations (cases and noncases) within z,
- respectively, and C and N are the total numbers of cases and observations in the whole
- study region, respectively.\cr
+respectively, and C and N are the total numbers of cases and observations in the whole
+study region, respectively.\cr
 \deqn{\Delta = }
 \strong{Multinomial version of the scan test}\cr
 \cr
@@ -119,37 +119,37 @@ is denoted by Z, the null hypothesis for the statistic can be stated as follows:
 where \eqn{p_j} is the probability of being of event type j inside the window Z,
 and \eqn{q_j} is the probability of being of event type j outside the window.
 The alternative hypothesis is that for at least one type event the probability
- of being of that type is different inside and outside of the window.\cr
+of being of that type is different inside and outside of the window.\cr
 
- The statistic is built as a likelihood ratio, and takes the following
- form after transformation using the natural logarithm:
+The statistic is built as a likelihood ratio, and takes the following
+form after transformation using the natural logarithm:
 \deqn{\Delta = \max_Z \{\sum_j \{ S_j^Z log({ S_j^Z \over S^Z }) +
 (S_j-S_j^Z) log({ {S_j-S_j^Z} \over {S-S^Z} })\}\}-\sum_j S_j log({ S_j \over S }) }
 where S is the total number of events in the study area and \eqn{S_j} is the total number
 of events of type j. The superscript Z denotes the same but for the sub-region
 defined by the moving window. \cr
 The theoretical distribution of the statistic under the null hypothesis is not known,
- and therefore significance is evaluated numerically by simulating neutral landscapes
- (obtained using a random spatial process) and contrasting the empirically calculated
- statistic against the frequency of values obtained from the neutral landscapes.
- The results of the likelihood ratio serve to identify the most likely cluster,
- which is followed by secondary clusters by the expedient of sorting them according to
-  the magnitude of the test. As usual, significance is assigned by the analyst, and the
-   cutoff value for significance reflects the confidence of the analyst, or tolerance for error.\cr
- When implementing the statistic, the analyst must decide the shape of the
- window and the maximum number of cases that any given window can cover.
- Currently, analysis can be done using circular or elliptical windows.\cr
- Elliptical windows are more time consuming to evaluate but provide greater
- flexibility to contrast the distribution of events inside and outside the window,
- and are our selected shape in the analyses to follow. Furthermore, it is recommended
- that the maximum number of cases entering any given window does not exceed 50\% of
- all available cases.
+and therefore significance is evaluated numerically by simulating neutral landscapes
+(obtained using a random spatial process) and contrasting the empirically calculated
+statistic against the frequency of values obtained from the neutral landscapes.
+The results of the likelihood ratio serve to identify the most likely cluster,
+which is followed by secondary clusters by the expedient of sorting them according to
+the magnitude of the test. As usual, significance is assigned by the analyst, and the
+cutoff value for significance reflects the confidence of the analyst, or tolerance for error.\cr
+When implementing the statistic, the analyst must decide the shape of the
+window and the maximum number of cases that any given window can cover.
+Currently, analysis can be done using circular or elliptical windows.\cr
+Elliptical windows are more time consuming to evaluate but provide greater
+flexibility to contrast the distribution of events inside and outside the window,
+and are our selected shape in the analyses to follow. Furthermore, it is recommended
+that the maximum number of cases entering any given window does not exceed 50\\% of
+all available cases.
 }
 \section{Control arguments}{
 
-  \tabular{ll}{
-    \code{seedinit} \tab Numerical value for the seed (only for boot version). Default value seedinit=123 \cr
-      }
+\tabular{ll}{
+\code{seedinit} \tab Numerical value for the seed (only for boot version). Default value seedinit=123 \cr
+}
 }
 
 \examples{
@@ -157,9 +157,9 @@ The theoretical distribution of the statistic under the null hypothesis is not k
 # Case 1: Scan test bernoulli
 data(provinces_spain)
 sf::sf_use_s2(FALSE)
-provinces_spain$Male2Female <- factor(provinces_spain$Male2Female > 100)
-levels(provinces_spain$Male2Female) = c("men","woman")
-formula <- ~ Male2Female
+provinces_spain$Mal2Fml <- factor(provinces_spain$Mal2Fml > 100)
+levels(provinces_spain$Mal2Fml) = c("men","woman")
+formula <- ~ Mal2Fml
 scan <- scan.test(formula = formula, data = provinces_spain, case="men",
 nsim = 99, distr = "bernoulli")
 print(scan)
@@ -230,9 +230,9 @@ plot(scan)
 # Case 6: Flexible windows
 data(provinces_spain)
 sf::sf_use_s2(FALSE)
-provinces_spain$Male2Female <- factor(provinces_spain$Male2Female > 100)
-levels(provinces_spain$Male2Female) = c("men","woman")
-formula <- ~ Male2Female
+provinces_spain$Mal2Fml <- factor(provinces_spain$Mal2Fml > 100)
+levels(provinces_spain$Mal2Fml) = c("men","woman")
+formula <- ~ Mal2Fml
 listw <- spdep::poly2nb(provinces_spain, queen = FALSE)
 scan <- scan.test(formula = formula, data = provinces_spain, case="men", listw = listw, nv = 6,
                   nsim = 99, distr = "bernoulli", windows = "flexible")
@@ -244,28 +244,28 @@ plot(scan, sf = provinces_spain)
 }
 \references{
 \itemize{
-    \item Kulldorff M, Nagarwalla N. (1995).
-    Spatial disease clusters: Detection and Inference.
-      \emph{Statistics in Medicine}. 14:799-810
-    \item Jung I, Kulldorff M, Richard OJ (2010).
-    A spatial scan statistic for multinomial data.
-      \emph{Statistics in Medicine}. 29(18), 1910-1918
-     \item Páez, A., López-Hernández, F.A., Ortega-García, J.A., Ruiz, M. (2016).
-     Clustering and co-occurrence of cancer types: A comparison of techniques with
-     an application to pediatric cancer in Murcia, Spain.
-     \emph{Spatial Analysis in Health Geography}, 69-90.
-     \item Tango T., Takahashi K. (2005). A flexibly shaped spatial scan statistic
-     for detecting clusters, \emph{International Journal of Health Geographics} 4:11.
-  }
+\item Kulldorff M, Nagarwalla N. (1995).
+Spatial disease clusters: Detection and Inference.
+\emph{Statistics in Medicine}. 14:799-810
+\item Jung I, Kulldorff M, Richard OJ (2010).
+A spatial scan statistic for multinomial data.
+\emph{Statistics in Medicine}. 29(18), 1910-1918
+\item Páez, A., López-Hernández, F.A., Ortega-García, J.A., Ruiz, M. (2016).
+Clustering and co-occurrence of cancer types: A comparison of techniques with
+an application to pediatric cancer in Murcia, Spain.
+\emph{Spatial Analysis in Health Geography}, 69-90.
+\item Tango T., Takahashi K. (2005). A flexibly shaped spatial scan statistic
+for detecting clusters, \emph{International Journal of Health Geographics} 4:11.
+}
 }
 \seealso{
 \code{\link{local.sp.runs.test}}, \code{\link{dgp.spq}}, \code{\link{Q.test}},
 }
 \author{
 \tabular{ll}{
-  Fernando López  \tab \email{fernando.lopez@upct.es} \cr
-  Román Mínguez  \tab \email{roman.minguez@uclm.es} \cr
-  Antonio Páez \tab \email{paezha@gmail.com} \cr
-  Manuel Ruiz \tab \email{manuel.ruiz@upct.es} \cr
-  }
+Fernando López  \tab \email{fernando.lopez@upct.es} \cr
+Román Mínguez  \tab \email{roman.minguez@uclm.es} \cr
+Antonio Páez \tab \email{paezha@gmail.com} \cr
+Manuel Ruiz \tab \email{manuel.ruiz@upct.es} \cr
+}
 }

@@ -26,20 +26,20 @@ No return value, called for side effects
 }
 \description{
 The \code{plot()} function allows the user plot the significant cluster(s).\cr
- \code{\link{summary}} list information about the most likelihood cluster.\cr
+\code{\link{summary}} list information about the most likelihood cluster.\cr
 }
 \references{
 \itemize{
-    \item Ruiz, M., López, F., and Páez, A. (2021).
-    A test for global and local homogeneity of categorical data based on spatial runs.
-      \emph{Working paper}.
-  }
+\item Ruiz, M., López, F., and Páez, A. (2021).
+A test for global and local homogeneity of categorical data based on spatial runs.
+\emph{Working paper}.
+}
 }
 \author{
 \tabular{ll}{
-  Fernando López  \tab \email{fernando.lopez@upct.es} \cr
-  Román Mínguez  \tab \email{roman.minguez@uclm.es} \cr
-  Antonio Páez \tab \email{paezha@gmail.com} \cr
-  Manuel Ruiz \tab \email{manuel.ruiz@upct.es} \cr
-  }
+Fernando López  \tab \email{fernando.lopez@upct.es} \cr
+Román Mínguez  \tab \email{roman.minguez@uclm.es} \cr
+Antonio Páez \tab \email{paezha@gmail.com} \cr
+Manuel Ruiz \tab \email{manuel.ruiz@upct.es} \cr
+}
 }

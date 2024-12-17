@@ -31,7 +31,6 @@ expected values and standard deviation, z-value ans p-value is prited for each o
 }
 \examples{
 # Example 1: Local spatial runs test based on knn
-library(lwgeom)
 N <- 100
 cx <- runif(N)
 cy <- runif(N)
@@ -49,16 +48,16 @@ plot(lsrq, sig = 0.05)
 }
 \references{
 \itemize{
-    \item Ruiz, M., López, F., and Páez, A. (2021).
-    A test for global and local homogeneity of categorical data based on spatial runs.
-      \emph{working paper}.
-  }
+\item Ruiz, M., López, F., and Páez, A. (2021).
+A test for global and local homogeneity of categorical data based on spatial runs.
+\emph{working paper}.
+}
 }
 \author{
 \tabular{ll}{
-  Fernando López  \tab \email{fernando.lopez@upct.es} \cr
-  Román Mínguez  \tab \email{roman.minguez@uclm.es} \cr
-  Antonio Páez \tab \email{paezha@gmail.com} \cr
-  Manuel Ruiz \tab \email{manuel.ruiz@upct.es} \cr
-  }
+Fernando López  \tab \email{fernando.lopez@upct.es} \cr
+Román Mínguez  \tab \email{roman.minguez@uclm.es} \cr
+Antonio Páez \tab \email{paezha@gmail.com} \cr
+Manuel Ruiz \tab \email{manuel.ruiz@upct.es} \cr
+}
 }

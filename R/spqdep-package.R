@@ -1,3 +1,10 @@
+#' @keywords internal
+"_PACKAGE"
+
+## usethis namespace: start
+## usethis namespace: end
+NULL
+
 #' Selection of fast food restaurants in Toronto
 #'
 #' A simple feature (sf) dataframe containing the locations of a selection of fast food restaurants
@@ -11,8 +18,7 @@
 #'
 #' \describe{
 #'   \item{ID}{Unique identifier of record.}
-#'   \item{Class}{Factor with 3 types of fast food restaurants:
-#'   [P]izza, [S]andwich, and [H]amburger}
+#'   \item{Class}{Factor with 3 types of fast food restaurants: \[P\]izza, \[S\]andwich, and \[H\]amburger}
 #'   \item{geometry}{Geometry of simple features.}
 #' }
 #'
@@ -25,41 +31,6 @@
 #'     data using symbolic dynamics}. Journal of Geographical Systems. 12 (3) 281-309
 #'   }
 "FastFood.sf"
-
-#' Extract of 1880 US Census for Newark, New Jersey.
-#'
-#' A simple features object with geocoded information about respondents in the 1880 US Census
-#' with selected demographic information coded as dummy variables. The data are projected using
-#' EPSG: 32618 (WGS 84/UTM Zone 18N). The coordinates have been and jiggled to create unique coordinates
-#' for each observation.
-#'
-#' @format A simple features dataframe with 21,520 rows and 8 columns:
-#' \describe{
-#'   \item{ID}{Unique identifier of record.}
-#'   \item{YANKEE}{Dummy variable for ethnicity of respondent: 1 if Yankee, 0 otherwise.}
-#'   \item{IRISH}{Dummy variable for ethnicity of respondent: 1 if Irish, 0 otherwise.}
-#'   \item{GERMAN}{Dummy variable for ethnicity of respondent: 1 if German, 0 otherwise.}
-#'   \item{under30}{Dummy variable for age of respondent: 1 if younger than 30 years old, 0 otherwise.}
-#'   \item{mar}{Dummy variable for marital status of respondent: 1 if married, 0 otherwise.}
-#'   \item{usborn}{Dummy variable for place of birth of respondent: 1 if born in the US, 0 otherwise.}
-#'   \item{geometry}{geometry of the simple features object}
-#' }
-#'
-#' @docType data
-#' @keywords datasets
-#' @name Newark.sf
-#' @usage data(Newark.sf)
-#' @source Páez et al. (2012) \doi{10.1080/00045608.2011.620502}
-#'
-#' @references
-#'   \itemize{
-#'     \item Paez, A., Ruiz, M., Lopez, F. & Logan, J. (2012). \emph{Measuring Ethnic Clustering
-#'      and Exposure with the Q Statistic: An Exploratory Analysis of Irish, Germans, and Yankees in 1880 Newark.}. Annals of the Association of American Geographers.
-#'   }
-#' @examples
-#'  data(Newark.sf)
-#'  summary(Newark.sf)
-"Newark.sf"
 
 #' Provinces in Spain.
 #'
@@ -74,7 +45,7 @@
 #'   \item{Density}{Population density in the province in persons/km^2}
 #'   \item{Older}{Percentage of population 65 and older in the provice in 2020}
 #'   \item{Median_Age}{Median age of population in the province in 2020}
-#'   \item{Male2Female}{Ratio of male to female population in the province in 2020}
+#'   \item{Mal2Fml}{Ratio of male to female population in the province in 2020}
 #'   \item{GDPpc}{GDP per capita in the province in 2016}
 #'   \item{Transit}{Dummy variable for mass transit system in province; 1: YES}
 #'   \item{Area}{Area of the province}
@@ -118,12 +89,12 @@
 #' @keywords datasets
 #' @name Boots.sf
 #' @usage data(Boots.sf)
-#' @source Boots, B. (2003) \url{https://link.springer.com/content/pdf/10.1007/s10109-003-0110-3.pdf}
+#' @source Boots, B. (2003) Developing local measures of spatial association for categorical data, Journal of Geographical Systems, 5(2), 139-160. \doi{10.1007/s10109-003-0110-3}
 #'
 #' @references
 #'   \itemize{
 #'     \item Boots, B. (2003). Developing local measures of spatial association
-#'     for categorical data. Journal of Geographical Systems, 5(2), 139-160.
+#'     for categorical data. Journal of Geographical Systems, 5(2), 139-160. \doi{10.1007/s10109-003-0110-3}
 #'     \item Upton G., Fingleton B. (1985) Spatial data analysis by example.
 #'     Volume 1: Point pattern and quantitative data.
 #'     John Wiley & Sons, Chichester
@@ -131,5 +102,4 @@
 #' @examples
 #'  data(Boots.sf)
 #'  summary(Boots.sf)
-#'  plot(Boots.sf)
 "Boots.sf"

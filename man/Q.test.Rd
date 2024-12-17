@@ -20,7 +20,7 @@ variable(s) to be tested.}
 \item{fx}{a factor  or a matrix of factors in columns}
 
 \item{coor}{(optional) a 2xN vector with spatial coordinates.
-Used when *data* is not a spatial object}
+Used when \emph{data} is not a spatial object}
 
 \item{m}{length of m-surrounding (default = 3).}
 
@@ -32,27 +32,27 @@ Used when *data* is not a spatial object}
 }
 \value{
 An list of two object of the class \code{htest}. Each element of the list return the:
-  \tabular{ll}{
-    \code{data.name} \tab a character string giving the names of the data.\cr
-    \code{statistic} \tab Value of the Q test \cr
-    \code{N} \tab total number of observations.\cr
-    \code{R} \tab total number of symbolized observations.\cr
-    \code{m} \tab length m-surrounding.\cr
-    \code{r} \tab degree of overlapping.\cr
-    \code{df} \tab degree of freedom.\cr
-    \code{distr} \tab type of distribution used to get the significance of the Q test.\cr
-    \code{type} \tab type of symbols.\cr
-    }
+\tabular{ll}{
+\code{data.name} \tab a character string giving the names of the data.\cr
+\code{statistic} \tab Value of the Q test \cr
+\code{N} \tab total number of observations.\cr
+\code{R} \tab total number of symbolized observations.\cr
+\code{m} \tab length m-surrounding.\cr
+\code{r} \tab degree of overlapping.\cr
+\code{df} \tab degree of freedom.\cr
+\code{distr} \tab type of distribution used to get the significance of the Q test.\cr
+\code{type} \tab type of symbols.\cr
+}
 }
 \description{
 A function to compute Q test for spatial qualitative data.
 }
 \details{
 The Q-test is a simple, consistent, and powerful statistic for qualitative spatial
- independence that we develop using concepts from symbolic dynamics and symbolic
-  entropy. The Q test can be used to detect, given a spatial distribution of events,
-  patterns of spatial association of qualitative variables in a wide variety of
-  settings. \cr
+independence that we develop using concepts from symbolic dynamics and symbolic
+entropy. The Q test can be used to detect, given a spatial distribution of events,
+patterns of spatial association of qualitative variables in a wide variety of
+settings. \cr
 The Q(m) statistic was introduced by Ruiz et al. (2010) as a tool to explore geographical
 co-location/co-occurrence of qualitative data. Consider a spatial variable X which is the
 result of a qualitative process with a set number of categorical outcomes \eqn{a_j} (j=1,...,k).
@@ -77,8 +77,8 @@ the m-surrounding, there are exactly k possible unique ways in which those value
 co-locate. This is the number of permutations with replacement.\cr
 For instance, if k=2
 (e.g. the possible outcomes are a1=0 and a2=1) and m=3, the following eight unique
-patterns of co-location are possible (the number of symbols is \eqn{n_{\sigma}}=8): {0,0,0}, {1,0,0},
-{0,1,0}, {0,0,1}, {1,1,0}, {1,0,1}, {0,1,1}, and {1,1,1}. Each unique co-locationtype
+patterns of co-location are possible (the number of symbols is \eqn{n_{\sigma}}=8): (0,0,0), (1,0,0),
+(0,1,0), (0,0,1), (1,1,0), (1,0,1), (0,1,1), and (1,1,1). Each unique co-locationtype
 can be denoted in a convenient way by means of a symbol \eqn{\sigma_i} \eqn{(i=1, 2,...,k^m)}. It follows
 that each site can be uniquely associated with a specific symbol, in a process termed
 symbolization. In this way, we say that a location s is of type \eqn{\sigma_i} if and only if \eqn{X_m(s)=\sigma_i}.\cr
@@ -107,7 +107,7 @@ The entropy function is bounded between \eqn{0 < h (m) \leq \eta}.\cr
 The Q statistic is essentially a likelihood ratio test between the symbolic entropy
 of the observed pattern and the entropy of the system under the null hypothesis
 of a random spatial sequence:
- \deqn{Q(m)=2R(\eta-h(m))}
+\deqn{Q(m)=2R(\eta-h(m))}
 with \eqn{\eta = ln(k^m)}. The statistic is asymptotically \eqn{\chi^2} distributed
 with degrees of freedom equal to the number of symbols minus one.\cr
 }
@@ -124,7 +124,7 @@ is upper than k percentage of maximum distance between anywhere observation.}
 \item{dtmaxknn}{A integer value 'k'. Delete degenerate surrounding based on the near neighbourhood criteria. Delete m-surrounding
 is a element of the m-surrounding is not include in the set of k near neighbourhood of the first element}
 \item{nsim}{number of simulations for get the Monte Carlo distribution.
- Default = 999}
+Default = 999}
 \item{seedinit}{seed to select the initial element to star
 the algorithm to get compute the m-surroundings or to start the simulation}
 }
@@ -137,39 +137,39 @@ Standard-Permutation Symbols — contains a large amount of topological informat
 regarding the units of analysis, including proximity and direction.
 In this sense, the protocol is fairly general. On the other hand, it is easy to see
 that the combinatorial possibilities can very quickly become unmanageable.
- For a process with k = 3 outcomes and m = 5, the number of symbols becomes
- \eqn{3^5 = 243}; for k = 6 and m = 4 it is  \eqn{6^4 = 1,296}. Depending on the number
- of observations N, the explosion in the number of symbols can very rapidly consume
- degrees of freedom for hypothesis testing, because as a rule of thumb
- it is recommended that the number of symbolized locations be at least five times
- the number of symbols used (e.g., \eqn{R \geq 5k^m}), and R will usually be a fraction of N.\cr
+For a process with k = 3 outcomes and m = 5, the number of symbols becomes
+\eqn{3^5 = 243}; for k = 6 and m = 4 it is  \eqn{6^4 = 1,296}. Depending on the number
+of observations N, the explosion in the number of symbols can very rapidly consume
+degrees of freedom for hypothesis testing, because as a rule of thumb
+it is recommended that the number of symbolized locations be at least five times
+the number of symbols used (e.g., \eqn{R \geq 5k^m}), and R will usually be a fraction of N.\cr
 
- As an alternative, we propose a symbolization protocol that sacrifices
- some amount of topological detail for conciseness. The alternative is based
- on the standard scheme; however, instead of retaining proximity and
- direction relationships, it maintains only the total number of occurrences
- of each outcome in an m-surrounding. We call these Equivalent-Combination Symbols.
- Because order in the sequence is not considered in this protocol, instead of a
- permutation with repetition, the number of symbols reflects a combination with
- repetition. \cr
+As an alternative, we propose a symbolization protocol that sacrifices
+some amount of topological detail for conciseness. The alternative is based
+on the standard scheme; however, instead of retaining proximity and
+direction relationships, it maintains only the total number of occurrences
+of each outcome in an m-surrounding. We call these Equivalent-Combination Symbols.
+Because order in the sequence is not considered in this protocol, instead of a
+permutation with repetition, the number of symbols reflects a combination with
+repetition. \cr
 }
 
 \section{Selection of m-surrounding with Controlled Degree of Overlapping (r)}{
 
- To select S locations for the analysis, coordinates are selected such that
- for any two coordinates \eqn{s_i} , \eqn{s_j} the number of overlapping nearest
- neighbours of \eqn{s_i} and \eqn{s_j} are at most r. The set S, which is a subset of all the
- observations N, is defined recursively as follows. First choose a location \eqn{s_0} at random and fix an integer r
- with \eqn{0 \leq r < m}. The integer r is the degree of overlap, the maximum number of observations that contiguous
- m-surroundings are allowed to have in common.\cr
- Let \eqn{ \{s_1^0, s_2^0,...,s_{m-1}^0 \}} be the set of nearest neighbours
- to \eqn{s_0}, where the \eqn{s_i^0} are ordered by distance to \eqn{s_0}, or angle in the case of ties.
- Let us call \eqn{s_1 = s_{m-r-1}^0} and define \eqn{ A_0 = \{s_0,s_0^1,...,s^0_{m-r-2} \}  } . Take the set of
- nearest neighbours to \eqn{s_1}, namely, \eqn{ \{ s_1^1, s_2^1,...,s^1_{m-1} \} } in the
- set of locations \eqn{S \setminus A_0 } and define \eqn{s_2=s^1_{m-r-1} }. Nor for i>1 we define
- \eqn{s_i = s^{i-1}_{m-r-1}} where \eqn{s^{i-1}_{m-r-1}} is in the ser of nearest neighbors to \eqn{s_{i-1}},
-  \eqn{ \{ s_1^{i-1},s_2^{i-1},...,s_{m-1}^{i-1} \} } ,of the set \eqn{S \setminus \{ \cup_{j=0}^{i-1} A_j \} }.
-  Continue this process while there are locations to symbolize.\cr
+To select S locations for the analysis, coordinates are selected such that
+for any two coordinates \eqn{s_i} , \eqn{s_j} the number of overlapping nearest
+neighbours of \eqn{s_i} and \eqn{s_j} are at most r. The set S, which is a subset of all the
+observations N, is defined recursively as follows. First choose a location \eqn{s_0} at random and fix an integer r
+with \eqn{0 \leq r < m}. The integer r is the degree of overlap, the maximum number of observations that contiguous
+m-surroundings are allowed to have in common.\cr
+Let \eqn{ \{s_1^0, s_2^0,...,s_{m-1}^0 \}} be the set of nearest neighbours
+to \eqn{s_0}, where the \eqn{s_i^0} are ordered by distance to \eqn{s_0}, or angle in the case of ties.
+Let us call \eqn{s_1 = s_{m-r-1}^0} and define \eqn{ A_0 = \{s_0,s_0^1,...,s^0_{m-r-2} \}  } . Take the set of
+nearest neighbours to \eqn{s_1}, namely, \eqn{ \{ s_1^1, s_2^1,...,s^1_{m-1} \} } in the
+set of locations \eqn{S \setminus A_0 } and define \eqn{s_2=s^1_{m-r-1} }. Nor for i>1 we define
+\eqn{s_i = s^{i-1}_{m-r-1}} where \eqn{s^{i-1}_{m-r-1}} is in the ser of nearest neighbors to \eqn{s_{i-1}},
+\eqn{ \{ s_1^{i-1},s_2^{i-1},...,s_{m-1}^{i-1} \} } ,of the set \eqn{S \setminus \{ \cup_{j=0}^{i-1} A_j \} }.
+Continue this process while there are locations to symbolize.\cr
 }
 
 \section{Selection of m-surroundings for bootstrap distribution}{
@@ -212,11 +212,11 @@ print(q.test)
 # Case 3: With a sf object with isolated areas
 data("provinces_spain")
 sf::sf_use_s2(FALSE)
-provinces_spain$Male2Female <- factor(provinces_spain$Male2Female > 100)
-levels(provinces_spain$Male2Female) = c("men","woman")
+provinces_spain$Mal2Fml<- factor(provinces_spain$Mal2Fml > 100)
+levels(provinces_spain$Mal2Fml) = c("men","woman")
 provinces_spain$Older <- cut(provinces_spain$Older, breaks = c(-Inf,19,22.5,Inf))
 levels(provinces_spain$Older) = c("low","middle","high")
-f1 <- ~ Older + Male2Female
+f1 <- ~ Older + Mal2Fml
 q.test <- Q.test(formula = f1,
 data = provinces_spain, m = 3, r = 1, control = list(seedinit = 1111))
 summary(q.test)
@@ -270,11 +270,11 @@ plot(q.test)
 }
 \references{
 \itemize{
-    \item Ruiz M, López FA, A Páez. (2010). Testing for spatial association of qualitative
-    data using symbolic dynamics. \emph{Journal of Geographical Systems}. 12 (3) 281-309
-    \item López, FA, and A Páez. (2012). Distribution-free inference for Q(m) based on permutational bootstrapping: an application
-    to the spatial co-location pattern of firms in Madrid \emph{Estadística Española}, 177, 135-156.
-  }
+\item Ruiz M, López FA, A Páez. (2010). Testing for spatial association of qualitative
+data using symbolic dynamics. \emph{Journal of Geographical Systems}. 12 (3) 281-309
+\item López, FA, and A Páez. (2012). Distribution-free inference for Q(m) based on permutational bootstrapping: an application
+to the spatial co-location pattern of firms in Madrid \emph{Estadística Española}, 177, 135-156.
+}
 }
 \author{
 \tabular{ll}{
@@ -282,5 +282,5 @@ Fernando López  \tab \email{fernando.lopez@upct.es} \cr
 Román Mínguez  \tab \email{roman.minguez@uclm.es} \cr
 Antonio Páez \tab \email{paezha@gmail.com} \cr
 Manuel Ruiz \tab \email{manuel.ruiz@upct.es} \cr
-  }
+}
 }

@@ -16,12 +16,12 @@ output:
       collapsed: no
       smooth_scroll: no
     toc_title: Article Outline
-    self_contained: false
+    self_contained: TRUE
     linkcolor: red
 link-citations: yes
 bibliography: ["bibliospq.bib"]
 vignette: |
-  %\VignetteIndexEntry{spqdep user guide}
+  %\VignetteIndexEntry{spq_userguide}
   %\VignetteEncoding{UTF-8}
   %\VignetteEngine{knitr::rmarkdown} 
 editor_options: 
@@ -83,19 +83,17 @@ cy <- runif(N)
 coor <- cbind(cx,cy)
 p <- c(1/6,3/6,2/6) # proportion of classes
 rho = 0.5 # level of spatial structure
-listw <- spdep::nb2listw(knn2nb(knearneigh(coor, k = 4)))
+listw <- spdep::nb2listw(spdep::knn2nb(spdep::knearneigh(coor, k = 4)))
 fx <- dgp.spq(list = listw, p = p, rho = rho)
 ```
 
 The next plot show the qualitative spatial process defined.
 
 ```{r, results='hide'}
-ggplot(data.frame(fx = fx, cx = cx, cy = cy), aes(x = cx, y = cy, color = fx)) + 
+ggplot(data.frame(fx = fx, cx = cx, cy = cy), ggplot2::aes(x = cx, y = cy, color = fx)) + 
     geom_point(size = 6) +
     theme_bw()
 ```
-
-![](dgp_example.png)
 
 # Q-test
 
@@ -285,9 +283,9 @@ plot(q.test)
 ```{r, warning = FALSE}
 # Case 3: With a sf object with isolated areas
 sf_use_s2(FALSE)
-provinces_spain$Male2Female <- factor(provinces_spain$Male2Female > 100)
-levels(provinces_spain$Male2Female) = c("men","woman")
-f1 <- ~ Male2Female
+provinces_spain$Mal2Fml <- factor(provinces_spain$Mal2Fml > 100)
+levels(provinces_spain$Mal2Fml) = c("men","woman")
+f1 <- ~ Mal2Fml
 q.test.sf <- Q.test(formula = f1, data = provinces_spain, m = 3, r = 1)
 ```
 
@@ -427,10 +425,10 @@ plot(lsrq, sig = 0.05)
 ```{r, warning = FALSE}
 data("provinces_spain")
 listw <- spdep::poly2nb(as(provinces_spain,"Spatial"), queen = FALSE)
-provinces_spain$Male2Female <- factor(provinces_spain$Male2Female > 100)
-levels(provinces_spain$Male2Female) = c("men","woman")
-plot(provinces_spain["Male2Female"])
-formula <- ~ Male2Female
+provinces_spain$Mal2Fml <- factor(provinces_spain$Mal2Fml > 100)
+levels(provinces_spain$Mal2Fml) = c("men","woman")
+plot(provinces_spain["Mal2Fml"])
+formula <- ~ Mal2Fml
 # Boots Version
 lsrq <- local.sp.runs.test(formula = formula, data = provinces_spain, listw = listw, distr ="bootstrap", nsim = 199)
 plot(lsrq, sf = provinces_spain, sig = 0.10)
@@ -455,7 +453,7 @@ plot(lsrq, sf = provinces_spain, sig = 0.10)
 - For qualitative spatial process with two categories the bernoulli scan test is obtain with the next code
 
 ```{r bernoulli-scan, warning = FALSE}
-formula <- ~ Male2Female
+formula <- ~ Mal2Fml
 scan.spain <- spqdep::scan.test(formula = formula, data = provinces_spain, 
                                 case="men", nsim = 99, distr = "bernoulli")
 print(scan.spain)
@@ -499,7 +497,8 @@ plot(scan.spain, sf = provinces_spain)
 ```
 
 ```{r, warning = FALSE}
-plot(scan.fastfood, sf = FastFood.sf)
+data(FastFood.sf)
+# plot(scan.fastfood, sf = FastFood.sf)
 ```
 
 # Similarity test
@@ -525,7 +524,7 @@ print(similarity)
 ```{r, warning = FALSE}
 provinces_spain$Older <- cut(provinces_spain$Older, breaks = c(-Inf,19,22.5,Inf))
 levels(provinces_spain$Older) = c("low","middle","high")
-f1 <- ~ Older + Male2Female
+f1 <- ~ Older + Mal2Fml
 jc1 <- jc.test(formula = f1, data = provinces_spain, distr = "asymptotic", alternative = "greater", zero.policy = TRUE)
 summary(jc1)
 ```
@@ -536,27 +535,6 @@ summary(jc1)
 jc1 <- jc.test(formula = f1, data = provinces_spain, distr = "mc", alternative = "greater", zero.policy = TRUE)
 summary(jc1)
 ```
-
-# Local join-count tests
-
-This function calculates the local Join Count tests. This function is a wrapper of **local_joincount** in the **rgeoda** package.
-
-This test can be apply only for binary variables (usually named B and W), and count the number of joins of type B-B where the proportion of observations with B is loewer than half. The interest lies in identifying co-occurrences of uncommon events, i.e., situations where observations that take on the value of B constitute much less than half of the sample.
-
-The statistic recently introduced by  @anselinLi2019 is defined as:
-
-$$BB_i = x_i  \sum_j{w_{ij}x_j}$$
-where $x_i=1$ if in the localization i the variable $X$ take the value $B$ and 0 in otherwise. The $w_{ij}$ are the elements of a binary spatial weights matrix. The $BB_i$ statistic only count the  observations where $x_i=1$, since for $x_i=0$ the result will always equal zero.
-
-To apply the local Join Count statistic we consider the example of a regular lattice 
-
-```{r}
-data(Boots.sf)
-listw <- spdep::poly2nb(as(Boots.sf,"Spatial"), queen = TRUE)
-formula <- ~ BW
-ljc <- local.jc.test(formula = formula, data = Boots.sf, case="B", listw = listw)
-```
-
 
 # References
 

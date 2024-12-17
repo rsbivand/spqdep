@@ -109,15 +109,15 @@
 #'
 #' # Case 2:
 #' data(provinces_spain)
-#' sf::sf_use_s2(FALSE)
+#' # sf::sf_use_s2(FALSE)
 #' m = 3
 #' r = 1
 #'
-#' provinces_spain$Male2Female <- factor(provinces_spain$Male2Female > 100)
-#' levels(provinces_spain$Male2Female) = c("men","woman")
+#' provinces_spain$Mal2Fml <- factor(provinces_spain$Mal2Fml > 100)
+#' levels(provinces_spain$Mal2Fml) = c("men","woman")
 #' provinces_spain$Coast <- factor(provinces_spain$Coast)
 #' levels(provinces_spain$Coast) = c("no","yes")
-#' formula <- ~ Coast + Male2Female
+#' formula <- ~ Coast + Mal2Fml
 #' qmap <- Q.map.test(formula = formula, data = provinces_spain, m = m, r = r,
 #'                    type ="combinations")
 #' print(qmap)
@@ -151,13 +151,13 @@ Q.map.test <- function(formula = formula, data = data, coor = NULL, m = m, r = 1
   if (inherits(data, "sf") && is.null(coor)){
     coor <- suppressWarnings(sf::st_centroid(
       sf::st_geometry(data)))
-    coor <- st_as_sf(coor)
+    coor <- sf::st_as_sf(coor)
   } else if (!inherits(data, "sf") && is.matrix(coor)){
     coor <- sp::SpatialPoints(coor)
-    coor <- as(coor, "sf")
+    coor <- methods::as(coor, "sf")
   } else stop("input data wrong")
 
-  df <- get_all_vars(formula, data)
+  df <- stats::get_all_vars(formula, data)
   # Control of factors
   if (sum(sapply(df,is.factor)) !=2) {stop ("include two factors")}
   if (length(levels(df[,1])) != length(levels(df[,2]))) {stop ("both factos must have the same length of classes")}
@@ -285,13 +285,13 @@ Q.map.test <- function(formula = formula, data = data, coor = NULL, m = m, r = 1
 
   QE <- 4*R*(log(2) - h + (1/2)*sum(rowSums(fnk*lfnk)))
   gl.Equivalence <- nusi - 1
-  p.value.Equivalence = pchisq(QE,
+  p.value.Equivalence = stats::pchisq(QE,
                                       df = gl.Equivalence,
                                       lower.tail = FALSE)
 
   QI <- 2*R*(-sum(rowSums(fnk*lfnk))+sum(FNK*LFNK))
   gl.Independence <- nusi*(nusi-2) + 1
-  p.value.Independence = pchisq(QI,
+  p.value.Independence = stats::pchisq(QI,
                                        df = gl.Independence,
                                        lower.tail = FALSE)
 

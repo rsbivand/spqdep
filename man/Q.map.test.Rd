@@ -26,19 +26,19 @@ type = "combinations", control = list())
 A list with two objects of the class \code{htest}. The first one
 is the QE test of Equivalence between maps and the second one is the QI test
 of independence between maps. the elements of each test are: \cr
-  \tabular{ll}{
-    \code{method} \tab a character string giving description of the method. \cr
-    \code{data.name} \tab a character string giving the name(s) of the data. \cr
-    \code{statistic} \tab the value of the statistic QE or/and QI. \cr
-    \code{alternative} \tab a character string describing the alternative hypothesis. \cr
-    \code{p.value} \tab  p-value for QE or QI. \cr
-    \code{parameter} \tab free degree of the statistic for QE or QI. \cr
-    \code{symb} \tab A matrix with the symbols. \cr
-    \code{mh} \tab m-surrounding of th map. \cr
-    \code{Tm} \tab number of maps (ONLY 2). \cr
-    \code{sample.size} \tab  number of symbolized observations. \cr
-    \code{nsk} \tab a matrix Tm x symbols with the frequency of the number of symbols of each map. \cr
-    }
+\tabular{ll}{
+\code{method} \tab a character string giving description of the method. \cr
+\code{data.name} \tab a character string giving the name(s) of the data. \cr
+\code{statistic} \tab the value of the statistic QE or/and QI. \cr
+\code{alternative} \tab a character string describing the alternative hypothesis. \cr
+\code{p.value} \tab  p-value for QE or QI. \cr
+\code{parameter} \tab free degree of the statistic for QE or QI. \cr
+\code{symb} \tab A matrix with the symbols. \cr
+\code{mh} \tab m-surrounding of th map. \cr
+\code{Tm} \tab number of maps (ONLY 2). \cr
+\code{sample.size} \tab  number of symbolized observations. \cr
+\code{nsk} \tab a matrix Tm x symbols with the frequency of the number of symbols of each map. \cr
+}
 }
 \description{
 This function compute the QE and QI tests for maps comparison based on symbolic entropy.
@@ -107,15 +107,15 @@ plot(qmap)
 
 # Case 2:
 data(provinces_spain)
-sf::sf_use_s2(FALSE)
+# sf::sf_use_s2(FALSE)
 m = 3
 r = 1
 
-provinces_spain$Male2Female <- factor(provinces_spain$Male2Female > 100)
-levels(provinces_spain$Male2Female) = c("men","woman")
+provinces_spain$Mal2Fml <- factor(provinces_spain$Mal2Fml > 100)
+levels(provinces_spain$Mal2Fml) = c("men","woman")
 provinces_spain$Coast <- factor(provinces_spain$Coast)
 levels(provinces_spain$Coast) = c("no","yes")
-formula <- ~ Coast + Male2Female
+formula <- ~ Coast + Mal2Fml
 qmap <- Q.map.test(formula = formula, data = provinces_spain, m = m, r = r,
                    type ="combinations")
 print(qmap)
@@ -132,22 +132,22 @@ summary(qmap[[1]]$mh)
 }
 \references{
 \itemize{
-    \item Ruiz M, López FA and A Páez (2011).
-    Comparison of Thematic Maps Using Symbolic Entropy.
-      \emph{International Journal of Geographical Information Science}, 26, 413-439.
-    \item Ruiz, M., López, FA, and Páez, A. (2010).
-    Testing for spatial association of qualitative data using symbolic dynamics.
-    \emph{Journal of Geographical Systems}, 12(3), 281-309.0.
-  }
+\item Ruiz M, López FA and A Páez (2011).
+Comparison of Thematic Maps Using Symbolic Entropy.
+\emph{International Journal of Geographical Information Science}, 26, 413-439.
+\item Ruiz, M., López, FA, and Páez, A. (2010).
+Testing for spatial association of qualitative data using symbolic dynamics.
+\emph{Journal of Geographical Systems}, 12(3), 281-309.0.
+}
 }
 \seealso{
 \code{\link{dgp.spq}}, \code{\link{m.surround}}, \code{\link{Q.test}}
 }
 \author{
 \tabular{ll}{
-  Fernando López  \tab \email{fernando.lopez@upct.es} \cr
-  Román Mínguez  \tab \email{roman.minguez@uclm.es} \cr
-  Antonio Páez \tab \email{paezha@gmail.com} \cr
-  Manuel Ruiz \tab \email{manuel.ruiz@upct.es} \cr
-  }
+Fernando López  \tab \email{fernando.lopez@upct.es} \cr
+Román Mínguez  \tab \email{roman.minguez@uclm.es} \cr
+Antonio Páez \tab \email{paezha@gmail.com} \cr
+Manuel Ruiz \tab \email{manuel.ruiz@upct.es} \cr
+}
 }

@@ -16,7 +16,7 @@ An object of the nb class with the elements in order.
 }
 \description{
 An auxiliary function. In the case of obtaining the list of neighbors of class
-nb or \code{\link{poly2nb}}, it is necessary to reorder the elements based on distance and/or angle.
+nb or poly2nb, it is necessary to reorder the elements based on distance and/or angle.
 }
 \details{
 Sort the elements of a list nb. First by distance and
@@ -43,15 +43,15 @@ listw.order <- nb2nb_order(listw = listw, sf = hexs.sf)
 }
 \author{
 \tabular{ll}{
-  Fernando López  \tab \email{fernando.lopez@upct.es} \cr
-  Román Mínguez  \tab \email{roman.minguez@uclm.es} \cr
-  Antonio Páez \tab \email{paez@gmail.com} \cr
-  Manuel Ruiz \tab \email{manuel.ruiz@upct.es} \cr
-  }
-  @references
-  \itemize{
-    \item Ruiz, M., López, F., and Páez, A. (2021).
-    A test for global and local homogeneity of categorical data based on spatial runs.
-      \emph{Working paper}.
-  }
+Fernando López  \tab \email{fernando.lopez@upct.es} \cr
+Román Mínguez  \tab \email{roman.minguez@uclm.es} \cr
+Antonio Páez \tab \email{paez@gmail.com} \cr
+Manuel Ruiz \tab \email{manuel.ruiz@upct.es} \cr
+}
+@references
+\itemize{
+\item Ruiz, M., López, F., and Páez, A. (2021).
+A test for global and local homogeneity of categorical data based on spatial runs.
+\emph{Working paper}.
+}
 }

@@ -13,10 +13,10 @@ cr_symb(k = k, m = m)
 }
 \value{
 A list with two types of symbols. Permutation and Combinations-totals
- \tabular{ll}{
-    \code{p_symb} \tab Matrix with symbols (permutations)\cr
-    \code{c_symb} \tab  Matrix with symbols (combinations)\cr
-    }
+\tabular{ll}{
+\code{p_symb} \tab Matrix with symbols (permutations)\cr
+\code{c_symb} \tab  Matrix with symbols (combinations)\cr
+}
 }
 \description{
 This function obtains the set of symbols to get the Q-statistic
@@ -33,18 +33,18 @@ symb25$c_symb # Combinations-totals symbols
 }
 \references{
 \itemize{
-    \item Ruiz M, López FA, A Páez. (2010). \emph{Testing for spatial association of qualitative
-    data using symbolic dynamics}. Journal of Geographical Systems. 12 (3) 281-309
-  }
+\item Ruiz M, López FA, A Páez. (2010). \emph{Testing for spatial association of qualitative
+data using symbolic dynamics}. Journal of Geographical Systems. 12 (3) 281-309
+}
 }
 \seealso{
 \code{\link{m.surround}}
 }
 \author{
 \tabular{ll}{
-  Fernando López  \tab \email{fernando.lopez@upct.es} \cr
-  Román Mínguez  \tab \email{roman.minguez@uclm.es} \cr
-  Antonio Páez \tab \email{paezha@gmail.com} \cr
-  Manuel Ruiz \tab \email{manuel.ruiz@upct.es} \cr
-  }
+Fernando López  \tab \email{fernando.lopez@upct.es} \cr
+Román Mínguez  \tab \email{roman.minguez@uclm.es} \cr
+Antonio Páez \tab \email{paezha@gmail.com} \cr
+Manuel Ruiz \tab \email{manuel.ruiz@upct.es} \cr
+}
 }

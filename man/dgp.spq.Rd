@@ -9,11 +9,11 @@ dgp.spq(listw = listw, p = p,  rho = rho, control = list())
 \arguments{
 \item{listw}{A \code{listw} object of the class nb, knn, listw o matrix created
 for example by
-  \code{\link[spdep]{nb2listw}} from \pkg{spatialreg} package; if
-  \code{\link[spdep]{nb2listw}} not given, set to
-  the same spatial weights as the \code{listw} argument. It can
-  also be a spatial weighting matrix of order \emph{(NxN)} instead of
-  a \code{listw} object. Default = \code{NULL}.}
+\code{\link[spdep]{nb2listw}} from \pkg{spatialreg} package; if
+\code{\link[spdep]{nb2listw}} not given, set to
+the same spatial weights as the \code{listw} argument. It can
+also be a spatial weighting matrix of order \emph{(NxN)} instead of
+a \code{listw} object. Default = \code{NULL}.}
 
 \item{p}{a vector with the percentage of elements of each categories.
 The lengths must be the number of categories.
@@ -37,22 +37,22 @@ and characteristics of a spatial qualitative dataset.
 }
 \details{
 In order to obtain categorical random variables with controlled degrees
- of spatial dependence, we have designed a two- stage data generating process:\cr
- \cr
- Firstly, we simulate autocorrelated data using the following model:
- \deqn{Y = (I - \rho W)^{-1} \epsilon}
- where \eqn{\epsilon = N(0,1)} I is the \eqn{N \times N} identity matrix, \eqn{\rho} is a parameter
-  of spatial dependence, and \emph{W} is a connectivity matrix that
-  determines the set of spatial relationships among points.\cr
-  \cr
-  In the second step of the data generation process, the continuous spatially
-  autocorrelated variable Y is used to define a discrete spatial process
-  as follows. Let \eqn{b_{ij}} be defined by:\cr
-  \deqn{p(Y \leq b_{ij})= {i \over j} \ \ \ with \ \ \ i<j}
-  Let \eqn{A =\{a_1,a_2,...,a_k\}} and define the discrete spatial process as:
-  \deqn{X_s=a_1 \ \ \ if \ \ \ Y_s \leq b_{1k}}
-  \deqn{X_s=a_i \ \ \ if \ \ \ b_{i-1k} < Y_s \leq b_{ik}}
-  \deqn{X_s=a_k \ \ \ if \ \ \ Y_s > b_{k-1k}}
+of spatial dependence, we have designed a two- stage data generating process:\cr
+\cr
+Firstly, we simulate autocorrelated data using the following model:
+\deqn{Y = (I - \rho W)^{-1} \epsilon}
+where \eqn{\epsilon = N(0,1)} I is the \eqn{N \times N} identity matrix, \eqn{\rho} is a parameter
+of spatial dependence, and \emph{W} is a connectivity matrix that
+determines the set of spatial relationships among points.\cr
+\cr
+In the second step of the data generation process, the continuous spatially
+autocorrelated variable Y is used to define a discrete spatial process
+as follows. Let \eqn{b_{ij}} be defined by:\cr
+\deqn{p(Y \leq b_{ij})= {i \over j} \ \ \ with \ \ \ i<j}
+Let \eqn{A =\{a_1,a_2,...,a_k\}} and define the discrete spatial process as:
+\deqn{X_s=a_1 \ \ \ if \ \ \ Y_s \leq b_{1k}}
+\deqn{X_s=a_i \ \ \ if \ \ \ b_{i-1k} < Y_s \leq b_{ik}}
+\deqn{X_s=a_k \ \ \ if \ \ \ Y_s > b_{k-1k}}
 }
 \section{Control arguments}{
 
@@ -82,18 +82,18 @@ plot(provinces_spain["xf"])
 }
 \references{
 \itemize{
-    \item Ruiz M, López FA, A Páez. (2010). \emph{Testing for spatial association of qualitative
-    data using symbolic dynamics}. Journal of Geographical Systems. 12 (3) 281-309
-  }
+\item Ruiz M, López FA, A Páez. (2010). \emph{Testing for spatial association of qualitative
+data using symbolic dynamics}. Journal of Geographical Systems. 12 (3) 281-309
+}
 }
 \seealso{
 \code{\link{Q.test}}, \code{\link{Q.map.test}}, \code{\link{sp.runs.test}}, \code{\link{scan.test}}
 }
 \author{
 \tabular{ll}{
-  Fernando López  \tab \email{fernando.lopez@upct.es} \cr
-  Román Mínguez  \tab \email{roman.minguez@uclm.es} \cr
-  Antonio Páez \tab \email{paezha@gmail.com} \cr
-  Manuel Ruiz \tab \email{manuel.ruiz@upct.es} \cr
-  }
+Fernando López  \tab \email{fernando.lopez@upct.es} \cr
+Román Mínguez  \tab \email{roman.minguez@uclm.es} \cr
+Antonio Páez \tab \email{paezha@gmail.com} \cr
+Manuel Ruiz \tab \email{manuel.ruiz@upct.es} \cr
+}
 }

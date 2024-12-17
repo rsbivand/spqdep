@@ -112,12 +112,12 @@
 #' ## Multinomial + Binomial using a sf multipolygon
 #' \donttest{
 #' data("provinces_spain")
-#' sf::sf_use_s2(FALSE)
-#' provinces_spain$Male2Female <- factor(provinces_spain$Male2Female > 100)
-#' levels(provinces_spain$Male2Female) = c("men","woman")
+#' # sf::sf_use_s2(FALSE)
+#' provinces_spain$Mal2Fml <- factor(provinces_spain$Mal2Fml > 100)
+#' levels(provinces_spain$Mal2Fml) = c("men","woman")
 #' provinces_spain$Older <- cut(provinces_spain$Older, breaks = c(-Inf,19,22.5,Inf))
 #' levels(provinces_spain$Older) = c("low","middle","high")
-#' f1 <- ~ Older + Male2Female
+#' f1 <- ~ Older + Mal2Fml
 #' jc1 <- jc.test(formula = f1,
 #'                data = provinces_spain,
 #'                distr = "mc",
@@ -127,7 +127,7 @@
 #'
 #' provinces_spain$Coast <- factor(provinces_spain$Coast)
 #' levels(provinces_spain$Coast) = c("no","yes")
-#' f2 <- ~ Male2Female + Coast
+#' f2 <- ~ Mal2Fml + Coast
 #' jc2 <- jc.test(formula = f2,
 #'                data = provinces_spain,
 #'                distr = "mc",
@@ -138,7 +138,7 @@
 #' # Case 2:
 #' ## Multinomial using a sf multipoint
 #' data("FastFood.sf")
-#' sf::sf_use_s2(FALSE)
+#' # sf::sf_use_s2(FALSE)
 #' f1 <- ~ Type
 #' jc3 <- jc.test(formula = f1,
 #'                data = FastFood.sf,
@@ -194,27 +194,27 @@ jc.test <- function (formula = NULL,
   spChk <- con$spChk
   cl <- match.call()
   if (is.null(zero.policy))
-    zero.policy <- get.ZeroPolicyOption()
+    zero.policy <- spatialreg::get.ZeroPolicyOption()
   stopifnot(is.logical(zero.policy))
   if (!is.null(formula) && !is.null(data)) {
-    if (inherits(data, "Spatial")) data <- as(data, "sf")
+    if (inherits(data, "Spatial")) data <- methods::as(data, "sf")
     if (inherits(data, "sf")) {
-      geom_data <- st_geometry(data)
+      geom_data <- sf::st_geometry(data)
       if (inherits(geom_data,
                    c("sfc_MULTIPOLYGON",
                      "sfc_POLYGON")))
-        nbdata <- poly2nb(data,
+        nbdata <- spdep::poly2nb(data,
                                  queen = queen)
       if (inherits(geom_data,
                    c("sfc_POINT")))
-        nbdata <- knn2nb(
-                    knearneigh(x = data,
+        nbdata <- spdep::knn2nb(
+          spdep::knearneigh(x = data,
                                       k = knn))
-      listw <- nb2listw(neighbours = nbdata,
+      listw <- spdep::nb2listw(neighbours = nbdata,
                                style = style,
                                zero.policy = zero.policy)
     }
-    mfx <- model.frame(formula, data,
+    mfx <- stats::model.frame(formula, data,
                               na.action = na.action)
   } else if (!is.null(fx)) { mfx <- fx }
   if (!is.null(listw)) listw = listw # listw provided as argument
@@ -236,14 +236,14 @@ jc.test <- function (formula = NULL,
     if (ki == 2) {
       # Binomial
       if (distr == "asymptotic") {
-        jci <- joincount.test(
+        jci <- spdep::joincount.test(
           fx = fxi, listw = listw,
           zero.policy = zero.policy,
           sampling = sampling,
           spChk = spChk,
           adjust.n = adjust.n
         )
-        jcimulti <- joincount.multi(fx = fxi,
+        jcimulti <- spdep::joincount.multi(fx = fxi,
                                       listw = listw,
                                       zero.policy = zero.policy,
                                       spChk = spChk,
@@ -256,15 +256,15 @@ jc.test <- function (formula = NULL,
         names(jci[[3]]$estimate) <- c("Diferent colour statistic",
                                       "Expectation", "Variance")
         if (alternative == "greater") {
-          jci[[3]]$p.value <- pnorm(jcimulti[3, c("z-value")],
+          jci[[3]]$p.value <- stats::pnorm(jcimulti[3, c("z-value")],
                           mean = 0, sd = 1,
                           lower.tail = FALSE)
         } else if (alternative == "lower") {
-          jci[[3]]$p.value <- pnorm(jcimulti[3, c("z-value")],
+          jci[[3]]$p.value <- stats::pnorm(jcimulti[3, c("z-value")],
                           mean = 0, sd = 1,
                           lower.tail = TRUE)
         } else {
-          jci[[3]]$p.value <- 2*pnorm(abs(jcimulti[3, c("z-value")]),
+          jci[[3]]$p.value <- 2*stats::pnorm(abs(jcimulti[3, c("z-value")]),
                             mean = 0, sd = 1,
                             lower.tail = FALSE)
 
@@ -272,7 +272,7 @@ jc.test <- function (formula = NULL,
         rm(jcimulti)
       } else {
         # FALTA POR INCLUIR ESTADÍSTICO BLACK-WHITE EN ESTE CASO...
-        jci <- joincount.mc(
+        jci <- spdep::joincount.mc(
           fx = fxi,
           listw = listw,
           nsim = nsim,
@@ -296,21 +296,21 @@ jc.test <- function (formula = NULL,
       }
     } else {
       if (distr == "asymptotic") {
-        jci <- joincount.multi(fx = fxi,
+        jci <- spdep::joincount.multi(fx = fxi,
                                       listw = listw,
                                       zero.policy = zero.policy,
                                       spChk = spChk,
                                       adjust.n = adjust.n)
         if (alternative == "greater") {
-          pvalue <- pnorm(jci[, c("z-value")],
+          pvalue <- stats::pnorm(jci[, c("z-value")],
                           mean = 0, sd = 1,
                           lower.tail = FALSE)
         } else if (alternative == "lower") {
-          pvalue <- pnorm(jci[, c("z-value")],
+          pvalue <- stats::pnorm(jci[, c("z-value")],
                           mean = 0, sd = 1,
                           lower.tail = TRUE)
         } else {
-          pvalue <- 2*pnorm(abs(jci[, c("z-value")]),
+          pvalue <- 2*stats::pnorm(abs(jci[, c("z-value")]),
                             mean = 0, sd = 1,
                             lower.tail = FALSE)
 
@@ -318,7 +318,7 @@ jc.test <- function (formula = NULL,
         jci <- cbind(jci, pvalue)
         } else {
         # Assumption: non-free sampling
-        jci_obs <- joincount.multi(fx = fxi,
+        jci_obs <- spdep::joincount.multi(fx = fxi,
                                           listw = listw,
                                           zero.policy = zero.policy,
                                           spChk = spChk,
@@ -331,7 +331,7 @@ jc.test <- function (formula = NULL,
         for (j in 1:nsim) {
           fx_sim <- sample(fxi, size = length(fxi),
                            replace = FALSE)
-          jci_sim <- joincount.multi(fx = fx_sim,
+          jci_sim <- spdep::joincount.multi(fx = fx_sim,
                                    listw = listw,
                                    zero.policy = zero.policy,
                                    spChk = spChk,
@@ -344,7 +344,7 @@ jc.test <- function (formula = NULL,
                                        1, mean,
                                        na.rm = TRUE)
         variancejoincount_all <- apply(joincount_all,
-                                       1, var,
+                                       1, stats::var,
                                        na.rm = TRUE)
         rankjoincount_all <- apply(joincount_all,
                                   1, rank,

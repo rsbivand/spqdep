@@ -27,15 +27,15 @@ of "High" (default), "Both" or "Low".}
 }
 \value{
 A object of the \emph{htest}
-  \tabular{ll}{
-    \code{data.name} \tab a character string giving the names of the data.\cr
-    \code{statistic} \tab Value of the similarity test \cr
-    \code{N} \tab total number of observations.\cr
-    \code{Zmlc} \tab Elements in the Most Likelihood Cluster.\cr
-    \code{alternative} \tab a character string describing the alternative hypothesis. \cr
-    \code{p.value} \tab p-value of the similarity test \cr
-    \code{similiarity.mc} \tab values of the similarity test in each permutation. \cr
-    }
+\tabular{ll}{
+\code{data.name} \tab a character string giving the names of the data.\cr
+\code{statistic} \tab Value of the similarity test \cr
+\code{N} \tab total number of observations.\cr
+\code{Zmlc} \tab Elements in the Most Likelihood Cluster.\cr
+\code{alternative} \tab a character string describing the alternative hypothesis. \cr
+\code{p.value} \tab p-value of the similarity test \cr
+\code{similiarity.mc} \tab values of the similarity test in each permutation. \cr
+}
 }
 \description{
 This function compute the nonparametric test for spatial independence
@@ -43,38 +43,38 @@ using symbolic analysis for categorical/qualitative spatial process.
 }
 \details{
 This testing approach for spatial independence that extends some of the properties
- of the join count statistic. The premise of the tests is similar to the join count
- statistic in that they use the concept of similarity between neighbouring spatial
- entities (Dacey 1968; Cliff and Ord 1973, 1981). However, it differs by taking
- into consideration the number of joins belonging locally to each spatial unit,
- rather than the total number of joins in the entire spatial system. The approach
- proposed here is applicable to spatial and network contiguity structures, and
- the number of neighbors belonging to observations need not be constant.\cr
+of the join count statistic. The premise of the tests is similar to the join count
+statistic in that they use the concept of similarity between neighbouring spatial
+entities (Dacey 1968; Cliff and Ord 1973, 1981). However, it differs by taking
+into consideration the number of joins belonging locally to each spatial unit,
+rather than the total number of joins in the entire spatial system. The approach
+proposed here is applicable to spatial and network contiguity structures, and
+the number of neighbors belonging to observations need not be constant.\cr
 
- We define an equivalence relation \eqn{\sim} in the set of locations S. An equivalence
- relation satisfies the following properties:\cr \cr
- Reflexive: \eqn{s_i \sim s_i} for all \eqn{s_i \in S},\cr
- Symmetric: If \eqn{s_i \sim s_j}, then \eqn{s_j \sim s_i} for all \eqn{s_i,\ s_j \in S} and\cr
- Transitive: If \eqn{s_i \sim s_j} and \eqn{s_j \sim s_k}, then \eqn{s_i \sim s_k}
- for all \eqn{s_i, \  s_j, \ s_k \in S}\cr \cr
- We call the relation \eqn{\sim} a similarity relation. Then, the null hypothesis that
- we are interested in is
- \deqn{H_0: \{X_s\}_{s \in S} \ \ is\ \ iid}
- Assume that, under the null hypothesis, \eqn{P(s_i \sim s_{ji}) = p_i} for all
- \eqn{s_{ji} \in N_{s_i}}. \cr
- Define\cr
- \deqn{I_{ij}=1 \ \ if \ \ s_i \sim s_{ji} \ \ ; 0 \ \ otherwise}\cr
- Then, for a fixed degree d and for all location si with degree d, the variable d\cr
- \deqn{\Lambda_{(d,i)}=\sum_{j=1}^d I_{ij}}
- gives the number of nearest neighbours to si that are similar to si.
- Therefore, under the null hypothesis, \eqn{H_0}, \eqn{\Lambda(d,i)} follows a binomial
- distribution \eqn{B(d, p_i)}.
+We define an equivalence relation \eqn{\sim} in the set of locations S. An equivalence
+relation satisfies the following properties:\cr \cr
+Reflexive: \eqn{s_i \sim s_i} for all \eqn{s_i \in S},\cr
+Symmetric: If \eqn{s_i \sim s_j}, then \eqn{s_j \sim s_i} for all \eqn{s_i,\ s_j \in S} and\cr
+Transitive: If \eqn{s_i \sim s_j} and \eqn{s_j \sim s_k}, then \eqn{s_i \sim s_k}
+for all \eqn{s_i, \  s_j, \ s_k \in S}\cr \cr
+We call the relation \eqn{\sim} a similarity relation. Then, the null hypothesis that
+we are interested in is
+\deqn{H_0: \{X_s\}_{s \in S} \ \ is\ \ iid}
+Assume that, under the null hypothesis, \eqn{P(s_i \sim s_{ji}) = p_i} for all
+\eqn{s_{ji} \in N_{s_i}}. \cr
+Define\cr
+\deqn{I_{ij}=1 \ \ if \ \ s_i \sim s_{ji} \ \ ; 0 \ \ otherwise}\cr
+Then, for a fixed degree d and for all location si with degree d, the variable d\cr
+\deqn{\Lambda_{(d,i)}=\sum_{j=1}^d I_{ij}}
+gives the number of nearest neighbours to si that are similar to si.
+Therefore, under the null hypothesis, \eqn{H_0}, \eqn{\Lambda(d,i)} follows a binomial
+distribution \eqn{B(d, p_i)}.
 }
 \section{Control arguments}{
 
-  \tabular{ll}{
-    \code{seedinit} \tab Numerical value for the seed (only for boot version). Default value seedinit=123 \cr
-      }
+\tabular{ll}{
+\code{seedinit} \tab Numerical value for the seed (only for boot version). Default value seedinit=123 \cr
+}
 }
 
 \examples{
@@ -102,27 +102,27 @@ print(similarity)
 # Case 3:
 data(provinces_spain)
 listw <- spdep::poly2nb(as(provinces_spain,"Spatial"), queen = FALSE)
-provinces_spain$Male2Female <- factor(provinces_spain$Male2Female > 100)
-levels(provinces_spain$Male2Female) = c("men","woman")
-formula <- ~ Male2Female
+provinces_spain$Mal2Fml <- factor(provinces_spain$Mal2Fml > 100)
+levels(provinces_spain$Mal2Fml) = c("men","woman")
+formula <- ~ Mal2Fml
 similarity <- similarity.test(formula = formula, data = provinces_spain, listw = listw)
 print(similarity)
 }
 \references{
 \itemize{
-    \item Farber, S., Marin, M. R., & Paez, A. (2015).
-    Testing for spatial independence using similarity relations.
-      \emph{Geographical Analysis}. 47(2), 97-120.
-  }
+\item Farber, S., Marin, M. R., & Paez, A. (2015).
+Testing for spatial independence using similarity relations.
+\emph{Geographical Analysis}. 47(2), 97-120.
+}
 }
 \seealso{
 \code{\link{sp.runs.test}}, \code{\link{dgp.spq}}, \code{\link{Q.test}}, , \code{\link{scan.test}}
 }
 \author{
 \tabular{ll}{
-  Fernando López  \tab \email{fernando.lopez@upct.es} \cr
-  Román Mínguez  \tab \email{roman.minguez@uclm.es} \cr
-  Antonio Páez \tab \email{paezha@gmail.com} \cr
-  Manuel Ruiz \tab \email{manuel.ruiz@upct.es} \cr
-  }
+Fernando López  \tab \email{fernando.lopez@upct.es} \cr
+Román Mínguez  \tab \email{roman.minguez@uclm.es} \cr
+Antonio Páez \tab \email{paezha@gmail.com} \cr
+Manuel Ruiz \tab \email{manuel.ruiz@upct.es} \cr
+}
 }

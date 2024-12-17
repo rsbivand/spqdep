@@ -38,9 +38,9 @@
 #' formula <- ~ Older
 #' srq <- sp.runs.test(formula = formula, data = provinces_spain, listw = listw, nsim = 299)
 #' plot(srq)
-#' provinces_spain$Male2Female <- factor(provinces_spain$Male2Female > 100)
-#' levels(provinces_spain$Male2Female) = c("men","woman")
-#' formula <- ~ Male2Female
+#' provinces_spain$Mal2Fml <- factor(provinces_spain$Mal2Fml > 100)
+#' levels(provinces_spain$Mal2Fml) = c("men","woman")
+#' formula <- ~ Mal2Fml
 #' srq <- sp.runs.test(formula = formula, data = provinces_spain, listw = listw, nsim = 299)
 #' plot(srq)
 
@@ -55,10 +55,10 @@ fff[,1] <- 1:runs
 fff[,2] <- srq$dnr[,2]
 fff <- as.data.frame(fff)
 if (is.null(srq$nsim)){
-    g1 <- ggplot(data = fff, aes(x = fff$V1, y = fff$V2)) +
-    geom_bar(stat="identity", color = "black", fill = "steelblue") +
-    labs(x = "Number of runs", y = "Frequency") +
-    theme_bw()
+    g1 <- ggplot2::ggplot(data = fff, ggplot2::aes(x = fff$V1, y = fff$V2)) +
+    ggplot2::geom_bar(stat="identity", color = "black", fill = "steelblue") +
+      ggplot2::labs(x = "Number of runs", y = "Frequency") +
+      ggplot2::theme_bw()
     suppressWarnings(print(g1))
 }  else {
 aa <- matrix(0, ncol = runs, nrow = srq$nsim)
@@ -67,20 +67,20 @@ aa[i,] <- as.data.frame(table(factor(srq$SRLP[,i], levels = c(1:runs))))$Freq
 }
 hh <- matrix(0, ncol = 2, nrow = runs)
 for (i in 1:runs){
-hh[i,] <- quantile(aa[,i],c(0.05,.95))
+hh[i,] <- stats::quantile(aa[,i],c(0.05,.95))
 }
 fff$min <- hh[,1]
 fff$max <- hh[,2]
 fff$mean <- colMeans(aa)
 
-g1 <- ggplot(data = fff, aes(x = fff$V1, y = fff$V2)) +
-  geom_bar(stat="identity",color = "black",
+g1 <- ggplot2::ggplot(data = fff, ggplot2::aes(x = fff$V1, y = fff$V2)) +
+  ggplot2::geom_bar(stat="identity",color = "black",
                     fill = "steelblue") +
-  labs(x = "Number of runs", y = "Frequency") +
-  geom_errorbar(data = fff, aes(x =  fff$V1, ymin = min, ymax = max), width = 0.3,
+  ggplot2::labs(x = "Number of runs", y = "Frequency") +
+  ggplot2::geom_errorbar(data = fff, ggplot2::aes(x =  fff$V1, ymin = min, ymax = max), width = 0.3,
                 colour = "red", alpha = 0.9, size = 1.1) +
-  geom_point(data=fff, aes(x = fff$V1, y = mean), size = 3, shape = 21, fill = "white") +
-  theme_bw()
+  ggplot2::geom_point(data=fff, ggplot2::aes(x = fff$V1, y = mean), size = 3, shape = 21, fill = "white") +
+  ggplot2::theme_bw()
 suppressWarnings(print(g1))
   }
 }

@@ -30,7 +30,7 @@ plot.spqtest <- function(x, ...,ci = 0.95) {
   z <- x
   if (!inherits(z, "spqtest")) stop("Argument must be a spqtest object")
   alpha_div_2 <- (1-ci)/2
-  critval <- qnorm(alpha_div_2, lower.tail = FALSE)
+  critval <- stats::qnorm(alpha_div_2, lower.tail = FALSE)
   lplot_symb <- vector('list', length(z))
   for (i in 1:length(z)) {
     zi <- z[[i]]
@@ -58,9 +58,9 @@ plot.spqtest <- function(x, ...,ci = 0.95) {
       ub_int <- sf0/R + sep_symb
     } else if (zi$distr == "mc") {
       for (j in 1:length(sf0)) {
-        lb_int[j] <- quantile(efsymb_mc[j,],
+        lb_int[j] <- stats::quantile(efsymb_mc[j,],
                                 alpha_div_2)
-        ub_int[j] <- quantile(efsymb_mc[j,],
+        ub_int[j] <- stats::quantile(efsymb_mc[j,],
                                1 - alpha_div_2)
         }
       lb_int <- lb_int / R
@@ -99,26 +99,26 @@ plot.spqtest <- function(x, ...,ci = 0.95) {
                     " distance: ", zi$distance,
                     " intervals: ", zi$distr)
     } else stop("Distribution must be asymptotic or mc")
-    lplot_symb[[i]] <- ggplot(Symb.df) +
-      geom_bar(aes(x = Symb, y = efsymbR,
+    lplot_symb[[i]] <- ggplot2::ggplot(Symb.df) +
+      ggplot2::geom_bar(ggplot2::aes(x = Symb, y = efsymbR,
                             fill = sigp_symb),
                         stat = "identity",
                         color = "black")  +
-      scale_fill_manual(values = c("sig -" = "blue",
+      ggplot2::scale_fill_manual(values = c("sig -" = "blue",
                                             "non-sig" = "grey77",
                                             "sig +" = "red")) +
-      geom_errorbar(aes(x = Symb, y = sf0R,
+      ggplot2::geom_errorbar(ggplot2::aes(x = Symb, y = sf0R,
                                  ymin = lb_int,
                                  ymax = ub_int,
                                  color = "black"),
                              width = 0.5) +
-      labs(title = paste("Symbolization for variable:",
+      ggplot2::labs(title = paste("Symbolization for variable:",
                                   zi$var.name),
            subtitle = subt,
             x = paste("Symbol:", zi$type), y = "Frequency",
            color = "Significance") +
-      theme_bw() +
-      theme(axis.text.x = element_text(angle = 90, hjust = 0,
+      ggplot2::theme_bw() +
+      ggplot2::theme(axis.text.x = ggplot2::element_text(angle = 90, hjust = 0,
                                         size = 6),
                       legend.position = "bottom")
   }
@@ -129,7 +129,7 @@ plot.spqtest <- function(x, ...,ci = 0.95) {
 
 # # Como no tengo coordenadas uso igraph
 # if (inherits(lsrq$listw), "knn")){
-#   W <- nb2mat(knn2nb(lsrq$listw))
+#   W <- spdep::nb2mat(spdep::knn2nb(lsrq$listw))
 #   W <- (W>0)*1
 # }
 # if (inherits(lsrq$listw, "nb")){

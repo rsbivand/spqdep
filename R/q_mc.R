@@ -6,7 +6,7 @@ q_mc <- function(fx, x, m, nsim = 999,
     stop("The length and Y does not match the dimension of the coordinates")
   k <- nlevels(Y)
   N <- length(Y)
-  mdtfull <- st_distance(st_as_sf(x),
+  mdtfull <- sf::st_distance(sf::st_as_sf(x),
                              which = distance)
   # full distance matrix
   ms <- mdtms <- matrix(0, nrow = nrow(mdtfull),

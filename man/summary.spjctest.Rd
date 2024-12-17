@@ -16,18 +16,18 @@ An object of class \emph{summary.spjctest}
 }
 \description{
 This function summarizes estimated \emph{spjctest} objects.
-  The tables in the output include basic information for each test.
-  blablabla...
+The tables in the output include basic information for each test.
+blablabla...
 }
 \examples{
 ## Multinomial + Binomial using a sf multipolygon
 data("provinces_spain")
 sf::sf_use_s2(FALSE)
-provinces_spain$Male2Female <- factor(provinces_spain$Male2Female > 100)
-levels(provinces_spain$Male2Female) = c("men","woman")
+provinces_spain$Mal2Fml <- factor(provinces_spain$Mal2Fml > 100)
+levels(provinces_spain$Mal2Fml) = c("men","woman")
 provinces_spain$Older <- cut(provinces_spain$Older, breaks = c(-Inf,19,22.5,Inf))
 levels(provinces_spain$Older) = c("low","middle","high")
-f1 <- ~ Older + Male2Female
+f1 <- ~ Older + Mal2Fml
 jc1 <- jc.test(formula = f1,
                data = provinces_spain,
                distr = "mc",
@@ -37,14 +37,14 @@ summary(jc1)
 }
 \seealso{
 \code{\link{print.summary.spqtest}},
-  \code{\link[spdep]{joincount.test}},
-  \code{\link[spdep]{joincount.multi}}
+\code{\link[spdep]{joincount.test}},
+\code{\link[spdep]{joincount.multi}}
 }
 \author{
 \tabular{ll}{
-  Fernando López  \tab \email{fernando.lopez@upct.es} \cr
-  Román Mínguez  \tab \email{roman.minguez@uclm.es} \cr
-  Antonio Páez \tab \email{paezha@gmail.com} \cr
-  Manuel Ruiz \tab \email{manuel.ruiz@upct.es} \cr
-  }
+Fernando López  \tab \email{fernando.lopez@upct.es} \cr
+Román Mínguez  \tab \email{roman.minguez@uclm.es} \cr
+Antonio Páez \tab \email{paezha@gmail.com} \cr
+Manuel Ruiz \tab \email{manuel.ruiz@upct.es} \cr
+}
 }

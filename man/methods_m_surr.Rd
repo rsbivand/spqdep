@@ -29,10 +29,10 @@ No return value, called for side effects
 \description{
 A function to plots the m-surrounds give an object of the
 class \emph{m_surr} obtain with the code \code{m.surround}.\cr
- The \code{plot()} function allows the user view the configuration of the m-surroundings.\cr
- The argument \code{type} select the type o visualization. \cr
- The \code{print()} print the matrix of the m-surrounding. \cr.
- The \code{summary} give information about the characteristics of the m-surroundings. \cr.
+The \code{plot()} function allows the user view the configuration of the m-surroundings.\cr
+The argument \code{type} select the type o visualization. \cr
+The \code{print()} print the matrix of the m-surrounding. \cr.
+The \code{summary} give information about the characteristics of the m-surroundings. \cr.
 }
 \examples{
 
@@ -53,7 +53,7 @@ data("FastFood.sf")
 m = 6
 r = 1
 msurr_points <-  m.surround(x = FastFood.sf, m = m, r = r, distance = "Euclidean",
-                            control = list(dtmaxpc = .01))
+                            control = list(dtmaxpc = .2))
 plot(msurr_points, type = 1)
 plot(msurr_points, type = 2)
 print(msurr_points)
@@ -61,16 +61,16 @@ print(msurr_points)
 }
 \references{
 \itemize{
-    \item Ruiz, M., López, F., and Páez, A. (2021).
-    A test for global and local homogeneity of categorical data based on spatial runs.
-      \emph{Working paper}.
-  }
+\item Ruiz, M., López, F., and Páez, A. (2021).
+A test for global and local homogeneity of categorical data based on spatial runs.
+\emph{Working paper}.
+}
 }
 \author{
 \tabular{ll}{
-  Fernando López  \tab \email{fernando.lopez@upct.es} \cr
-  Román Mínguez  \tab \email{roman.minguez@uclm.es} \cr
-  Antonio Páez \tab \email{paezha@gmail.com} \cr
-  Manuel Ruiz \tab \email{manuel.ruiz@upct.es} \cr
-  }
+Fernando López  \tab \email{fernando.lopez@upct.es} \cr
+Román Mínguez  \tab \email{roman.minguez@uclm.es} \cr
+Antonio Páez \tab \email{paezha@gmail.com} \cr
+Manuel Ruiz \tab \email{manuel.ruiz@upct.es} \cr
+}
 }

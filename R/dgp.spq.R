@@ -92,11 +92,11 @@ dgp.spq <- function(listw = listw, p = p,  rho = rho, control = list()) {
   if (sum(p)!=1)  stop("The sum of p must be equal to 1")
 
 if (inherits(listw, "knn")){
-  listw <- nb2listw(knn2nb(listw)) }
+  listw <- spdep::nb2listw(spdep::knn2nb(listw)) }
 if (inherits(listw, "listw")){
-  listw <- listw2mat(listw) }
+  listw <- spdep::listw2mat(listw) }
 if (inherits(listw, "nb")){
-  listw <- nb2mat(listw, style = "W", zero.policy = TRUE)}
+  listw <- spdep::nb2mat(listw, style = "W", zero.policy = TRUE)}
 if (inherits(listw, "matrix")) {
   listw <- listw/matrix(rowSums(listw),
                         ncol = dim(listw)[1],
@@ -105,13 +105,13 @@ if (inherits(listw, "matrix")) {
   }
 set.seed(seedinit)
 n <- dim(listw)[1]
-listw <- as(listw,"dgCMatrix")
+listw <- methods::as(listw,"dgCMatrix")
 k = 1
 y <- Matrix::solve(Matrix::Diagonal(n) - rho*listw) %*%
-        matrix(rnorm(n*k,mean = 0, sd = 1), n, k)
+        matrix(stats::rnorm(n*k,mean = 0, sd = 1), n, k)
 # y <- Matrix::solve(diag(n)-rho*listw)%*%rnorm(n,1)
 y <- as.matrix(y)
-Y <- cut(y, quantile(y,c(0, cumsum(p))),
+Y <- cut(y, stats::quantile(y,c(0, cumsum(p))),
          include.lowest = TRUE)
 levels(Y) <- as.character(1:length(p))
 levels(Y) <- LETTERS[1:length(p)]

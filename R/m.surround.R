@@ -34,26 +34,26 @@
 #'
 #' @section Control arguments:
 #'   \itemize{
-#'     \item {\code{initobs}:} {Initial observation to begin the
-#'       m-surrounding process. Default = 1.}
-#'     \item {\code{dtmaxabs}:} {Threshold of distance (in absolute
+#'     \item \code{initobs}: Initial observation to begin the
+#'       m-surrounding process. Default = 1.
+#'     \item \code{dtmaxabs}: Threshold of distance (in absolute
 #'       value) to prune the m-surroundings. Any m-surrounding
 #'       exceeding the threshold is excluded.
 #'       If \code{dtmaxabs} = 0 there is no exclusion of m-surroundings.
-#'       Default = 0.}
-#'     \item {\code{dtmaxpc}:} {Threshold of distance (as a percentage
+#'       Default = 0.
+#'     \item  \code{dtmaxpc}: Threshold of distance (as a percentage
 #'       of the maximum distance between observations) to prune the m-surroundings. Any m-surrounding
 #'       exceeding the threshold is excluded.
 #'       Example if \code{dtmaxpc} = 0.1 the m-surrounding exceeding
 #'       the 10% of the maximum distance between observations are excluded.
 #'       If \code{dtmaxpc} = 0 there is no exclusion of m-surroundings.
-#'       Default = 0.}
-#'     \item {\code{dtmaxknn}:} {Eliminate m-surroundings where some
+#'       Default = 0.
+#'     \item  \code{dtmaxknn}: Eliminate m-surroundings where some
 #'       of the elements are not among the closest
 #'       knn (k-nearest-neighbors).
 #'       Example, if \code{dtmaxknn} = 4 exclude m-surroundings
 #'       where some of the elements are not between the 4 closest.
-#'       Default \code{dtmaxknn} = 0 (no exclusion)}
+#'       Default \code{dtmaxknn} = 0 (no exclusion)
 #'    }
 #'
 #' @author
@@ -115,7 +115,7 @@
 #'
 #' # Example 3: With isolated areas
 #' data(provinces_spain)
-#' sf::sf_use_s2(FALSE)
+#' # sf::sf_use_s2(FALSE)
 #' plot(sf::st_geometry(provinces_spain))
 #' m <- 3
 #' r <- 1
@@ -167,23 +167,23 @@ m.surround <- function(x , m, r = 1, distance = "Euclidean", control = list()) {
   # Transform matrix coordinates into SpatialPoints class
   if (is.matrix(x)) x <- sp::SpatialPoints(x)
   # Transform Spatial classes into sf class
-  if (inherits(x, "Spatial")) x <- as(x, "sf")
+  if (inherits(x, "Spatial")) x <- methods::as(x, "sf")
   # Compute centroids/coordinates/distances from sf objects
   if (inherits(x, "sf")) {
-  xct <- suppressWarnings(st_centroid(st_geometry(x)))
+  xct <- suppressWarnings(sf::st_centroid(sf::st_geometry(x)))
   } else stop("object must be either sf, sp or matrix class")
   N <- length(xct)
   if (!is.null(r)) R <- trunc((N - m)/(m - r)) + 1 else R <- N
 
-  if (inherits(st_geometry(x)[1],
+  if (inherits(sf::st_geometry(x)[1],
                "sfc_MULTIPOLYGON"))
-    mcoor <- st_coordinates(xct)
-  if (inherits(st_geometry(x)[1],
+    mcoor <- sf::st_coordinates(xct)
+  if (inherits(sf::st_geometry(x)[1],
                "sfc_POINT"))
-    mcoor <- st_coordinates(x)
-  mcoor <- st_coordinates(xct)
+    mcoor <- sf::st_coordinates(x)
+  mcoor <- sf::st_coordinates(xct)
   rownames(mcoor) <- as.character(1:N)
-  mdtfull <- st_distance(xct, which = distance)
+  mdtfull <- sf::st_distance(xct, which = distance)
   # full distance matrix
   rownames(mdtfull) <- colnames(mdtfull) <- as.character(1:N)
 

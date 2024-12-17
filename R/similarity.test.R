@@ -100,9 +100,9 @@
 #' # Case 3:
 #' data(provinces_spain)
 #' listw <- spdep::poly2nb(as(provinces_spain,"Spatial"), queen = FALSE)
-#' provinces_spain$Male2Female <- factor(provinces_spain$Male2Female > 100)
-#' levels(provinces_spain$Male2Female) = c("men","woman")
-#' formula <- ~ Male2Female
+#' provinces_spain$Mal2Fml <- factor(provinces_spain$Mal2Fml > 100)
+#' levels(provinces_spain$Mal2Fml) = c("men","woman")
+#' formula <- ~ Mal2Fml
 #' similarity <- similarity.test(formula = formula, data = provinces_spain, listw = listw)
 #' print(similarity)
 
@@ -125,17 +125,17 @@ similarity.test <-  function(formula = NULL, data = NULL, fx = NULL, listw = lis
   }
   # Solo admite matrices knn, nb o matrix
   if (inherits(listw, "knn")){
-    W <- (nb2mat(knn2nb(listw),
+    W <- (spdep::nb2mat(spdep::knn2nb(listw),
                         zero.policy = TRUE) > 0)*1
     }
   if (inherits(listw, "nb")){
-    W <- (nb2mat(listw, zero.policy = TRUE) >0)*1
+    W <- (spdep::nb2mat(listw, zero.policy = TRUE) >0)*1
   }
 # Selecciona los argumentos. Bien con (formula + data) o bien incluye la variable (fx)
 if (!is.null(formula) && !is.null(data)) {
-  if (inherits(data, "Spatial")) data <- as(data, "sf")
-  mfx <- get_all_vars(formula, data)[,1]
-  data.name <- names(get_all_vars(formula,data))
+  if (inherits(data, "Spatial")) data <- methods::as(data, "sf")
+  mfx <- stats::get_all_vars(formula, data)[,1]
+  data.name <- names(stats::get_all_vars(formula,data))
 } else if (!is.null(fx)) {
   mfx <- fx
   if (is.null(names(fx))) data.name <- "fx"
@@ -212,11 +212,11 @@ SSnormal <- (est-meanest)/varest^0.5
 names(SSnormal) <- "Similarity-test"
 similarity.mc <- NULL
 if (alternative == "two.sided")
-  p.value <- 2 * pnorm(abs(SSnormal),
+  p.value <- 2 * stats::pnorm(abs(SSnormal),
                               lower.tail = FALSE)
 else if (alternative == "greater")
-  p.value <- pnorm(SSnormal, lower.tail = FALSE)
-else p.value <- pnorm(SSnormal )
+  p.value <- stats::pnorm(SSnormal, lower.tail = FALSE)
+else p.value <- stats::pnorm(SSnormal )
 if (!is.finite(SSnormal) || p.value < 0 || p.value > 1)
   warning("Out-of-range p-value: reconsider test arguments")
 }

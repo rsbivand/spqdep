@@ -17,7 +17,7 @@ local.sp.runs.test.boots <-  function(fx = fx,listw = listw, nv = nv){
     lnnb <- matrix(dim(listw$nn)[2],ncol = 1,
                    nrow = dim(listw$nn)[1])}
   if (inherits(listw, "nb")){
-    lnnb <- rowSums(nb2mat(listw, style='B',
+    lnnb <- rowSums(spdep::nb2mat(listw, style='B',
                            zero.policy = TRUE))
   }
 

@@ -42,7 +42,7 @@ NULL
 plot.qmap <- function(x,ci = 0.95,...){
   qmap <- x
   alpha_div_2 <- (1-ci)/2
-  critval <- qnorm(alpha_div_2, lower.tail = FALSE)
+  critval <- stats::qnorm(alpha_div_2, lower.tail = FALSE)
   R <- sum(qmap[[1]]$nsk[,2])
   ps <- qmap[[1]]$nsk[,1]/R
   qs <- qmap[[1]]$nsk[,2]/R
@@ -64,28 +64,28 @@ plot.qmap <- function(x,ci = 0.95,...){
   }
 
 
-  data <- data.frame(symbols = apply(qmap[[1]]$symb,1,function(x){paste0(x,collapse = "")}),
+  data <- data.frame(symb = apply(qmap[[1]]$symb,1,function(x){paste0(x,collapse = "")}),
                      fr = fr, lb_int = 0-e ,ub_int = 0+e)
   data$sigp_symb = factor(sigp_symb, levels=c("sig -", "non-sig", "sig +"))
-  ggplot(data, aes(x = symbols, y = fr,
+  ggplot2::ggplot(data, ggplot2::aes(x = data$symb, y = fr,
                             fill = sigp_symb)) +
-    geom_bar(color = "black",
+    ggplot2::geom_bar(color = "black",
                       stat = "identity",
                       position="stack") +
-    theme_bw() +
-    scale_fill_manual(values = c("sig -" = "blue",
+    ggplot2::theme_bw() +
+    ggplot2::scale_fill_manual(values = c("sig -" = "blue",
                                           "non sig" = "grey77",
                                           "sig +" = "red")) +
-    geom_errorbar(aes(x = symbols, y = fr,
+    ggplot2::geom_errorbar(ggplot2::aes(x = data$symb, y = fr,
                       ymin = lb_int,
                       ymax = ub_int,
                       color = "red"),width = 0.2) +
-    labs(title = paste("Bar charts of differences in symbol frequency"),
+    ggplot2::labs(title = paste("Bar charts of differences in symbol frequency"),
          subtitle = paste(qmap[[1]]$data.name),
          x = paste("Symbols", ""), y = "Difference in frequency Map",
          color = "Significance") +
-    theme_bw() +
-    theme(axis.text.x = element_text(angle = 90, hjust = 0,
+    ggplot2::theme_bw() +
+    ggplot2::theme(axis.text.x = ggplot2::element_text(angle = 90, hjust = 0,
                                      size = 6),
           legend.position = "bottom")
 }

@@ -2,7 +2,7 @@
 #' @title A function to order the elements of the m_i-subrrounds
 #'
 #' @description An auxiliary function. In the case of obtaining the list of neighbors of class
-#' nb or \code{\link{poly2nb}}, it is necessary to reorder the elements based on distance and/or angle.
+#' nb or poly2nb, it is necessary to reorder the elements based on distance and/or angle.
 #' @param listw an object of the nb class.
 #' @param sf the sf object used to get the \code{listw} .
 #' @usage nb2nb_order(listw = listw, sf = NULL)
@@ -45,8 +45,8 @@ nb2nb_order <- function(listw = listw, sf = NULL){
 
 # n <- length(listw)
 # co <- as.data.frame(sf::st_coordinates(sf::st_centroid(sf)))
-# co <- st_as_sf(co,coords=c("X","Y"), crs = 32630)
-# dis <- 1/matrix(as.numeric(st_distance(co,co)),ncol=n,nrow=n)
+# co <- sf::st_as_sf(co,coords=c("X","Y"), crs = 32630)
+# dis <- 1/matrix(as.numeric(sf::st_distance(co,co)),ncol=n,nrow=n)
 # diag(dis) <- 0
 # matw <- nb2mat(listw,style = 'B', zero.policy = TRUE)
 # m <- rowSums(matw)
@@ -64,7 +64,7 @@ nb2nb_order <- function(listw = listw, sf = NULL){
   matw <- spdep::nb2mat(listw, style = 'B',
                         zero.policy = TRUE)
   m <- rowSums(matw)
-  co <- st_coordinates(st_centroid(sf))
+  co <- sf::st_coordinates(sf::st_centroid(sf))
   NB <- list()
 for (i in 1:dim(co)[1]){
   if (m[i] == 0){NB[[i]]<- as.integer(0)}

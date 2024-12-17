@@ -39,9 +39,9 @@ levels(provinces_spain$Older) = c("low","middle","high")
 formula <- ~ Older
 srq <- sp.runs.test(formula = formula, data = provinces_spain, listw = listw, nsim = 299)
 plot(srq)
-provinces_spain$Male2Female <- factor(provinces_spain$Male2Female > 100)
-levels(provinces_spain$Male2Female) = c("men","woman")
-formula <- ~ Male2Female
+provinces_spain$Mal2Fml <- factor(provinces_spain$Mal2Fml > 100)
+levels(provinces_spain$Mal2Fml) = c("men","woman")
+formula <- ~ Mal2Fml
 srq <- sp.runs.test(formula = formula, data = provinces_spain, listw = listw, nsim = 299)
 plot(srq)
 }
@@ -50,9 +50,9 @@ plot(srq)
 }
 \author{
 \tabular{ll}{
-  Fernando López  \tab \email{fernando.lopez@upct.es} \cr
-  Román Mínguez  \tab \email{roman.minguez@uclm.es} \cr
-  Antonio Páez \tab \email{paez@gmail.com} \cr
-  Manuel Ruiz  \tab \email{manuel.ruiz@upct.es} \cr
-  }
+Fernando López  \tab \email{fernando.lopez@upct.es} \cr
+Román Mínguez  \tab \email{roman.minguez@uclm.es} \cr
+Antonio Páez \tab \email{paez@gmail.com} \cr
+Manuel Ruiz  \tab \email{manuel.ruiz@upct.es} \cr
+}
 }

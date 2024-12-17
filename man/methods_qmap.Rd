@@ -6,15 +6,15 @@
 \arguments{
 \item{x}{object of class \emph{qmap}}
 
-\item{ci}{confidence level for the difference of probabilities of symbols in `plot` method.
+\item{ci}{confidence level for the difference of probabilities of symbols in \code{plot} method.
 Default \code{ci = 0.95}}
 
 \item{...}{further arguments passed to or from other methods.}
 }
 \description{
 A function to plot the difference in frequencies of symbols of each map.
- The \code{plot()} function to obtain the plot.
- The argument \code{ci} select the confidence level. \cr
+The \code{plot()} function to obtain the plot.
+The argument \code{ci} select the confidence level. \cr
 }
 \examples{
 # Example 1:
@@ -31,19 +31,19 @@ plot(q.test)
 }
 \references{
 \itemize{
-    \item Ruiz M, López FA and A Páez (2011).
-    Comparison of Thematic Maps Using Symbolic Entropy.
-      \emph{International Journal of Geographical Information Science},  26, 413-439.
-    \item Ruiz, M., López, F., and Páez, A. (2021).
-    A test for global and local homogeneity of categorical data based on spatial runs.
-      \emph{working paper}.
-  }
+\item Ruiz M, López FA and A Páez (2011).
+Comparison of Thematic Maps Using Symbolic Entropy.
+\emph{International Journal of Geographical Information Science},  26, 413-439.
+\item Ruiz, M., López, F., and Páez, A. (2021).
+A test for global and local homogeneity of categorical data based on spatial runs.
+\emph{working paper}.
+}
 }
 \author{
 \tabular{ll}{
-  Fernando López  \tab \email{fernando.lopez@upct.es} \cr
-  Román Mínguez  \tab \email{roman.minguez@uclm.es} \cr
-  Antonio Páez \tab \email{paezha@gmail.com} \cr
-  Manuel Ruiz \tab \email{manuel.ruiz@upct.es} \cr
-  }
+Fernando López  \tab \email{fernando.lopez@upct.es} \cr
+Román Mínguez  \tab \email{roman.minguez@uclm.es} \cr
+Antonio Páez \tab \email{paezha@gmail.com} \cr
+Manuel Ruiz \tab \email{manuel.ruiz@upct.es} \cr
+}
 }

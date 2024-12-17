@@ -45,7 +45,7 @@
 #' m = 6
 #' r = 1
 #' msurr_points <-  m.surround(x = FastFood.sf, m = m, r = r, distance = "Euclidean",
-#'                             control = list(dtmaxpc = .01))
+#'                             control = list(dtmaxpc = .2))
 #' plot(msurr_points, type = 1)
 #' plot(msurr_points, type = 2)
 #' print(msurr_points)
@@ -96,28 +96,29 @@ summary.m_surr <- function(object, ...) {
 #'
 plot.m_surr <- function(x, ..., type = 1){
   m_surr <- x
+  if (dim(m_surr$ms)[1]==0){stop("The length of the m-sourronding is 0")}
   m <- dim(m_surr$ms)[2]
   W <- matrix(0, ncol =  m_surr$N, nrow =  m_surr$N)
   for (i in 1:dim(m_surr$ms)[1]){
     W[m_surr$ms[i,1], m_surr$ms[i,2:m]] <- 1
   }
 
-  oldpar <- par(no.readonly = TRUE)
+  oldpar <- graphics::par(no.readonly = TRUE)
 
   if (type == 1){
-    g1 <- graph.adjacency(W)
+    g1 <- igraph::graph.adjacency(W)
     list <- as.list(as.data.frame(t(m_surr$ms)))
-    if (inherits(st_geometry(m_surr$x)[1],
+    if (inherits(sf::st_geometry(m_surr$x)[1],
         "sfc_MULTIPOLYGON"))
-      lo <- layout.norm(st_coordinates(
-        st_centroid(m_surr$x)))
-    if (inherits(st_geometry(m_surr$x)[1],
+      lo <- igraph::layout.norm(sf::st_coordinates(
+        sf::st_centroid(m_surr$x)))
+    if (inherits(sf::st_geometry(m_surr$x)[1],
                  "sfc_POLYGON"))
-      lo <- layout.norm(
-          st_coordinates(st_centroid(m_surr$x)))
-    if (inherits(st_geometry(m_surr$x)[1],
+      lo <- igraph::layout.norm(
+          sf::st_coordinates(sf::st_centroid(m_surr$x)))
+    if (inherits(sf::st_geometry(m_surr$x)[1],
                  "sfc_POINT"))
-      lo <- layout.norm(st_coordinates(m_surr$x))
+      lo <- igraph::layout.norm(sf::st_coordinates(m_surr$x))
     mycolor <- as.matrix(0, ncol = 1, nrow = m_surr$N)
     mycolor <- "red"
     mycolor[m_surr$ms[,1]] = "black"
@@ -128,30 +129,30 @@ plot.m_surr <- function(x, ..., type = 1){
          mark.groups = list,
          edge.arrow.mode = 0, layout = lo, vertex.size = 3,
          vertex.color = mycolor, edge.color = 'black') # ,sub="black points are origin of m-surround"
-    title(main = paste("m-surrounding;", "m = ", m_surr$m,
+    graphics::title(main = paste("m-surrounding;", "m = ", m_surr$m,
                        "and r = ", m_surr$r,"\n black points are origin of m-surrounding"),
           cex.main=1,col.main="black")
-    on.exit(par(oldpar))
+    on.exit(graphics::par(oldpar))
   }
 
   if (type == 2){
-    W <- mat2listw(W)
-    plot(st_geometry(m_surr$x))
-    par(new = TRUE)
-    on.exit(par(oldpar))
-    if (inherits(st_geometry(m_surr$x)[1],
+    W <- spdep::mat2listw(W)
+    plot(sf::st_geometry(m_surr$x))
+    graphics::par(new = TRUE)
+    on.exit(graphics::par(oldpar))
+    if (inherits(sf::st_geometry(m_surr$x)[1],
                  "sfc_MULTIPOLYGON"))
-      plot(W, st_coordinates(
-        st_centroid(m_surr$x)), col = "red")
-    if (inherits(st_geometry(m_surr$x)[1],
+      plot(W, sf::st_coordinates(
+        sf::st_centroid(m_surr$x)), col = "red")
+    if (inherits(sf::st_geometry(m_surr$x)[1],
                  "sfc_POLYGON"))
-      plot(W, st_coordinates(
-        st_centroid(m_surr$x)), col = "red")
-    if (inherits(st_geometry(m_surr$x)[1],
+      plot(W, sf::st_coordinates(
+        sf::st_centroid(m_surr$x)), col = "red")
+    if (inherits(sf::st_geometry(m_surr$x)[1],
         "sfc_POINT"))
-      plot(W, st_coordinates(m_surr$x),
+      plot(W, sf::st_coordinates(m_surr$x),
            col = "red")
-    title(main = paste("m-surrounding;", "m = ", m_surr$m, "and r = ", m_surr$r))
+    graphics::title(main = paste("m-surrounding;", "m = ", m_surr$m, "and r = ", m_surr$r))
   }
 }
 
