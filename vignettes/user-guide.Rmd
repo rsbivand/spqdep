@@ -270,18 +270,17 @@ plot(q.test)
 - A sf object [@pebesma2018] or a data frame can be used as input of the \code{Q.test()} function:
 
 ```{r, warning = FALSE}
-# Case 3: With a sf object with isolated areas
-sf_use_s2(FALSE)
-provinces_spain$Mal2Fml <- factor(provinces_spain$Mal2Fml > 100)
-levels(provinces_spain$Mal2Fml) = c("men","woman")
-f1 <- ~ Mal2Fml
-q.test.sf <- Q.test(formula = f1, data = provinces_spain, m = 3, r = 1)
+# sf_use_s2(FALSE)
+# provinces_spain$GenderRatio <- factor(provinces_spain$Mal2Fml > 100)
+# levels(provinces_spain$GenderRatio) = c("men","woman")
+# f1 <- ~ provinces_spain$GenderRatio
+# q.test.sf <- Q.test(formula = f1, data = provinces_spain, m = 3, r = 1)
 ```
 
 - The method \code{plot()} show the histogram of the number of symbols
 
 ```{r}
-plot(q.test.sf)
+# plot(q.test.sf)
 ```
 
 # QMap-test
@@ -508,7 +507,7 @@ print(similarity)
 
 - The functions of the **spdep**  R-package have been **wrapped** for Bernoulli and Multinomial distributions. Asymptotic or Monte Carlo distributions (permutations) can be used to evaluate the signification of the tests.
 
-## Asyntotic distribution
+## Asymptotic distribution
 
 ```{r, warning = FALSE}
 provinces_spain$Older <- cut(provinces_spain$Older, breaks = c(-Inf,19,22.5,Inf))
