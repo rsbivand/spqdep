@@ -280,7 +280,7 @@ plot(q.test)
 - The method \code{plot()} show the histogram of the number of symbols
 
 ```{r}
-plot(q.test.sf)
+# plot(q.test.sf)
 ```
 
 # QMap-test
