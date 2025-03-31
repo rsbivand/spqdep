@@ -181,7 +181,8 @@ m.surround <- function(x , m, r = 1, distance = "Euclidean", control = list()) {
   for (i in seq_along(1:nrow(ms))) {
     rowds <- mdtfull[ms[i,],ms[i,]]
     rowds <- rowds[1,]
-    mdtms <- rbind(mdtms, rowds)
+    mdtms <- rbind(mdtms, units::set_units(rowds, value=NULL, mode = "standard"))
+#    mdtms <- rbind(mdtms, rowds)
   }
   colnames(mdtms) <- NULL
   rownames(mdtms) <- ms[, 1]

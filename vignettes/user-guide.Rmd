@@ -157,7 +157,7 @@ of a random spatial sequence:
 
 $$Q(m)=2R(\eta-h(m))$$
 
-with $\eta = ln(k^m)$. The statistic is asymptotically $\chi^2} distributed
+with $\eta = ln(k^m)$. The statistic is asymptotically $\chi^2$ distributed
 with degrees of freedom equal to the number of symbols minus one.\cr
 
 ## m-surroundings
