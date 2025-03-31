@@ -270,7 +270,6 @@ plot(q.test)
 - A sf object [@pebesma2018] or a data frame can be used as input of the \code{Q.test()} function:
 
 ```{r, warning = FALSE}
-# Case 3: With a sf object with isolated areas
 sf_use_s2(FALSE)
 provinces_spain$GenderRatio <- factor(provinces_spain$Mal2Fml > 100)
 levels(provinces_spain$GenderRatio) = c("men","woman")
