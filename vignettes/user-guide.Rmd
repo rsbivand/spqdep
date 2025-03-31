@@ -272,9 +272,9 @@ plot(q.test)
 ```{r, warning = FALSE}
 # Case 3: With a sf object with isolated areas
 sf_use_s2(FALSE)
-provinces_spain$Mal2Fml <- factor(provinces_spain$Mal2Fml > 100)
-levels(provinces_spain$Mal2Fml) = c("men","woman")
-f1 <- ~ Mal2Fml
+provinces_spain$GenderRatio <- factor(provinces_spain$Mal2Fml > 100)
+levels(provinces_spain$GenderRatio) = c("men","woman")
+f1 <- ~ provinces_spain$GenderRatio
 q.test.sf <- Q.test(formula = f1, data = provinces_spain, m = 3, r = 1)
 ```
 
