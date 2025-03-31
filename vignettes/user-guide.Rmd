@@ -508,7 +508,7 @@ print(similarity)
 
 - The functions of the **spdep**  R-package have been **wrapped** for Bernoulli and Multinomial distributions. Asymptotic or Monte Carlo distributions (permutations) can be used to evaluate the signification of the tests.
 
-## Asyntotic distribution
+## Asymptotic distribution
 
 ```{r, warning = FALSE}
 provinces_spain$Older <- cut(provinces_spain$Older, breaks = c(-Inf,19,22.5,Inf))

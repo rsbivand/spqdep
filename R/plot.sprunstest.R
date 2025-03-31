@@ -48,40 +48,47 @@
 #'
 
 plot.sprunstest <- function(x, ...){
-srq <- x
-runs <- srq$MaxNeig # max(as.numeric(levels(as.data.frame(srq$dnr)$Var1)))
-fff <- matrix(0, ncol = 2, nrow = runs)
-fff[,1] <- 1:runs
-fff[,2] <- srq$dnr[,2]
-fff <- as.data.frame(fff)
-if (is.null(srq$nsim)){
-    g1 <- ggplot2::ggplot(data = fff, ggplot2::aes(x = fff$V1, y = fff$V2)) +
-    ggplot2::geom_bar(stat="identity", color = "black", fill = "steelblue") +
+
+  srq <- x
+
+  runs <- srq$MaxNeig # max(as.numeric(levels(as.data.frame(srq$dnr)$Var1)))
+
+  fff <- matrix(0, ncol = 2, nrow = runs)
+  fff[,1] <- 1:runs
+  fff[,2] <- srq$dnr[,2]
+  fff <- as.data.frame(fff)
+
+  V1 <- ggplot2::sym("V1")
+  V2 <- ggplot2::sym("V2")
+
+  if (is.null(srq$nsim)){
+    g1 <- ggplot2::ggplot(data = fff, ggplot2::aes(x = !!V1, y = !!V2)) +
+      ggplot2::geom_bar(stat="identity", color = "black", fill = "steelblue") +
       ggplot2::labs(x = "Number of runs", y = "Frequency") +
       ggplot2::theme_bw()
     suppressWarnings(print(g1))
-}  else {
-aa <- matrix(0, ncol = runs, nrow = srq$nsim)
-for (i in 1:srq$nsim){
-aa[i,] <- as.data.frame(table(factor(srq$SRLP[,i], levels = c(1:runs))))$Freq
-}
-hh <- matrix(0, ncol = 2, nrow = runs)
-for (i in 1:runs){
-hh[i,] <- stats::quantile(aa[,i],c(0.05,.95))
-}
-fff$min <- hh[,1]
-fff$max <- hh[,2]
-fff$mean <- colMeans(aa)
+  }  else {
+    aa <- matrix(0, ncol = runs, nrow = srq$nsim)
+    for (i in 1:srq$nsim){
+      aa[i,] <- as.data.frame(table(factor(srq$SRLP[,i], levels = c(1:runs))))$Freq
+    }
+    hh <- matrix(0, ncol = 2, nrow = runs)
+    for (i in 1:runs){
+      hh[i,] <- stats::quantile(aa[,i],c(0.05,.95))
+    }
+    fff$min <- hh[,1]
+    fff$max <- hh[,2]
+    fff$mean <- colMeans(aa)
 
-g1 <- ggplot2::ggplot(data = fff, ggplot2::aes(x = fff$V1, y = fff$V2)) +
-  ggplot2::geom_bar(stat="identity",color = "black",
-                    fill = "steelblue") +
-  ggplot2::labs(x = "Number of runs", y = "Frequency") +
-  ggplot2::geom_errorbar(data = fff, ggplot2::aes(x =  fff$V1, ymin = min, ymax = max), width = 0.3,
-                colour = "red", alpha = 0.9, size = 1.1) +
-  ggplot2::geom_point(data=fff, ggplot2::aes(x = fff$V1, y = mean), size = 3, shape = 21, fill = "white") +
-  ggplot2::theme_bw()
-suppressWarnings(print(g1))
+    g1 <- ggplot2::ggplot(data = fff, ggplot2::aes(x = !!V1, y = !!V2)) +
+      ggplot2::geom_bar(stat="identity",color = "black",
+                        fill = "steelblue") +
+      ggplot2::labs(x = "Number of runs", y = "Frequency") +
+      ggplot2::geom_errorbar(data = fff, ggplot2::aes(x =  !!V1, ymin = min, ymax = max), width = 0.3,
+                             colour = "red", alpha = 0.9, size = 1.1) +
+      ggplot2::geom_point(data=fff, ggplot2::aes(x = !!V1, y = mean), size = 3, shape = 21, fill = "white") +
+      ggplot2::theme_bw()
+    suppressWarnings(print(g1))
   }
 }
 
