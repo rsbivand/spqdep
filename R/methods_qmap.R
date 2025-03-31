@@ -40,6 +40,7 @@ NULL
 
 #' @export
 plot.qmap <- function(x,ci = 0.95,...){
+  symb <- ggplot2::sym("symb")
   qmap <- x
   alpha_div_2 <- (1-ci)/2
   critval <- stats::qnorm(alpha_div_2, lower.tail = FALSE)
@@ -67,7 +68,7 @@ plot.qmap <- function(x,ci = 0.95,...){
   data <- data.frame(symb = apply(qmap[[1]]$symb,1,function(x){paste0(x,collapse = "")}),
                      fr = fr, lb_int = 0-e ,ub_int = 0+e)
   data$sigp_symb = factor(sigp_symb, levels=c("sig -", "non-sig", "sig +"))
-  ggplot2::ggplot(data, ggplot2::aes(x = data$symb, y = fr,
+  ggplot2::ggplot(data, ggplot2::aes(x = !!symb, y = fr,
                             fill = sigp_symb)) +
     ggplot2::geom_bar(color = "black",
                       stat = "identity",
@@ -76,7 +77,7 @@ plot.qmap <- function(x,ci = 0.95,...){
     ggplot2::scale_fill_manual(values = c("sig -" = "blue",
                                           "non sig" = "grey77",
                                           "sig +" = "red")) +
-    ggplot2::geom_errorbar(ggplot2::aes(x = data$symb, y = fr,
+    ggplot2::geom_errorbar(ggplot2::aes(x = !!symb, y = fr,
                       ymin = lb_int,
                       ymax = ub_int,
                       color = "red"),width = 0.2) +
