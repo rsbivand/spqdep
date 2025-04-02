@@ -139,30 +139,30 @@ summary.spjctest <- function(object, ...) {
     }
   }
   if (distribution == "asymptotic") {
-    tbl <- table_res |>
+    tbl <- table_res %>%
       dplyr::select(var.name, type.test, alternative, method, pairs, `z-value`,
-                    pvalue, Joincount, Expected, Variance) |>
+                    pvalue, Joincount, Expected, Variance) %>%
       dplyr::group_by(var.name, type.test, alternative, method)
-    gt_tbl <- gt::gt(tbl) |>
+    gt_tbl <- gt::gt(tbl) %>%
       gt::tab_header(
-        title = "JoinCount Spatial Tests (asymptotic)") |>
+        title = "JoinCount Spatial Tests (asymptotic)") %>%
       gt::fmt_number(
         columns = c("z-value", "Expected", "Variance"),
-        decimals = 2) |>
+        decimals = 2) %>%
       gt::fmt_number(
         columns = c("pvalue"),
         decimals = 5)
   } else {
-    tbl <- table_res |>
+    tbl <- table_res %>%
       dplyr::select(var.name, type.test, alternative, method, pairs,
-                    pvalue, Joincount, Expected, Variance) |>
+                    pvalue, Joincount, Expected, Variance) %>%
       dplyr::group_by(var.name, type.test, alternative, method)
-    gt_tbl <- gt::gt(tbl) |>
+    gt_tbl <- gt::gt(tbl) %>%
       gt::tab_header(
-        title = "JoinCount Spatial Tests (Monte Carlo)") |>
+        title = "JoinCount Spatial Tests (Monte Carlo)") %>%
       gt::fmt_number(
         columns = c("Expected", "Variance"),
-        decimals = 2) |>
+        decimals = 2) %>%
       gt::fmt_number(
         columns = c("pvalue"),
         decimals = 5)

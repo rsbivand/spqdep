@@ -26,6 +26,7 @@ Imports:
     gt,
     gtools,
     igraph,
+    magrittr,
     Matrix,
     methods,
     purrr,
